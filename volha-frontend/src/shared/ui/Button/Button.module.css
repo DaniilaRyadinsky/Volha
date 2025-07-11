@@ -1,0 +1,25 @@
+.btn {
+    width: fit-content;
+    padding: 16px 32px;
+    font-size: 0.8rem;
+    border: none;
+    font-weight: 400;
+    border-radius: 4px;
+}
+
+.primary {
+    background-color: var(--main);
+    color: var(--on-main);
+}
+
+.primary_container {
+    background-color: var(--main);
+    color: var(--on-main);
+    border: 1px solid var(--on-main);
+}
+
+.on_primary {
+    background-color: var(--on-main);
+    color: var(--main);
+    border: 1px solid var(--main);
+}

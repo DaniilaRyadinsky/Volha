@@ -1,0 +1,9 @@
+volha/exec.cmd
+volha/dump.sql
+volha/docker-compose.yml
+volha/configs/volha-gateway.yaml
+volha/configs/product-service.yaml
+volha/backup1.ps1
+volha/backup.ps1
+volha/.env
+/volha

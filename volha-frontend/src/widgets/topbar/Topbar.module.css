@@ -1,0 +1,18 @@
+.topbar {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 13px 60px;
+    border-bottom: 1px  solid #8D8D93;
+}
+
+.navlist {
+    display: flex;
+    flex-direction: row;
+    gap: 35px;
+}
+
+.navlist_item {
+    color: var(--main);
+}
