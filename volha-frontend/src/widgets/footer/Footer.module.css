@@ -38,6 +38,19 @@
         row-gap: 50px
     }
 }
+@media (max-width: 576px) { 
+    .footer {
+        padding: 60px 16px 20px 16px;
+    }
+    .footer_container {
+        width: 100%;
+        margin: 0;
+    }
+    .footer_list {
+        width: 100%;
+    }
+}
+
 
 .footer_list {
     display: flex;

@@ -1,3 +1,4 @@
+import { Link } from 'react-router'
 import NewsSubscr from '../../features/NewsSubscr/NewsSubscr'
 import styles from './Footer.module.css'
 
@@ -8,8 +9,8 @@ const Footer = () => {
                 <nav className={styles.footer_list} style={{gridArea: "a"}}>
                     <h3 className={styles.footer_title}>О магазине</h3>
                     <ul className={styles.footer_list_items}>
-                        <li className={styles.footer_item}>О нас</li>
-                        <li className={styles.footer_item}>Оставить заявку</li>
+                        <Link to="/about"><li className={styles.footer_item}>О нас</li></Link>
+                        <Link to="/contacts"><li className={styles.footer_item}>Оставить заявку</li></Link>
                         <li className={styles.footer_item}>Пользовательское соглашение</li>
                     </ul>
                 </nav>
