@@ -1,10 +1,12 @@
+import { Link } from 'react-router'
+import { CATEGORIES } from '../../shared/const/categories'
 import styles from './Topbar.module.css'
 
 const Topbar = () => {
     return (
         <div className={styles.topbar}>
             <svg width="50" height="50" viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <g clip-path="url(#clip0_95_172)">
+                <g clipPath="url(#clip0_95_172)">
                     <path d="M20.5083 15.1274H42.0957C41.799 15.6697 41.5429 16.1488 41.2746 16.6198C40.8091 17.4353 40.366 18.2671 39.8457 19.0479C39.6851 19.2885 39.305 19.523 39.0225 19.525C33.8924 19.5535 28.7603 19.5495 23.6303 19.5352C23.3843 19.5352 23.0185 19.4455 22.9128 19.2722C22.1079 17.9531 21.3559 16.6035 20.5083 15.1274Z" fill="var(--main)" />
                     <path d="M18.1442 33.9103C14.4897 27.576 10.9328 21.4088 7.30273 15.1132C7.76005 15.0846 8.09745 15.0459 8.43485 15.0479C9.49989 15.054 10.569 15.0439 11.63 15.1111C11.9227 15.1295 12.3251 15.3272 12.4653 15.5658C15.1157 20.0958 17.7377 24.6443 20.3495 29.1968C20.4572 29.3864 20.5263 29.7146 20.4369 29.8818C19.7255 31.1886 18.9714 32.471 18.1442 33.9103Z" fill="var(--main)" />
                     <path d="M35.4896 26.677C31.8758 32.9502 28.3412 39.0888 24.7335 45.3538C23.9083 43.9186 23.1421 42.6117 22.4124 41.2845C22.3311 41.1377 22.3961 40.8442 22.4916 40.677C25.0872 36.1408 27.6929 31.6087 30.3108 27.0847C30.4103 26.9135 30.6319 26.6994 30.8006 26.6953C32.3128 26.6647 33.825 26.677 35.4916 26.677H35.4896Z" fill="var(--main)" />
@@ -21,10 +23,9 @@ const Topbar = () => {
 
             <nav >
                 <ul className={styles.navlist}>
-                    <li className={styles.navlist_item}>Шкафы</li>
-                    <li className={styles.navlist_item}>Стеллажи</li>
-                    <li className={styles.navlist_item}>Тележки</li>
-                    <li className={styles.navlist_item}>Аксессуары</li>
+                    {CATEGORIES.slice(0, 4).map((category) =>
+                        <Link key={category.id}  to={`catalog/${category.link}`} style={{ textDecoration: "none" }}><li className={styles.navlist_item}>{category.title}</li></Link>)}
+                    <Link to={`catalog/`} style={{ textDecoration: "none" }}><li className={styles.navlist_item}>Все товары</li></Link>
                 </ul>
             </nav>
             <div>

@@ -1,6 +1,7 @@
 import { Link } from 'react-router'
 import NewsSubscr from '../../features/NewsSubscr/NewsSubscr'
 import styles from './Footer.module.css'
+import { CATEGORIES } from '../../shared/const/categories'
 
 const Footer = () => {
     return (
@@ -17,10 +18,9 @@ const Footer = () => {
                 <nav className={styles.footer_list} style={{gridArea: "b"}}>
                     <h3 className={styles.footer_title}>Продукция</h3>
                     <ul className={styles.footer_list_items}>
-                        <li className={styles.footer_item}>Ящики</li>
-                        <li className={styles.footer_item}>Шкафы</li>
-                        <li className={styles.footer_item}>Стеллажи</li>
-                        <li className={styles.footer_item}>Этажерки</li>
+                        {CATEGORIES.slice(0,4).map((category) => 
+                        <Link key={category.id} to={`catalog/${category.link}`} style={{textDecoration: "none"}}><li className={styles.footer_item}>{category.title}</li></Link>)}
+                        <Link to={`catalog/`} style={{textDecoration: "none"}}><li className={styles.footer_item}>Все товары</li></Link>
                     </ul>
                 </nav>
                 <div className={styles.footer_list} style={{gridArea: "c"}}>

@@ -4,8 +4,8 @@ interface IInput {
     type: string,
     value: string,
     placeholder: string,
-    onChange: (event: React.ChangeEvent<HTMLInputElement>) => void
-    style?: React.CSSProperties,
+    onChange: (event: React.ChangeEvent<HTMLInputElement>) => void,
+    style?: React.CSSProperties
 }
 
 const Input = ({ value, type, placeholder, onChange, style }: IInput) => {

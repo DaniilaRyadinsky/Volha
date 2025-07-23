@@ -2,7 +2,7 @@
     display: flex;
     flex-direction: column;
     gap: 20px;
-   
+
 }
 
 .title {
@@ -12,15 +12,12 @@
 
 .contacts_container {
     display: grid;
-    grid-template-areas:"a b c" ;
+    grid-template-areas: "a b c";
     grid-template-columns: 1fr 1fr 1fr;
     justify-content: space-between;
     gap: 30px;
     padding-left: 5%;
 }
-
-
-
 
 .left_container {
     display: flex;
@@ -39,10 +36,9 @@
     grid-area: b;
 }
 
-.map {
+.map_container {
     grid-area: c;
     width: 426px;
-    aspect-ratio: 1;
 }
 
 .info_container {
@@ -62,34 +58,37 @@
 }
 
 @media (max-width: 1400px) {
-    .contacts_container{
+    .contacts_container {
         grid-template-areas: "a a"
-        "b c";
+            "b c";
         grid-template-columns: 1fr 1fr;
         gap: 50px;
         padding-left: 0;
     }
 }
 
-@media (max-width: 992px) { 
-    .contacts_container{
+@media (max-width: 992px) {
+    .contacts_container {
         grid-template-areas: "a"
-        "b""c";
+            "b" "c";
         grid-template-columns: 1fr;
         gap: 30px;
     }
- }
+}
 
- @media (max-width: 576px) {
+@media (max-width: 576px) {
 
 
     .left_container {
         width: 100%;
     }
 
-    .map {
+    .map_container {
         width: auto;
-        aspect-ratio: 1;
     }
 
- }
+}
+
+.map {
+    aspect-ratio: 1;
+}

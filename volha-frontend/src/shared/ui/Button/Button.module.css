@@ -19,7 +19,7 @@
 }
 
 .on_primary {
-    background-color: var(--on-main);
+    background-color: #fff;
     color: var(--main);
     border: 1px solid var(--main);
 }

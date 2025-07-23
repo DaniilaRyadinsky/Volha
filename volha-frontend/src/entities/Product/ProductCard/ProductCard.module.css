@@ -9,6 +9,7 @@
     gap: 20px;
     padding: 20px;
     border-radius: 4px;
+    background-color: #fff;
 }
 
 .card_img {
@@ -41,4 +42,10 @@
 .card_price {
     font-size: 1.2rem;
     font-weight:500;
+}
+
+.color_container {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
 }

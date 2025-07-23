@@ -20,7 +20,7 @@ const Contacts = () => {
 
                     <div className={styles.info_container}>
                         <h2 className={styles.info_title}>Электронная почта </h2>
-                        <a href='tel:+79657638434' className={styles.info_link}>info@garagespace.ru</a>
+                        <a href='mailto:info@garagespace.ru' className={styles.info_link}>info@garagespace.ru</a>
                     </div>
 
                     <div className={styles.info_container}>
@@ -34,10 +34,10 @@ const Contacts = () => {
                     </div>
 
                 </div>
-                <div className={styles.map}>
-                    <iframe className={styles.map} src="https://yandex.ru/map-widget/v1/?um=constructor%3A5d2c1720e0c86bf44686601a868c49d82dfe2715381e62f77914f3c3798ac588&amp;source=constructor" width="auto" height="auto" frameBorder="0"/>
+                <div className={styles.map_container}>
+                    <iframe className={styles.map} src="https://yandex.ru/map-widget/v1/?um=constructor%3A5d2c1720e0c86bf44686601a868c49d82dfe2715381e62f77914f3c3798ac588&amp;source=constructor" width="auto" height="auto" frameBorder="0" />
                 </div>
-                
+
             </div>
         </div>
     )
