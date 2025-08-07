@@ -1,17 +1,11 @@
 import { useEffect, useState } from 'react';
 import styles from './Checkbox.module.css'
-import { Color } from '../Color/Color';
+import { ColorMarker } from '../Color/Color';
+import type { ICheckbox } from './Checkbox';
 
-interface ICheckbox {
-    text: string,
-    hex: string,
-    name: string,
-    checked: boolean,
-    onClick: () => void
-}
 
-const ColorCheckbox = ({ text, checked, onClick, hex, name }: ICheckbox) => {
-
+const ColorCheckbox = ({ text, checked, onClick, hex }: ICheckbox) => {
+    if (!hex) return;
     let r = parseInt(hex.substring(1, 3), 16)
     let g = parseInt(hex.substring(3, 5), 16)
     let b = parseInt(hex.substring(5), 16)
@@ -21,7 +15,7 @@ const ColorCheckbox = ({ text, checked, onClick, hex, name }: ICheckbox) => {
 
     return (
         <div className={styles.checkbox} onClick={onClick}>
-            <Color name={name} hex={hex} style={{ borderColor: checked ? 'var(--main)' : '' }}>
+            <ColorMarker name={text} hex={hex} style={{ borderColor: checked ? 'var(--main)' : '' }}>
                 {checked &&
                     <svg width="18" height="18" viewBox="0 0 18 19" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <g clipPath="url(#clip0_61_1837)">
@@ -29,7 +23,7 @@ const ColorCheckbox = ({ text, checked, onClick, hex, name }: ICheckbox) => {
                         </g>
                     </svg>
                 }
-            </Color>
+            </ColorMarker>
             <p className={styles.text}>{text}</p>
         </div>
     )

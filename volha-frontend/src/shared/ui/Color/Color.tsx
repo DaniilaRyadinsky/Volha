@@ -7,7 +7,7 @@ export interface IColor {
     style?: React.CSSProperties
 }
 
-export const Color = ({name,hex, children, style}: IColor) => {
+export const ColorMarker = ({name,hex, children, style}: IColor) => {
     return (
         <div className={styles.color} style={{backgroundColor: hex, ...style}} title={name}>{children}</div>
     )

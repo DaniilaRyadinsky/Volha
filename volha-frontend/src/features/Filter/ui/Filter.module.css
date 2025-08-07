@@ -7,6 +7,17 @@
     margin-top: 10px;
 }
 
+.filter_container_loading {
+     display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 325px;
+    margin-right: 25px;
+    margin-top: 10px;
+    align-items: center;
+    padding-top: 50px;
+}
+
 .details {
     position: relative;
     display: block;
@@ -34,7 +45,7 @@
 }
 
 .details[open] {
-    padding-bottom: 50px;
+    /* padding-bottom: 50px; */
 }
 
 .details summary {
@@ -56,7 +67,7 @@
     flex-direction: column;
     gap: 10px;
     margin-bottom: 10px;
-    margin-bottom: -40px;
+    /* margin-bottom: -40px; */
 }
 
 .details__content p:last-child {

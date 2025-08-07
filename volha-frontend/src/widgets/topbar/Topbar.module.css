@@ -1,10 +1,23 @@
 .topbar {
+    padding: 13px 60px;
+    border-bottom: 1px solid #8D8D93;
+    background-color: #F6F6F6;
+
+}
+
+.topbar_container {
+    margin: 0 auto;
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
-    padding: 13px 60px;
-    border-bottom: 1px  solid #8D8D93;
+    max-width: 1900px;
+}
+
+.logo {
+    width: 50px;
+    height: 50px;
+    color: aqua;
 }
 
 .navlist {

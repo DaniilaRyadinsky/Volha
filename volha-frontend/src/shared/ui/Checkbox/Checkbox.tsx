@@ -1,8 +1,9 @@
 import { useState } from 'react';
 import styles from './Checkbox.module.css'
 
-interface ICheckbox {
+export interface ICheckbox {
     text: string,
+    hex?: string,
     checked: boolean,
     onClick: () => void
 }

@@ -1,0 +1,82 @@
+.range {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    padding-bottom: 10px;
+}
+
+.inputs_container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 36px;
+}
+
+.input_container {
+    display: block;
+    position: relative;
+    font-size: 0.8rem;
+    color: var(--main);
+}
+
+.inputs {
+    display: block;
+    position: relative;
+    padding: 12px 12px 12px 36px;
+    border: 1px solid #CECED7;
+    border-radius: 4px;
+    width: calc(100% - 36px - 12px - 2px);
+    font-size: 0.8rem;
+    color: var(--main);
+}
+
+.input_container::after {
+    display: block;
+    position: absolute;
+    left: 14px;
+    top: 13px;
+    content: "от";
+    display: block;
+}
+
+
+
+.inputs:focus {
+    outline: none;
+    border-color: var(--main);
+}
+
+.inputs[type="number"]::-webkit-outer-spin-button,
+.inputs[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+}
+
+.inputs[type='number'],
+.inputs[type="number"]:hover,
+.inputs[type="number"]:focus {
+    appearance: none;
+    -moz-appearance: textfield;
+}
+
+.input_left:after {
+    content: "от";
+}
+
+.input_right:after {
+    content: "до";
+}
+
+.range_slider {
+    height: 4px;
+}
+
+.range_slider .range-slider__range {
+    background: var(--main);
+}
+
+.range_slider .range-slider__thumb {
+    background: var(--main);
+    width: 12px;
+    height: 12px;
+}

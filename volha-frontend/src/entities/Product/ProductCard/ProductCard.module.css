@@ -3,18 +3,21 @@
 }
 
 .card_unit {
-    width: 300px;
     display: flex;
     flex-direction: column;
     gap: 20px;
     padding: 20px;
     border-radius: 4px;
     background-color: #fff;
+    height: fit-content;
 }
 
 .card_img {
-    width: 300px;
-    height: 260px;
+    border-radius: 4px;
+    display: block;
+    width: 100%;
+    aspect-ratio: 1.1538;
+    object-fit: cover;
 }
 
 .card_unit_description_container {
@@ -25,6 +28,7 @@
 
 .card_title {
     font-size: 1rem;
+    height: 2rem;
     color: var(--main);
 }
 
@@ -36,12 +40,19 @@
 .price_container {
     display: flex;
     flex-direction: row;
+    align-items: center;
     justify-content: space-between;
 }
 
 .card_price {
     font-size: 1.2rem;
-    font-weight:500;
+    font-weight: 500;
+}
+
+.price_span {
+    color: #6D6D71;
+    font-size: 0.95rem;
+    margin-left: 5px;
 }
 
 .color_container {

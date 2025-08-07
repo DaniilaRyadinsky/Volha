@@ -3,12 +3,19 @@
     flex-direction: column;
     gap: 30px;
     padding: 20px 60px 50px 60px;
-    background-color: #F6F6F6;
     min-height: calc(100vh - 500px);
+    max-width: 1900px;
+    margin: 0 auto;
+}
+
+@media (max-width: 1096px) {
+    .layout__content {
+        padding: 20px 16px 50px 16px;
+    }
 }
 
 @media (max-width: 576px) {
     .layout__content {
-        padding: 20px 16px 50px 16px;
+        padding: 20px 8px 50px 8px;
     }
 }
