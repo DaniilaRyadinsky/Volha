@@ -1,8 +1,9 @@
-import { BrowserRouter, Routes, Route } from "react-router"
+import { BrowserRouter, Routes, Route, Navigate } from "react-router"
 import Layout from "../layout/Layout"
 import Contacts from "../../pages/Contacts/Contacts"
 import Catalog from "../../pages/Catalog/Catalog"
 import AdminPage from "../../pages/Admin/AdminPage"
+import ProductPage from "../../pages/ProductPage/ProductPage"
 
 
 const AppRouter = () => {
@@ -10,9 +11,15 @@ const AppRouter = () => {
         <BrowserRouter>
             <Routes>
                 <Route path="*" element={<Layout />}>
+                    <Route path="" element={<Navigate to="/catalog" replace />} />
                     <Route path="main" element={<h2>Главная</h2>} />
-                    <Route path="catalog" element={<Catalog />} >
-                        <Route path=":uri" element={<Catalog />} />
+                    <Route path="catalog">
+                        <Route index element={<Catalog />} />
+                        <Route path="category/:uri"  >
+                            <Route index element={<Catalog />} />
+                            <Route path="product/:id" element={<ProductPage />} />
+                        </Route>
+                        <Route path="product/:id" element={<ProductPage />} />
                     </Route>
                     <Route path="contacts" element={<Contacts />} />
                     <Route path="about" element={<h2>О компании</h2>} />

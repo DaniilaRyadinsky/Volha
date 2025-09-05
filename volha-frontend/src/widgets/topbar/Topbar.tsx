@@ -17,7 +17,7 @@ const Topbar = ({ categories }: ITopbar) => {
                 <nav >
                     <ul className={styles.navlist}>
                         {categories.slice(0, 4).map((category) =>
-                            <Link key={category.id} to={`/catalog/${category.uri}_${category.id}`} style={{ textDecoration: "none" }}><li className={styles.navlist_item}>{category.title}</li></Link>)}
+                            <Link key={category.id} to={`/catalog/category/${category.uri}_${category.id}`} style={{ textDecoration: "none" }}><li className={styles.navlist_item}>{category.title}</li></Link>)}
                         <Link to="/catalog" style={{ textDecoration: "none" }}><li className={styles.navlist_item}>Все товары</li></Link>
                     </ul>
                 </nav>

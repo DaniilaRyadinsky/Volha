@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import Checkbox from '../../../shared/ui/Checkbox/Checkbox';
 import ColorCheckbox from '../../../shared/ui/Checkbox/ColorCheckbox';
 
@@ -132,8 +132,6 @@ const Filter = ({ filterState, filterMetadata, onFilterChange, callback, isLoadi
                 onChange={(value) => updateRange(minKey, maxKey, value[0], value[1])} />
         </details>
     );
-
-
 
     if (isLoading) { console.log("loading");return <ClipLoader loading size={50} cssOverride={{ color: 'var(--main)' }} />;}
     if (error) return <div style={{ color: 'red' }}>Ошибка: {error.message}</div>;

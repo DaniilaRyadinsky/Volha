@@ -2,9 +2,11 @@ import React from 'react'
 import clsx from 'clsx';
 import styles from './Button.module.css'
 
+type ButtonMode = 'primary' | 'on_primary' | 'primary_container'
+
 interface IButton {
     children: React.ReactNode,
-    mode?: string,
+    mode?: ButtonMode,
     onClick: () => void,
     style?: React.CSSProperties
 }

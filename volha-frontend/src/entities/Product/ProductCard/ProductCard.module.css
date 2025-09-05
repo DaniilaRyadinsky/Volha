@@ -60,3 +60,72 @@
     flex-direction: row;
     gap: 10px;
 }
+
+@media (max-width: 768px) {
+    .price_container {
+        align-items: start;
+        flex-direction: column;
+        gap: 10px;
+    }
+    .card_title {
+        font-size: 0.85rem; /* 17px */
+        height: 1.7rem;
+    }
+    .card_dimensions {
+        font-size: 0.65rem; /* 13px */
+    }
+    .card_price {
+        font-size: 1rem; /* 20px */
+    }
+    .price_span {
+        font-size: 0.8rem; /* 16px */
+    }
+}
+
+@media (max-width: 576px) {
+    .card_unit {
+        padding: 8px;
+        gap: 8px;
+    }
+
+    .card_title {
+        font-size: 0.8rem; /* 16px */
+        height: 1.6rem;
+    }
+    .card_dimensions {
+        font-size: 0.6rem; /* 12px */
+    }
+    .card_price {
+        font-size: 0.9rem; /* 18px */
+    }
+    .price_span {
+        font-size: 0.75rem; /* 15px */
+    }
+}
+
+@media (max-width: 400px) {
+    .card_unit {
+        padding: 0px;
+        gap: 0px;
+    }
+
+    .card_unit_description_container {
+        padding: 8px;
+        gap: 8px;
+    }
+
+    .card_title {
+        font-size: 0.75rem; /* 15px */
+        height: 1.5rem;
+    }
+    .card_dimensions {
+        font-size: 0.55rem; /* 11px */
+    }
+    .card_price {
+        font-size: 0.85rem; /* 17px */
+    }
+    .price_span {
+        font-size: 0.7rem; /* 14px */
+    }
+    
+}

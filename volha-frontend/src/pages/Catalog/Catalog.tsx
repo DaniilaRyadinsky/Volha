@@ -1,13 +1,13 @@
 import styles from './Catalog.module.css';
 import ProductCard from '../../entities/Product/ProductCard/ProductCard';
-import { useEffect, useReducer, useState } from 'react';
-import Filter from '../../features/Filter/ui/Filter';
+import { useEffect, useState } from 'react';
 import { useParams } from 'react-router';
 import { useQuery } from '@tanstack/react-query';
 import BASE_URL from '../../shared/const/base_url';
 import { ClipLoader } from 'react-spinners';
 import type { Product } from '../../entities/Product/types/ProductTypes';
 import type { FilterMetadata, IFilter } from '../../features/Filter/model/FilterType';
+import FilterWiget from '../../features/Filter/ui/FilterWiget';
 
 const Catalog = () => {
     const { data: filterMetaData, isLoading: isLoadingFilterMeta, error } = useQuery<FilterMetadata>({
@@ -117,7 +117,8 @@ const Catalog = () => {
 
     return (
         <div className={styles.catalog_container}>
-            <h1>{uri?.split('_')[0] || 'Все товары'}</h1>
+            <h1 className={styles.header}>{uri?.split('_')[0] || 'Все товары'}</h1>
+            <FilterWiget/>
             <div className={styles.catalog}>
                
                 <div className={styles.product_list}>

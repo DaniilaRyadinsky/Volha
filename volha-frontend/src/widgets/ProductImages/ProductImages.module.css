@@ -1,0 +1,49 @@
+.container {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    gap: 15px;
+}
+
+.miniatures {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.miniature {
+    width: 98px;
+    height: 65px;
+    object-fit: cover;
+    border-radius: 4px;
+}
+
+.image_container {
+    flex: 1;
+}
+
+.image {
+    width: 100%;
+    /* чтобы картинка вела себя "резиново" */
+    height: auto;
+    aspect-ratio: 1.5;
+    object-fit: cover;
+    border-radius: 4px;
+}
+
+@media (max-width: 1400px) {
+    .container {
+        flex-direction: column-reverse;
+    }
+
+    .miniatures {
+        flex-direction: row;
+    }
+}
+
+@media (max-width: 1096px) {
+
+    .miniatures {
+        display: none;
+    }
+}

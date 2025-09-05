@@ -1,6 +1,6 @@
 .topbar {
     padding: 13px 60px;
-    border-bottom: 1px solid #8D8D93;
+    border-bottom: 1px solid var(--gray);
     background-color: #F6F6F6;
 
 }
@@ -28,4 +28,32 @@
 
 .navlist_item {
     color: var(--main);
+}
+
+@media (max-width: 1400px) {
+    .navlist {}
+}
+
+@media (max-width: 1096px) {
+    .topbar {
+        padding: 13px 16px;
+    }
+
+    .navlist {
+        display: none;
+    }
+}
+
+@media (max-width: 768px) {
+    .logo {
+        width: 40px;
+        height: 40px;
+    }
+}
+
+
+@media (max-width: 576px) {
+    .topbar {
+        padding: 8px 8px;
+    }
 }
