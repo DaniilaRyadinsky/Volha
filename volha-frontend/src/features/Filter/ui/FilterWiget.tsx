@@ -1,3 +1,4 @@
+import Select from '../../../shared/ui/Select/Select'
 import Filter from './Filter'
 import styles from './Filter.module.css'
 
@@ -27,12 +28,8 @@ const FilterWiget = () => {
                     Размеры
                 </div>
             </div>
-            <div className={styles.right_container}>
-                <select className={styles.sort}>
-                    <option value="">Сортировка</option>
-                    <option value="petersburg">По возрастанию цены</option>
-                    <option value="samara">По убыванию цены</option>
-                </select>
+            <div className={styles.widget_right_container}>
+                <Select title="Сортировка" options={[{label: "По убыванию цены", value: "price DESC"}, {label: "По возрастанию цены", value: "price ASC"}]} onChange={(e)=> console.log(e)}/>
             </div>
 
             <Filter />

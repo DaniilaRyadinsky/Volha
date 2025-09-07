@@ -1,0 +1,36 @@
+.title {
+    width: fit-content;
+    padding-right: 22px;
+    position: relative;
+    display: block;
+    font-size: 0.75rem;
+    cursor: pointer;
+    letter-spacing: 0.25px;
+}
+
+.title::after {
+    position: absolute;
+    right: 6px;
+    top: 2px;
+    content: "";
+    display: block;
+    width: 7px;
+    height: 7px;
+    border-right: 2px solid var(--main);
+    border-bottom: 2px solid var(--main);
+    transform: rotate(+45deg);
+    transform-origin: center;
+    transition: .2s;
+}
+
+
+
+.options {
+    /* display: none; */
+    position: absolute;
+}
+
+.option {
+    font-size: 0.75rem;
+    letter-spacing: 0.25px;
+}

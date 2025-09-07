@@ -8,7 +8,7 @@
 }
 
 .filter_container_loading {
-     display: flex;
+    display: flex;
     flex-direction: column;
     gap: 10px;
     width: 325px;
@@ -52,7 +52,6 @@
     list-style: none;
     color: var(--main);
     cursor: pointer;
-    list-style: none;
     transition: .2s;
     margin-bottom: 10px;
     font-weight: 600;
@@ -89,6 +88,11 @@
     display: flex;
     flex-direction: row;
     gap: 10px;
+}
+
+.widget_right_container {
+    display: flex;
+    align-items: center;
 }
 
 
