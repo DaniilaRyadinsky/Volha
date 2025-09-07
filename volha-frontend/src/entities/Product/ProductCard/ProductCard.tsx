@@ -21,7 +21,7 @@ const ProductCard = (product: IProduct) => {
   return (
     // <Link className={styles.main_link} to={`/product/${product.id}`}>
     <li className={styles.card_unit} key={product.id}>
-        <img src={fallbackImage} alt={product.title} className={styles.card_img}  /> {/*УБРАТЬ ОБЯЗАТЕЛЬНО*/}
+      <img src={fallbackImage} alt={product.title} className={styles.card_img} /> {/*УБРАТЬ ОБЯЗАТЕЛЬНО*/}
       <div className={styles.card_unit_description_container}>
         <h3 className={styles.card_title}>{product.title}</h3>
         <p className={styles.card_dimensions}>{product.width}*{product.depth}*{product.height}мм</p>
@@ -31,7 +31,10 @@ const ProductCard = (product: IProduct) => {
 
         <div className={styles.price_container}>
           <p className={styles.card_price}>{product.price}<span className={styles.price_span}>₽</span></p>
-          <Button mode='on_primary' style={{width: window.innerWidth < 768 ? "100%" : ""}} onClick={() => console.log('click')}>Подробнее</Button>
+          <div className={styles.button_container}>
+            <Button mode='on_primary' style={{ width: "100%" }} onClick={() => console.log('click')}>Подробнее</Button>
+          </div>
+
         </div>
       </div>
     </li>

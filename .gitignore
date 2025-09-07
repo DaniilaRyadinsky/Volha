@@ -7,3 +7,8 @@ volha/backup1.ps1
 volha/backup.ps1
 volha/.env
 /volha
+configs/volha-gateway.yaml
+docker-compose.yml
+.env
+configs/product-service.yaml
+package-lock.json

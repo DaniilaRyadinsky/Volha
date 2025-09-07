@@ -61,6 +61,10 @@
     gap: 10px;
 }
 
+.button_container {
+    width: fit-content;
+} 
+
 @media (max-width: 768px) {
     .price_container {
         align-items: start;
@@ -80,6 +84,10 @@
     .price_span {
         font-size: 0.8rem; /* 16px */
     }
+
+    .button_container {
+    width: 100%;
+} 
 }
 
 @media (max-width: 576px) {
