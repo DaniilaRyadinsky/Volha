@@ -2,7 +2,7 @@
 
 .header {
     padding: 20px 40px;
-    font-size: 1.6rem;
+    font-size: var(--title1-xxl);
 }
 
 .product_list {
@@ -13,18 +13,30 @@
 }
 
 @media (max-width: 1400px) {
+    .header {
+        font-size: var(--title1-xl);
+    }
+
     .product_list {
         grid-template-columns: repeat(3, 1fr);
     }
 }
 
 @media (max-width: 1096px) {
+    .header {
+        font-size: var(--title1-l);
+    }
+
     .product_list {
         grid-template-columns: repeat(2, 1fr);
     }
 }
 
 @media (max-width: 768px) {
+    .header {
+        font-size: var(--title1-m);
+    }
+
     .product_list {
         gap: 16px;
     }
@@ -35,19 +47,21 @@
 }
 
 @media (max-width: 568px) {
+
+
     .product_list {
         gap: 8px;
     }
 
     .header {
         padding: 10px 15px;
-        font-size: 1.2rem;
+        font-size: var(--title1-s);
     }
 }
 
 @media (max-width: 400px) {
     .header {
         padding: 10px 0px;
-        font-size: 1rem;
+        font-size: var(--title1-xs);
     }
 }

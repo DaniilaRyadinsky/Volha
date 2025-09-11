@@ -13,7 +13,9 @@ export interface IFilter {
     min_height: number,
     max_height: number,
     min_depth: number,
-    max_depth: number
+    max_depth: number,
+    sort_by: string,
+    sort_order: string
 }
 
 export type FilterMetadata = {
@@ -39,5 +41,25 @@ export type CheckboxItem = {
     title?: string,
     name?: string,
     hex?: string
+}
+
+export interface FilterWidgetProps {
+    filterState: IFilter;
+    filterMetadata: FilterMetadata,
+    onFilterChange: (newState: IFilter | ((prev: IFilter) => IFilter)) => void,
+    callback: () => void;
+    isLoading: boolean,
+    error: Error | null
+}
+
+export interface FilterProps {
+    filterState: IFilter;
+    filterMetadata: FilterMetadata,
+    onFilterChange: (newState: IFilter | ((prev: IFilter) => IFilter)) => void,
+    callback: () => void;
+    isLoading: boolean,
+    error: Error | null,
+    setIsUpdate: (newState: boolean | ((prev: boolean) => boolean)) => void,
+    closeCallback: () => void;
 }
 

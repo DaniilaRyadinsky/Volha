@@ -27,13 +27,13 @@
 }
 
 .card_title {
-    font-size: 1rem;
-    height: 2rem;
+    font-size: 1.25rem;
+    height: 2.5rem;
     color: var(--main);
 }
 
 .card_dimensions {
-    font-size: 0.7rem;
+    font-size: 0.875rem;
     color: #6d6d71;
 }
 
@@ -45,13 +45,13 @@
 }
 
 .card_price {
-    font-size: 1.2rem;
+    font-size: 1.5rem;
     font-weight: 500;
 }
 
 .price_span {
     color: #6D6D71;
-    font-size: 0.95rem;
+    font-size: 1.1875rem;
     margin-left: 5px;
 }
 
@@ -72,17 +72,17 @@
         gap: 10px;
     }
     .card_title {
-        font-size: 0.85rem; /* 17px */
-        height: 1.7rem;
+        font-size: 1.0625rem; /* 17px */
+        height: 2.125rem;
     }
     .card_dimensions {
-        font-size: 0.65rem; /* 13px */
+        font-size: 0.8125rem; /* 13px */
     }
     .card_price {
-        font-size: 1rem; /* 20px */
+        font-size: 1.25rem; /* 20px */
     }
     .price_span {
-        font-size: 0.8rem; /* 16px */
+        font-size: 1rem; /* 16px */
     }
 
     .button_container {
@@ -97,17 +97,17 @@
     }
 
     .card_title {
-        font-size: 0.8rem; /* 16px */
-        height: 1.6rem;
+        font-size: 1rem; /* 16px */
+        height: 2rem;
     }
     .card_dimensions {
-        font-size: 0.6rem; /* 12px */
+        font-size: 0.75rem; /* 12px */
     }
     .card_price {
-        font-size: 0.9rem; /* 18px */
+        font-size: 1.125rem; /* 18px */
     }
     .price_span {
-        font-size: 0.75rem; /* 15px */
+        font-size: 0.9375rem; /* 15px */
     }
 }
 
@@ -123,17 +123,17 @@
     }
 
     .card_title {
-        font-size: 0.75rem; /* 15px */
-        height: 1.5rem;
+        font-size: 0.9375rem; /* 15px */
+        height: 1.875rem;
     }
     .card_dimensions {
-        font-size: 0.55rem; /* 11px */
+        font-size: 0.6875rem; /* 11px */
     }
     .card_price {
-        font-size: 0.85rem; /* 17px */
+        font-size: 1.0625rem; /* 17px */
     }
     .price_span {
-        font-size: 0.7rem; /* 14px */
+        font-size: 0.875rem; /* 14px */
     }
     
 }

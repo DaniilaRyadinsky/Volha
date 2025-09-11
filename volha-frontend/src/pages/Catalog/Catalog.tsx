@@ -33,7 +33,9 @@ const Catalog = () => {
         min_depth: 0,
         max_depth: 1000,
         min_price: 0,
-        max_price: 1000
+        max_price: 1000,
+        sort_by: "",
+        sort_order: ""
     })
 
     useEffect(() => {
@@ -53,7 +55,7 @@ const Catalog = () => {
                 min_depth: filterMetaData.min_depth,
                 max_depth: filterMetaData.max_depth,
                 min_price: filterMetaData.min_price,
-                max_price: filterMetaData.max_price
+                max_price: filterMetaData.max_price,
             }))
             setShouldUpdate(true)
         }
@@ -80,6 +82,7 @@ const Catalog = () => {
     }, [uri]);
 
     const fetchCatalog = async () => {
+        console.log(filterState.sort_order)
         setIsLoading(true)
         fetch(`${BASE_URL}product/filter`, {
             method: 'POST',
@@ -100,8 +103,8 @@ const Catalog = () => {
                 min_price: filterState.min_price,
                 min_width: filterState.min_width,
                 offset: 0,
-                sort_by: "price",
-                sort_order: "ASC"
+                sort_by: filterState.sort_by,
+                sort_order: filterState.sort_order
             })
         }).then(res => res.json()).then(d => setProductList(d)).catch(e => alert(e))
         setIsLoading(false)
@@ -118,7 +121,7 @@ const Catalog = () => {
     return (
         <div className={styles.catalog_container}>
             <h1 className={styles.header}>{uri?.split('_')[0] || 'Все товары'}</h1>
-            <FilterWiget/>
+            <FilterWiget filterState={filterState} filterMetadata={filterMetaData} onFilterChange={setFilterState} callback={fetchCatalog} isLoading={isLoadingFilterMeta} error={error}/>
             <div className={styles.catalog}>
                
                 <div className={styles.product_list}>

@@ -5,7 +5,14 @@
   --main-container: #4d4d51;
   --on-main-container: #e0e0e0;
   --outline: #AEAEB5;
-  --gray: #8d8d93
+  --gray: #8d8d93;
+
+--title1-xxl: 2.5rem;    /* 1900+ (40px) */
+--title1-xl: 2.25rem;    /* 1400-1899 (36px) */
+--title1-l: 2rem;        /* 1000-1399 (32px) */
+--title1-m: 1.75rem;     /* 768-999 (28px) */
+--title1-s: 1.5rem;      /* 576-767 (24px) */
+--title1-xs: 1.25rem;    /* 400-575 (20px) */
 }
 
 a,
@@ -20,8 +27,8 @@ p {
   margin: 0;
   padding: 0;
   font-weight: normal;
-  letter-spacing: 0;
   color: var(--main);
+  letter-spacing: 0.15px;
 }
 
 ul,
@@ -31,7 +38,8 @@ li {
 }
 
 html {
-  font-size: 20px;
+  font-size: 16px;
+  scrollbar-gutter: stable;
 }
 
 body {
@@ -45,4 +53,27 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background-color: #F6F6F6;
+  scrollbar-gutter: stable;
+}
+
+::-webkit-scrollbar {
+  background-color: #f1f1f1;
+  width: 10px;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent; 
+  border-left: 4px solid white;
+}
+
+::-webkit-scrollbar-thumb  {
+  background-color: var(--gray);
+  border-radius: 4px;
+  cursor: pointer;
+  border: 3px solid white;
+}
+
+::-webkit-scrollbar-thumb:hover  {
+  background-color: var(--outline);
 }

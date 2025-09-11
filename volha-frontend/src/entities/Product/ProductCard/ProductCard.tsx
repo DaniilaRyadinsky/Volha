@@ -4,6 +4,7 @@ import { Button } from '../../../shared/ui/Button/Button'
 import { ColorMarker } from '../../../shared/ui/Color/Color'
 import type { Color } from '../types/ProductTypes'
 import fallbackImage from '../../../shared/assets/img/666ef3d869c6d.jpg';
+import { Link } from 'react-router';
 
 
 interface IProduct {
@@ -19,7 +20,7 @@ interface IProduct {
 
 const ProductCard = (product: IProduct) => {
   return (
-    // <Link className={styles.main_link} to={`/product/${product.id}`}>
+    <Link className={styles.main_link} to={`product/${product.id}`}>
     <li className={styles.card_unit} key={product.id}>
       <img src={fallbackImage} alt={product.title} className={styles.card_img} /> {/*УБРАТЬ ОБЯЗАТЕЛЬНО*/}
       <div className={styles.card_unit_description_container}>
@@ -34,11 +35,10 @@ const ProductCard = (product: IProduct) => {
           <div className={styles.button_container}>
             <Button mode='on_primary' style={{ width: "100%" }} onClick={() => console.log('click')}>Подробнее</Button>
           </div>
-
         </div>
       </div>
     </li>
-    // </Link>
+    </Link>
   )
 }
 

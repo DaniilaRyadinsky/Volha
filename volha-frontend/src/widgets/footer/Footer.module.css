@@ -58,7 +58,7 @@
 
 .footer_title {
     color: #fff;
-    font-size: 1rem;
+    font-size: 1.125rem;
 }
 
 .footer_list_items {
@@ -69,12 +69,11 @@
 
 .footer_item {
     color: var(--on-main);
-    font-size: 0.8rem;
 }
 
 
 .footer_credits {
-    font-size: 0.7rem;
+    font-size: 0.8rem;
     color: var(--on-main);
     margin: 14px 30px;
 }

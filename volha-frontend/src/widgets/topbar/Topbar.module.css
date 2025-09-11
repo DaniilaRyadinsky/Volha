@@ -28,6 +28,7 @@
 
 .navlist_item {
     color: var(--main);
+    font-size: 1.125rem;
 }
 
 @media (max-width: 1400px) {

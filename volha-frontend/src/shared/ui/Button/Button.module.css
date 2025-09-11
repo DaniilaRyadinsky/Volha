@@ -1,9 +1,9 @@
 .btn {
     width: fit-content;
     padding: 16px 32px;
-    font-size: 0.8rem;
     border: none;
     font-weight: 400;
+    font-size: 1rem;
     border-radius: 4px;
     transition: all 0.2s ease;
     cursor: pointer;
@@ -64,7 +64,7 @@
 
 @media (max-width: 400px) {
     .btn {
-        font-size: 0.7rem;
+        font-size: 0.875rem;
         padding: 10px 20px;
     }
 }

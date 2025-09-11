@@ -25,11 +25,11 @@
 }
 
 .title {
-    font-size: 1.8rem;
+    font-size: 2rem;
 }
 
 .price {
-    font-size: 2rem;
+    font-size: 2.25rem;
 }
 
 .button_container {
@@ -44,11 +44,11 @@
 
 .title2 {
     padding: 0 30px;
-    font-size: 1.6rem;
+    font-size: 2rem;
 }
 
 .description {
-    font-size: 0.8rem;
+    font-size: 1rem;
     padding: 0 40px;
 }
 
@@ -68,7 +68,7 @@
 
 .feature_title {
     white-space: nowrap;
-    font-size: 0.8rem;
+    font-size: 1rem;
     color: var(--gray);
 }
 
@@ -80,7 +80,7 @@
 
 .feature_text {
     white-space: nowrap;
-    font-size: 0.8rem;
+    font-size: 1rem;
 }
 
 
@@ -110,22 +110,22 @@
     }
 
     .title {
-        font-size: 1.6rem;
+        font-size: 1.8rem;
     }
 
     .price {
-        font-size: 1.8rem;
+        font-size: 2rem;
     }
 
 }
 
 @media (max-width: 768px) {
     .title {
-        font-size: 1.1rem;
+        font-size: 1.4rem;
     }
 
     .price {
-        font-size: 1.6rem;
+        font-size: 1.8rem;
     }
 }
 
