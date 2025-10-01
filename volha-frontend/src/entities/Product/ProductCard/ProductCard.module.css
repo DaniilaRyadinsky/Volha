@@ -27,8 +27,13 @@
 }
 
 .card_title {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
     font-size: 1.25rem;
-    height: 2.5rem;
+    height: 3rem;
     color: var(--main);
 }
 
@@ -63,7 +68,7 @@
 
 .button_container {
     width: fit-content;
-} 
+}
 
 @media (max-width: 768px) {
     .price_container {
@@ -71,23 +76,31 @@
         flex-direction: column;
         gap: 10px;
     }
+
     .card_title {
-        font-size: 1.0625rem; /* 17px */
-        height: 2.125rem;
+        font-size: 1.0625rem;
+        /* 17px */
+        height: 2.55rem;
     }
+
     .card_dimensions {
-        font-size: 0.8125rem; /* 13px */
+        font-size: 0.8125rem;
+        /* 13px */
     }
+
     .card_price {
-        font-size: 1.25rem; /* 20px */
+        font-size: 1.25rem;
+        /* 20px */
     }
+
     .price_span {
-        font-size: 1rem; /* 16px */
+        font-size: 1rem;
+        /* 16px */
     }
 
     .button_container {
-    width: 100%;
-} 
+        width: 100%;
+    }
 }
 
 @media (max-width: 576px) {
@@ -97,17 +110,24 @@
     }
 
     .card_title {
-        font-size: 1rem; /* 16px */
-        height: 2rem;
+        font-size: 1rem;
+        /* 16px */
+        height: 2.4rem;
     }
+
     .card_dimensions {
-        font-size: 0.75rem; /* 12px */
+        font-size: 0.75rem;
+        /* 12px */
     }
+
     .card_price {
-        font-size: 1.125rem; /* 18px */
+        font-size: 1.125rem;
+        /* 18px */
     }
+
     .price_span {
-        font-size: 0.9375rem; /* 15px */
+        font-size: 0.9375rem;
+        /* 15px */
     }
 }
 
@@ -123,17 +143,24 @@
     }
 
     .card_title {
-        font-size: 0.9375rem; /* 15px */
-        height: 1.875rem;
+        font-size: 0.9375rem;
+        /* 15px */
+        height: 2.25rem;
     }
+
     .card_dimensions {
-        font-size: 0.6875rem; /* 11px */
+        font-size: 0.6875rem;
+        /* 11px */
     }
+
     .card_price {
-        font-size: 1.0625rem; /* 17px */
+        font-size: 1.0625rem;
+        /* 17px */
     }
+
     .price_span {
-        font-size: 0.875rem; /* 14px */
+        font-size: 0.875rem;
+        /* 14px */
     }
-    
+
 }

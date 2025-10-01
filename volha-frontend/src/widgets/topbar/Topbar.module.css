@@ -15,9 +15,10 @@
 }
 
 .logo {
+    display: block;
+    height: auto;
     width: 50px;
-    height: 50px;
-    color: aqua;
+    height: auto;
 }
 
 .navlist {
@@ -31,8 +32,41 @@
     font-size: 1.125rem;
 }
 
+.right_container_short {
+    display: none;
+}
+
+.sidebar_navlist {
+    display: flex;
+    flex-direction: column;
+    padding: 40px 30px;
+    gap: 10px;
+}
+
 @media (max-width: 1400px) {
-    .navlist {}
+    .navlist {
+        display: none;
+    }
+
+    .right_container {
+        display: none;
+    }
+
+    .right_container_short {
+        display: block;
+
+    }
+
+    .icons_container {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+    }
+
+    .icons {
+        width: 30px;
+        height: 30px;
+    }
 }
 
 @media (max-width: 1096px) {
@@ -50,6 +84,11 @@
         width: 40px;
         height: 40px;
     }
+
+    /* .icons {
+        width: 20px;
+        height: 20px;
+    } */
 }
 
 

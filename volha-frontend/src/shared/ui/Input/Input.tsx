@@ -17,7 +17,7 @@ const Input = ({ value, type, placeholder, onChange, style }: IInput) => {
                 type={type}
                 value={value}
                 style={style}
-                onChange={onChange} />
+                onChange={onChange}/>
         </>
     )
 }

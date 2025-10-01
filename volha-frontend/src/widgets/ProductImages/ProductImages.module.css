@@ -3,32 +3,64 @@
     display: flex;
     flex-direction: row;
     gap: 15px;
+    align-items: start;
 }
 
+/* .miniatures_container {
+    width: 100px;
+    height: 100%;
+} */
+
 .miniatures {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
+    box-sizing: border-box;
+    width: 100px;
+    height: 395px;
+    /* box-sizing: border-box; */
 }
 
 .miniature {
     width: 98px;
-    height: 65px;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* ПРАВИЛЬНЫЕ стили для слайдов */
+.miniatures :global(.swiper-slide) {
+    width: 98px !important;
+    height: 65px !important;
+    border-radius: 4px;
+    opacity: 0.6;
+    transition: opacity 0.3s ease;
+    border: 1px solid transparent;
+}
+
+/* Стиль для активного слайда */
+.miniatures :global(.swiper-slide-thumb-active) {
+    width: 98px !important;
+    height: 65px !important;
+    opacity: 1 !important;
+    border: 1px solid var(--outline);
+}
+
+.miniatures :global(.swiper-slide) img {
+    width: 100%;
+    height: 100%;
     object-fit: cover;
     border-radius: 4px;
 }
 
 .image_container {
-    flex: 1;
+    flex-grow: 1;
+    min-width: 0;
+    max-width: calc(100% - 100px - 15px);
+    border-radius: 4px;
 }
 
 .image {
     width: 100%;
-    /* чтобы картинка вела себя "резиново" */
     height: auto;
     aspect-ratio: 1.5;
     object-fit: cover;
-    border-radius: 4px;
 }
 
 @media (max-width: 1400px) {
@@ -36,9 +68,16 @@
         flex-direction: column-reverse;
     }
 
-    .miniatures {
-        flex-direction: row;
+    .image_container {
+        max-width: 100%;
     }
+
+    .miniatures {
+        height: 67px;
+        width: 527px;
+    }
+
+
 }
 
 @media (max-width: 1096px) {

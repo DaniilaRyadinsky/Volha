@@ -5,7 +5,7 @@
     font-weight: 400;
     font-size: 1rem;
     border-radius: 4px;
-    transition: all 0.2s ease;
+    transition: color 0.2s ease, background-color 0.2s ease, outline 0.2s ease;
     cursor: pointer;
 }
 
@@ -28,7 +28,7 @@
 .primary_container {
     background-color: var(--main-container);
     color: var(--on-main);
-    border: 1px solid var(--outline);
+    outline: 1px solid var(--outline);
 }
 
 .primary_container:hover {
@@ -38,13 +38,13 @@
 .primary_container:active {
     background-color: #fff;
     color: var(--main);
-    border: 1px solid var(--main);
+    outline: 1px solid var(--main);
 }
 
 .on_primary {
     background-color: #fff;
     color: var(--main);
-    border: 1px solid var(--outline);
+    outline: 1px solid var(--outline);
 }
 
 .on_primary:hover {

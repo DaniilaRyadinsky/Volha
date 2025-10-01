@@ -1,7 +1,7 @@
 .container {
     position: relative;
     display: flex;
-    z-index: 100;
+    z-index: 50;
 }
 
 .title_container {
@@ -20,7 +20,7 @@
 .arrow {
     transform-origin: center;
     transition: transform 0.2s;
-    z-index: 101;
+    z-index: 51;
 }
 
 .fake_arrow {
@@ -68,5 +68,5 @@
     width: 100vw;
     height: 100vh;
     background: transparent;
-    z-index: 98;
+    z-index: 48;
 }

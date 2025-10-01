@@ -4,12 +4,12 @@ import Filter from './Filter'
 import styles from './Filter.module.css'
 import type { FilterWidgetProps } from '../model/FilterType'
 import clsx from 'clsx'
+import Sidebar from '../../../shared/ui/Sidebar/Sidebar'
 
 
 
 const FilterWiget = (props: FilterWidgetProps) => {
     const [isFilter, setIsFilter] = useState(false)
-
     const [isUpdate, setIsUpdate] = useState(false)
 
 
@@ -34,11 +34,6 @@ const FilterWiget = (props: FilterWidgetProps) => {
     const filterClick = () => {
         setIsFilter(!isFilter)
     }
-
-    const handleBackdropClick = () => {
-        setIsFilter(false)
-    }
-
 
     const sortChange = (optionValue: string) => {
         props.onFilterChange(prevState => {
@@ -81,17 +76,10 @@ const FilterWiget = (props: FilterWidgetProps) => {
                     options={[{ label: "По убыванию цены", value: "price DESC" }, { label: "По возрастанию цены", value: "price ASC" }]}
                     onChange={(e) => sortChange(e)} />
             </div>
-            <div className={clsx(styles.filter_slide, {
-                [styles.filter_slide_active]: isFilter
-            })}>
-                <Filter {...props} setIsUpdate={setIsUpdate} closeCallback={() => setIsFilter(false)}/>
-            </div>
-            {isFilter && (
-                <div
-                    className={styles.backdrop}
-                    onClick={handleBackdropClick}
-                />
-            )}
+
+            <Sidebar isOpen={isFilter} closeCallback={() => setIsFilter(false)}>
+                <Filter {...props} setIsUpdate={setIsUpdate} closeCallback={() => setIsFilter(false)} />
+            </Sidebar>
 
 
         </div >

@@ -2,10 +2,10 @@ import styles from './Catalog.module.css';
 import ProductCard from '../../entities/Product/ProductCard/ProductCard';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router';
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import BASE_URL from '../../shared/const/base_url';
 import { ClipLoader } from 'react-spinners';
-import type { Product } from '../../entities/Product/types/ProductTypes';
+import type { Category, Product } from '../../entities/Product/types/ProductTypes';
 import type { FilterMetadata, IFilter } from '../../features/Filter/model/FilterType';
 import FilterWiget from '../../features/Filter/ui/FilterWiget';
 
@@ -66,23 +66,37 @@ const Catalog = () => {
 
     useEffect(() => {
         if (shouldUpdate) {
-        fetchCatalog()
-        console.log(filterState)
-        setShouldUpdate(false)
+            fetchCatalog()
+            console.log(filterState)
+            setShouldUpdate(false)
         }
 
     }, [filterState])
 
     const { uri } = useParams();
+    const [title, setTitle] = useState('Все товары')
+    const queryClient = useQueryClient();
 
     useEffect(() => {
         if (uri) {
+            const categories = queryClient.getQueryData<Category[]>(['categories']) ?? [];
+            const category = categories.find(c => c.uri === uri)
 
+            if (category) {
+                setTitle(category.title);
+                if (filterMetaData) {
+                    setFilterState(prev => ({
+                        ...prev,
+                        categories: [category.id],
+                    }));
+                    // console.log(filterState)
+                }
+            }
         }
-    }, [uri]);
+    }, [uri, filterMetaData]);
 
     const fetchCatalog = async () => {
-        console.log(filterState.sort_order)
+        console.log(filterState)
         setIsLoading(true)
         fetch(`${BASE_URL}product/filter`, {
             method: 'POST',
@@ -120,42 +134,13 @@ const Catalog = () => {
 
     return (
         <div className={styles.catalog_container}>
-            <h1 className={styles.header}>{uri?.split('_')[0] || 'Все товары'}</h1>
-            <FilterWiget filterState={filterState} filterMetadata={filterMetaData} onFilterChange={setFilterState} callback={fetchCatalog} isLoading={isLoadingFilterMeta} error={error}/>
+            <h1 className={styles.header}>{title}</h1>
+            <FilterWiget filterState={filterState} filterMetadata={filterMetaData} onFilterChange={setFilterState} callback={fetchCatalog} isLoading={isLoadingFilterMeta} error={error} />
             <div className={styles.catalog}>
-               
+
                 <div className={styles.product_list}>
                     {productList?.map((item) => <ProductCard
-                        key={item.id}
-                        id={item.id}
-                        title={item.title}
-                        price={item.price}
-                        width={item.width}
-                        height={item.height}
-                        depth={item.depth}
-                        colors={item.colors}
-                        photos={item.photos} />)}
-                        {productList?.map((item) => <ProductCard
-                        key={item.id}
-                        id={item.id}
-                        title={item.title}
-                        price={item.price}
-                        width={item.width}
-                        height={item.height}
-                        depth={item.depth}
-                        colors={item.colors}
-                        photos={item.photos} />)}
-                        {productList?.map((item) => <ProductCard
-                        key={item.id}
-                        id={item.id}
-                        title={item.title}
-                        price={item.price}
-                        width={item.width}
-                        height={item.height}
-                        depth={item.depth}
-                        colors={item.colors}
-                        photos={item.photos} />)}
-                        {productList?.map((item) => <ProductCard
+                        article={item.article}
                         key={item.id}
                         id={item.id}
                         title={item.title}
