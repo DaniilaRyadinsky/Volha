@@ -1,10 +1,9 @@
 import { useEffect, useState } from 'react'
-import Select from '../../../shared/ui/Select/Select'
 import Filter from './Filter'
 import styles from './Filter.module.css'
 import type { FilterWidgetProps } from '../model/FilterType'
-import clsx from 'clsx'
 import Sidebar from '../../../shared/ui/Sidebar/Sidebar'
+import SortSelect from './SortSelect/SortSelect'
 
 
 
@@ -46,6 +45,18 @@ const FilterWiget = (props: FilterWidgetProps) => {
         setIsUpdate(true)
     }
 
+    const getSortMode = () => {
+        const sort_mode = props.filterState.sort_by + " " + props.filterState.sort_order
+        switch (sort_mode) {
+            case "price DESC":
+                return "По убыванию цены"
+            case "price ASC":
+                return "По возрастанию цены"
+            default:
+                return undefined
+        }
+    }
+
     return (
         <div className={styles.widget_container}>
             <div className={styles.widget_left_container}>
@@ -71,7 +82,8 @@ const FilterWiget = (props: FilterWidgetProps) => {
                 </div>
             </div>
             <div className={styles.widget_right_container}>
-                <Select
+                <SortSelect
+                    value={getSortMode()}
                     title="Сортировка"
                     options={[{ label: "По убыванию цены", value: "price DESC" }, { label: "По возрастанию цены", value: "price ASC" }]}
                     onChange={(e) => sortChange(e)} />

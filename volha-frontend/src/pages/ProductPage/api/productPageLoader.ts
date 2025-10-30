@@ -4,7 +4,7 @@ import BASE_URL from "../../../shared/const/base_url";
 export const productPageLoader = async ({ params }: { params: any }) => {
   const { id } = params;
   
-  const res = await fetch(`${BASE_URL}product/search?query=${id}`);
+  const res = await fetch(`${BASE_URL}product/get?id=${id}`);
   if (!res.ok) throw new Error('Product not found');
   
   const product = await res.json();
@@ -12,7 +12,7 @@ export const productPageLoader = async ({ params }: { params: any }) => {
   
   return {
     product,
-    breadcrumb: product[0].title
+    breadcrumb: product.title
   };
 };
 

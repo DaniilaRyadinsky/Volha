@@ -1,7 +1,7 @@
 import styles from './Catalog.module.css';
 import ProductCard from '../../entities/Product/ProductCard/ProductCard';
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router';
+import { useParams } from 'react-router-dom';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import BASE_URL from '../../shared/const/base_url';
 import { ClipLoader } from 'react-spinners';

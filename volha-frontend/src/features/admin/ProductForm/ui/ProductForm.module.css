@@ -1,0 +1,23 @@
+.form_container {
+    display: flex;
+    width: 450px;
+    flex-direction: column;
+    gap: 15px;
+    flex-shrink: 0;
+}
+
+.label {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.width_container {
+    display: flex;
+    flex-direction: row;
+    gap: 35px;
+}
+
+.select_add{
+    
+}

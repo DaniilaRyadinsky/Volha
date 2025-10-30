@@ -7,7 +7,7 @@ interface IInput {
     style?: React.CSSProperties,
 }
 
-const Input = ({ value, placeholder, onChange, style }: IInput) => {
+const Textarea = ({ value, placeholder, onChange, style }: IInput) => {
     return (
         <>
             <textarea
@@ -20,4 +20,4 @@ const Input = ({ value, placeholder, onChange, style }: IInput) => {
     )
 }
 
-export default Input
+export default Textarea

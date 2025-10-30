@@ -1,40 +1,28 @@
 import Footer from '../../widgets/footer/Footer'
-import { Outlet, useLocation } from 'react-router'
+import { Outlet } from 'react-router-dom'
 import Topbar from '../../widgets/topbar/Topbar'
 import styles from './Layout.module.css'
 import type { Category } from '../../entities/Product/types/ProductTypes'
 import { useSuspenseQuery } from '@tanstack/react-query';
-import { FetchCategories } from './api/FetchCategories'
+
 import Breadcrumbs from '../../features/Breadcrumbs/Breadcrumbs'
-import { useEffect } from 'react'
+import { ScrollToTop } from '../../shared/lib/ScrollToTop'
+import { fetchCategories } from '../../shared/api/fetchTables'
 
-const ScrollToTop = () => {
-    const { pathname } = useLocation();
 
-    useEffect(() => {
-        window.scrollTo(0, 0);
-    }, [pathname]);
 
-    return null;
-};
-
-// interface ILayout {
-//     categories: Category[],
-    
-// }
 
 
 const Layout = () => {
     const { data: categories, error } = useSuspenseQuery<Category[]>({
         queryKey: ['categories'],
-        queryFn: FetchCategories,
+        queryFn: fetchCategories,
     });
 
     if (error) return <div className={styles.filter_container} style={{ color: "red", fontSize: '0.8rem' }}>Ошибка: {error.message}</div>;
 
     return (
         <>
-
             <ScrollToTop />
             <Topbar categories={categories} />
 

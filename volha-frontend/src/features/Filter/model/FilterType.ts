@@ -63,3 +63,11 @@ export interface FilterProps {
     closeCallback: () => void;
 }
 
+export type Sort = {
+    label: "По убыванию цены",
+    value: "price DESC"
+} |
+{
+    label: "По возрастанию цены",
+    value: "price ASC"
+}

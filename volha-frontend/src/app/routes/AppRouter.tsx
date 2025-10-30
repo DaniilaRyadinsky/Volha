@@ -1,4 +1,4 @@
-import { Navigate, createBrowserRouter, RouterProvider, Outlet } from "react-router"
+import { Navigate, createBrowserRouter, RouterProvider, Outlet } from "react-router-dom"
 import Layout from "../layout/Layout"
 import Contacts from "../../pages/Contacts/Contacts"
 import Catalog from "../../pages/Catalog/Catalog"
@@ -7,6 +7,8 @@ import ProductPage from "../../pages/ProductPage/ProductPage"
 import { productPageLoader } from "../../pages/ProductPage/api/productPageLoader"
 import { useQueryClient } from "@tanstack/react-query"
 import type { Category } from "../../entities/Product/types/ProductTypes"
+import AdminLayout from "../../features/admin/AdminLayout/ui/AdminLayout"
+import { ProductForm } from "../../features/admin/ProductForm/ui/ProductForm"
 
 
 const getCategoryCrumb = (_data: any, params: any) => {
@@ -34,7 +36,6 @@ const router = createBrowserRouter([
                 handle: { crumb: "Каталог" },
                 children: [
                     { index: true, element: <Catalog /> },
-
                     {
                         path: "category/:uri",
                         element: <Outlet />,
@@ -54,7 +55,6 @@ const router = createBrowserRouter([
                             }
                         ]
                     },
-
                     {
                         path: "product/:id/:title",
                         element: <ProductPage />,
@@ -81,7 +81,13 @@ const router = createBrowserRouter([
         ]
     },
 
-    { path: "admin", element: <AdminPage /> }
+    {
+        path: "admin",
+        element: <AdminLayout />,
+        children: [
+            { index: true, element: <ProductForm /> },
+        ]
+    }
 ]);
 
 const AppRouter = () => {

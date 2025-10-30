@@ -1,10 +1,10 @@
-// import { Link } from 'react-router'
+// import { Link } from 'react-router-dom'
 import styles from './ProductCard.module.css'
 import { Button } from '../../../shared/ui/Button/Button'
 import { ColorMarker } from '../../../shared/ui/Color/Color'
 import type { Color } from '../types/ProductTypes'
 import fallbackImage from '../../../shared/assets/img/666ef3d869c6d.jpg';
-import { Link } from 'react-router';
+import { Link } from 'react-router-dom';
 
 import CyrillicToTranslit from 'cyrillic-to-translit-js';
 
@@ -32,7 +32,7 @@ const ProductCard = ({id,article, title, price, colors, width, height, depth, ph
   return (
     <Link 
     className={styles.main_link} 
-    to={`${isAbsolutePath ? "/" : ""}product/${article}/${CyrillicToTranslit().transform(title, '-').toLowerCase()}`}>
+    to={`${isAbsolutePath ? "/" : ""}product/${id}/${CyrillicToTranslit().transform(title, '-').toLowerCase()}`}>
     <li className={styles.card_unit} key={id}>
       <img src={fallbackImage} alt={title} className={styles.card_img} /> {/*УБРАТЬ ОБЯЗАТЕЛЬНО*/}
       <div className={styles.card_unit_description_container}>

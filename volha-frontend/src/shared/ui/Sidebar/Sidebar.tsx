@@ -1,3 +1,4 @@
+import Backdrop from '../Backdrop/Backdrop'
 import styles from './Sidebar.module.css'
 import clsx from 'clsx'
 interface ISidebar {
@@ -15,11 +16,8 @@ const Sidebar = ({ children, isOpen, closeCallback }: ISidebar) => {
                 {children}
             </div>
             {isOpen && (
-                    <div
-                        className={styles.backdrop}
-                        onClick={closeCallback}
-                    />
-                )}
+                <Backdrop onClick={closeCallback} mode={"gray"} />
+            )}
         </>
     )
 }

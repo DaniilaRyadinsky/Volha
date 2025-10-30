@@ -1,28 +1,14 @@
-.container {}
 
-.admin_layout {
-    padding: 20px 60px 50px 60px;
-    background-color: #F6F6F6;
-}
 
-.admin_topbar {
+.admin_content {
     display: flex;
     flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-    padding: 13px 60px;
-    border-bottom: 1px solid #8D8D93;
-    background-color: #F6F6F6;
 }
 
-.form_container {
+
+
+.photoinput_container {
     display: flex;
-    width: 40%;
-    flex-direction: column;
-    gap: 10px;
-}
-.label {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
+                flex-grow: 1;
+    min-width: 0;
 }

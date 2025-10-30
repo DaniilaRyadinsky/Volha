@@ -1,4 +1,4 @@
-import { Link } from 'react-router'
+import { Link } from 'react-router-dom'
 import styles from './Topbar.module.css'
 import type { Category } from '../../entities/Product/types/ProductTypes'
 import logo from '../../shared/assets/icons/logo.svg'

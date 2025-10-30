@@ -3,19 +3,21 @@ import { Button } from '../../shared/ui/Button/Button'
 import ProductImages from '../../widgets/ProductImages/ProductImages'
 import 'swiper/swiper-bundle.css';
 
+
 import styles from './ProductPage.module.css'
-import { Pagination } from 'swiper/modules';
+import { Navigation, Pagination } from 'swiper/modules';
 import ProductCard from '../../entities/Product/ProductCard/ProductCard';
 import type { Product } from '../../entities/Product/types/ProductTypes';
 import { useLoaderData } from 'react-router-dom';
 
 interface LoaderResult {
-  product: Product[];
+  product: Product;
   breadcrumb: string;
 }
 
 const ProductPage = () => {
-  const product = (useLoaderData() as LoaderResult).product[0];
+  const product = (useLoaderData() as LoaderResult).product;
+  console.log(product)
 
   const getMaterials = () => {
     let res = ''
@@ -59,13 +61,13 @@ const ProductPage = () => {
             <div className={styles.feature}>
               <div className={styles.feature_title}>Производитель</div>
               <div className={styles.feature_points}></div>
-              <div className={styles.feature_text}>{product.brand.name}</div>
+              <div className={styles.feature_text}>{product.brand?.name}</div>
             </div>
 
             <div className={styles.feature}>
               <div className={styles.feature_title}>Страна производства</div>
               <div className={styles.feature_points}></div>
-              <div className={styles.feature_text}>{product.country.title}</div>
+              <div className={styles.feature_text}>{product.country?.title}</div>
             </div>
 
             <div className={styles.feature}>
@@ -101,7 +103,7 @@ const ProductPage = () => {
           pagination={{
             clickable: true,
           }}
-          modules={[Pagination]}
+          modules={[Pagination, Navigation]}
           className="mySwiper"
         >
           <SwiperSlide>

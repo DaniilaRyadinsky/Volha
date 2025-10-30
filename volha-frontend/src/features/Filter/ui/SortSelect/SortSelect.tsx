@@ -1,8 +1,8 @@
 import { useState } from 'react';
-import styles from './Select.module.css'
+import styles from './SortSelect.module.css'
 import clsx from 'clsx';
-import arrow from '../../assets/icons/expand_more.svg'
-import Backdrop from '../Backdrop/Backdrop';
+import arrow from '../../../../shared/assets/icons/expand_more.svg'
+import Backdrop from '../../../../shared/ui/Backdrop/Backdrop';
 
 type Option = {
     value: string;
@@ -14,12 +14,10 @@ interface ISelect {
     options: Option[];
     value?: string;
     onChange: (value: string) => void;
-    lastChild?: React.ReactNode
 }
 
-const Select = ({ title, options, value, onChange, lastChild }: ISelect) => {
+const Select = ({ title, options, value, onChange }: ISelect) => {
     const [isOpen, setIsOpen] = useState(false)
-
     const handleToggle = () => {
         setIsOpen(!isOpen);
     };
@@ -47,7 +45,8 @@ const Select = ({ title, options, value, onChange, lastChild }: ISelect) => {
                 </div>
 
                 <div style={{ visibility: isOpen ? "visible" : "hidden" }} className={styles.options}>
-                    <div className={styles.title_container} onClick={handleToggle}>
+                    <div className={styles.title_container}
+                        onClick={handleToggle}>
                         <div className={styles.title}>{title}</div>
                         <img className={clsx([styles.arrow], {
                             [styles.arrow_active]: isOpen
@@ -60,9 +59,7 @@ const Select = ({ title, options, value, onChange, lastChild }: ISelect) => {
                             onClick={() => handleOptionClick(option.value)}>
                             {option.label}
                         </div>)}
-                    <div className={styles.option}>{lastChild}</div>
                 </div>
-
 
             </div>
             {isOpen && (

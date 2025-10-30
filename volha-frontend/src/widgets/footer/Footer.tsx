@@ -1,4 +1,4 @@
-import { Link } from 'react-router'
+import { Link } from 'react-router-dom'
 import NewsSubscr from '../../features/NewsSubscr/NewsSubscr'
 import styles from './Footer.module.css'
 import type { Category } from '../../entities/Product/types/ProductTypes'

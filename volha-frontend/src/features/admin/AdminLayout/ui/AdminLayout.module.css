@@ -1,0 +1,17 @@
+.admin_layout {
+    gap: 40px;
+    padding: 20px 60px 50px 60px;
+    background-color: #F6F6F6;
+    width: 100%;
+
+}
+
+.admin_topbar {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 13px 60px;
+    border-bottom: 1px solid #8D8D93;
+    background-color: #F6F6F6;
+}
