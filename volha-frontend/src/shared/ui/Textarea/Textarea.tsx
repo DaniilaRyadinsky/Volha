@@ -3,7 +3,7 @@ import styles from './Textarea.module.css'
 interface IInput {
     value: string,
     placeholder: string,
-    onChange: (event: React.ChangeEvent<HTMLTextAreaElement>) => void
+    onChange: (text: string) => void
     style?: React.CSSProperties,
 }
 
@@ -15,7 +15,7 @@ const Textarea = ({ value, placeholder, onChange, style }: IInput) => {
                 placeholder={placeholder}
                 value={value}
                 style={style}
-                onChange={onChange} />
+                onChange={(e) => onChange(e.target.value)} />
         </>
     )
 }

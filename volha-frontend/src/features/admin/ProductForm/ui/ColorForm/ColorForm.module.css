@@ -1,0 +1,37 @@
+.color_form{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 0px 5px;
+
+}
+
+.color_form_title {
+    font-size: 1rem;
+}
+
+.color_top {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.color_list {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+}
+
+.color_item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 5px 10px;
+    border: 1px solid var(--outline);
+    background-color: #fff;
+    border-radius: 4px;
+}
+
+.color_input {
+    border: 1px solid var(--outline);
+}

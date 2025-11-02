@@ -15,9 +15,9 @@ const Feedback = () => {
 
   return (
     <div className={styles.feedback_container}>
-      <Input type="name" placeholder='Фамилия, имя и отчество' value={feed.name} onChange={(e) => setFeed((prev) => ({ ...prev, name: e.target.value }))} />
-      <Input type="email" placeholder='E-mail' value={feed.email} onChange={(e) => setFeed((prev) => ({ ...prev, email: e.target.value }))} />
-      <Textarea style={{height: "150px"}} placeholder='Сообщение' value={feed.text} onChange={(e) => setFeed((prev) => ({ ...prev, text: e.target.value }))} />
+      <Input type="name" placeholder='Фамилия, имя и отчество' value={feed.name} onChange={(e) => setFeed((prev) => ({ ...prev, name: e }))} />
+      <Input type="email" placeholder='E-mail' value={feed.email} onChange={(e) => setFeed((prev) => ({ ...prev, email: e}))} />
+      <Textarea style={{height: "150px"}} placeholder='Сообщение' value={feed.text} onChange={(e) => setFeed((prev) => ({ ...prev, text: e}))} />
       <Button onClick={()=>console.log('click')}>Отправить</Button>
     </div>
   )

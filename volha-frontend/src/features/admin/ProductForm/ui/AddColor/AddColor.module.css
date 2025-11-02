@@ -2,53 +2,52 @@
     position: relative;
     display: inline-flex;
     /* z-index: 50; */
-    width: 100%;
+    width: fit-content;
+
 }
 
 .title_container {
     display: flex;
     box-sizing: border-box;
-    justify-content: space-between;
     align-items: center;
-    padding: 13px 25px;
+    padding: 2px 0px 2px 0px;
+    gap: 10px;
     cursor: pointer;
     width: 100%;
-    background-color: #fff;
+    background-color: transparent;
     border-radius: 4px;
 }
 
+.title_container:hover {
+    background-color: var(--on-main-container);
+}
+
 .title {
-    font-size: 0.9375rem;
+    font-size: 1rem;
     letter-spacing: 0.25px;
     margin-right: 10px;
 }
 
-.arrow {
-    transform-origin: center;
-    transition: transform 0.2s;
-}
-
-.arrow_active {
-    transform: rotate(-180deg);
-}
 
 .options {
-    width: 100%;
+    box-sizing: border-box;
     position: absolute;
-    top: 0;
-    right: 0;
-    display: block;
-    max-height: 220px;
+    top: calc(100% + 5px);
+    left: 0;
+    min-width: 100%;
+    max-height: 150px;
     overflow: auto;
+    display: block;
     border-radius: 4px;
     background: #fff;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
     z-index: 50;
+    transition: visibility .15s ease-in;
 }
 
 .option {
-    padding: 16px 25px;
-    font-size: 0.9375rem;
+    padding: 10px 10px;
+    font-size: 1rem;
     letter-spacing: 0.25px;
     cursor: pointer;
     white-space: nowrap;
@@ -56,9 +55,6 @@
     text-overflow: ellipsis;
 }
 
-.title_container:hover {
-    background-color: #f5f5f5;
-}
 
 .option:hover {
     background-color: #f5f5f5;

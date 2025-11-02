@@ -7,6 +7,7 @@ import fallbackImage from '../../../shared/assets/img/666ef3d869c6d.jpg';
 import { Link } from 'react-router-dom';
 
 import CyrillicToTranslit from 'cyrillic-to-translit-js';
+import BASE_URL from '../../../shared/const/base_url';
 
 
 interface IProduct {
@@ -28,13 +29,13 @@ interface IProduct {
 //   constructor(config?: { preset: 'ru' | 'uk' | 'mn' });
 // }
 
-const ProductCard = ({id,article, title, price, colors, width, height, depth, photos, isAbsolutePath=false}: IProduct) => {
+const ProductCard = ({id, title, price, colors, width, height, depth, photos, isAbsolutePath=false}: IProduct) => {
   return (
     <Link 
     className={styles.main_link} 
     to={`${isAbsolutePath ? "/" : ""}product/${id}/${CyrillicToTranslit().transform(title, '-').toLowerCase()}`}>
     <li className={styles.card_unit} key={id}>
-      <img src={fallbackImage} alt={title} className={styles.card_img} /> {/*УБРАТЬ ОБЯЗАТЕЛЬНО*/}
+      <img src={`${BASE_URL}${photos[0]}`} alt={title} className={styles.card_img} /> {/*УБРАТЬ ОБЯЗАТЕЛЬНО*/}
       <div className={styles.card_unit_description_container}>
         <h3 className={styles.card_title}>{title}</h3>
         <p className={styles.card_dimensions}>{width}*{depth}*{height}мм</p>

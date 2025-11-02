@@ -1,9 +1,20 @@
 .form_container {
-    display: flex;
-    width: 450px;
-    flex-direction: column;
-    gap: 15px;
-    flex-shrink: 0;
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  gap: 50px;
+}
+
+.left_container {
+  width: 430px;
+  flex-shrink: 0;
+}
+
+.right_container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
 }
 
 .label {
@@ -18,6 +29,19 @@
     gap: 35px;
 }
 
-.select_add{
-    
+.select_add {}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.form_title {
+    padding: 15px 80px;
+    font-size: 1.5rem;
+}
+
+.err {
+    color: var(--red);
 }

@@ -1,24 +1,12 @@
-import { useState } from 'react';
-import styles from './Select.module.css'
-import clsx from 'clsx';
-import arrow from '../../assets/icons/expand_more.svg'
-import Backdrop from '../Backdrop/Backdrop';
+import clsx from "clsx";
+import { useState } from "react";
+import Backdrop from "../../../../../shared/ui/Backdrop/Backdrop";
+import type { ISelect } from "../../../../../shared/ui/Select/Select";
+import plus from '../../../../../shared/assets/icons/add.svg'
 
-type Option = {
-    value: string;
-    label: string;
-}
+import styles from './AddColor.module.css'
 
-export interface ISelect {
-    title: string;
-    options: Option[];
-    value?: string;
-    onChange: (value: string) => void;
-    lastChild?: React.ReactNode;
-    lastOnClick?: () => void
-}
-
-const Select = ({ title, options, value, onChange, lastChild, lastOnClick }: ISelect) => {
+export const AddColor = ({ title, options, value, onChange, lastChild, lastOnClick }: ISelect) => {
     const [isOpen, setIsOpen] = useState(false)
 
     const handleToggle = () => {
@@ -44,23 +32,17 @@ const Select = ({ title, options, value, onChange, lastChild, lastOnClick }: ISe
                     className={styles.title_container}
                     onClick={handleToggle}
                 >
+                    <img className={clsx([styles.arrow], {
+                        [styles.arrow_active]: isOpen
+                    })} src={plus} />
                     <div className={styles.title}
                     >
                         {value === undefined ? title : value}
                     </div>
-                    <img className={clsx([styles.arrow], {
-                        [styles.arrow_active]: isOpen
-                    })} src={arrow} />
+
                 </div>
 
                 <div style={{ visibility: isOpen ? "visible" : "hidden" }} className={styles.options}>
-                    <div className={styles.title_container} onClick={handleToggle}>
-                        <div className={styles.title}>{title}</div>
-                        <img className={clsx([styles.arrow], {
-                            [styles.arrow_active]: isOpen
-                        })} src={arrow} />
-                    </div>
-
                     {options.map((option) =>
                         <div key={option.value}
                             className={styles.option}
@@ -69,8 +51,6 @@ const Select = ({ title, options, value, onChange, lastChild, lastOnClick }: ISe
                         </div>)}
                     <div className={styles.option} onClick={handleLastClick}>{lastChild}</div>
                 </div>
-
-
             </div >
             {isOpen && (
                 <Backdrop onClick={() => setIsOpen(false)} />
@@ -79,5 +59,3 @@ const Select = ({ title, options, value, onChange, lastChild, lastOnClick }: ISe
         </>
     )
 }
-
-export default Select

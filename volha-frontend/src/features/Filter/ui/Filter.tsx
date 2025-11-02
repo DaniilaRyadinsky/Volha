@@ -1,4 +1,3 @@
-import { useEffect, useState } from 'react';
 import Checkbox from '../../../shared/ui/Checkbox/Checkbox';
 import ColorCheckbox from '../../../shared/ui/Checkbox/ColorCheckbox';
 

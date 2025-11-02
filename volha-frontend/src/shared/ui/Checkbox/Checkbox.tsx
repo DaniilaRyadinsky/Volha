@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import styles from './Checkbox.module.css'
 
 export interface ICheckbox {

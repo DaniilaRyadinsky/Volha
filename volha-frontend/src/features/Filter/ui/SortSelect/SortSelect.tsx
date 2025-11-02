@@ -16,7 +16,7 @@ interface ISelect {
     onChange: (value: string) => void;
 }
 
-const Select = ({ title, options, value, onChange }: ISelect) => {
+const SortSelect = ({ title, options, value, onChange }: ISelect) => {
     const [isOpen, setIsOpen] = useState(false)
     const handleToggle = () => {
         setIsOpen(!isOpen);
@@ -69,4 +69,4 @@ const Select = ({ title, options, value, onChange }: ISelect) => {
     )
 }
 
-export default Select
+export default SortSelect

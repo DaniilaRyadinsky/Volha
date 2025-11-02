@@ -47,10 +47,6 @@
     transform: rotate(180deg);
 }
 
-.details[open] {
-    /* padding-bottom: 50px; */
-}
-
 .details summary {
     display: flex;
     flex-direction: row;

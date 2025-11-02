@@ -2,7 +2,6 @@ import { Navigate, createBrowserRouter, RouterProvider, Outlet } from "react-rou
 import Layout from "../layout/Layout"
 import Contacts from "../../pages/Contacts/Contacts"
 import Catalog from "../../pages/Catalog/Catalog"
-import AdminPage from "../../pages/Admin/AdminPage"
 import ProductPage from "../../pages/ProductPage/ProductPage"
 import { productPageLoader } from "../../pages/ProductPage/api/productPageLoader"
 import { useQueryClient } from "@tanstack/react-query"

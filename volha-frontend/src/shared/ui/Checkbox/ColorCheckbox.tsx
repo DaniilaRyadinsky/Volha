@@ -1,4 +1,3 @@
-import { useEffect, useState } from 'react';
 import styles from './Checkbox.module.css'
 import { ColorMarker } from '../Color/Color';
 import type { ICheckbox } from './Checkbox';

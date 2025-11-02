@@ -8,12 +8,13 @@ import { ClipLoader } from 'react-spinners';
 import type { Category, Product } from '../../entities/Product/types/ProductTypes';
 import type { FilterMetadata, IFilter } from '../../features/Filter/model/FilterType';
 import FilterWiget from '../../features/Filter/ui/FilterWiget';
+import { fetchProducts } from './api/Fetch';
 
 const Catalog = () => {
     const { data: filterMetaData, isLoading: isLoadingFilterMeta, error } = useQuery<FilterMetadata>({
         queryKey: ['filterMetaData'],
         queryFn: async () => {
-            const res = await fetch(`${BASE_URL}dictionaries/getall`);
+            const res = await fetch(`${BASE_URL}api/dictionaries/getall`);
             if (!res.ok) throw new Error(res.statusText);
             return res.json();
         },
@@ -67,7 +68,6 @@ const Catalog = () => {
     useEffect(() => {
         if (shouldUpdate) {
             fetchCatalog()
-            console.log(filterState)
             setShouldUpdate(false)
         }
 
@@ -89,7 +89,6 @@ const Catalog = () => {
                         ...prev,
                         categories: [category.id],
                     }));
-                    // console.log(filterState)
                 }
             }
         }
@@ -98,29 +97,10 @@ const Catalog = () => {
     const fetchCatalog = async () => {
         console.log(filterState)
         setIsLoading(true)
-        fetch(`${BASE_URL}product/filter`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-                brand: filterState.brands,
-                category: filterState.categories,
-                colors: filterState.colors,
-                country: filterState.countries,
-                limit: 0,
-                materials: filterState.materials,
-                max_depth: filterState.max_depth,
-                max_height: filterState.max_height,
-                max_price: filterState.max_price,
-                max_width: filterState.max_width,
-                min_depth: filterState.min_depth,
-                min_height: filterState.min_height,
-                min_price: filterState.min_price,
-                min_width: filterState.min_width,
-                offset: 0,
-                sort_by: filterState.sort_by,
-                sort_order: filterState.sort_order
-            })
-        }).then(res => res.json()).then(d => setProductList(d)).catch(e => alert(e))
+        fetchProducts(filterState,
+            setProductList,
+            (e) => { alert(e) }
+        )
         setIsLoading(false)
 
     }

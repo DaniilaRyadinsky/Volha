@@ -1,13 +1,12 @@
 import { useQuery } from '@tanstack/react-query';
 import { commonQueries } from '../api/common-queries';
-import type { Category } from '../../../../entities/Product/types/ProductTypes';
 
 export const useAdminData = () => {
   const categoriesQ = useQuery(commonQueries.categories);
-  const brandsQ     = useQuery(commonQueries.brands);
-  const materialsQ  = useQuery(commonQueries.materials);
-  const colorsQ     = useQuery(commonQueries.colors);
-  const countriesQ  = useQuery(commonQueries.countries);
+  const brandsQ = useQuery(commonQueries.brands);
+  const materialsQ = useQuery(commonQueries.materials);
+  const colorsQ = useQuery(commonQueries.colors);
+  const countriesQ = useQuery(commonQueries.countries);
 
   const isLoading =
     categoriesQ.isLoading ||
@@ -25,11 +24,16 @@ export const useAdminData = () => {
 
   return {
     categories: categoriesQ.data ?? [],
-    brands:     brandsQ.data ?? [],
-    materials:  materialsQ.data ?? [],
-    colors:     colorsQ.data ?? [],
-    countries:  countriesQ.data ?? [],
+    brands: brandsQ.data ?? [],
+    materials: materialsQ.data ?? [],
+    colors: colorsQ.data ?? [],
+    countries: countriesQ.data ?? [],
     isLoading,
     isError,
+    refetchCategories: categoriesQ.refetch,
+    refetchBrands: brandsQ.refetch,
+    refetchMaterials: materialsQ.refetch,
+    refetchColors: colorsQ.refetch,
+    refetchCountries: countriesQ.refetch,
   };
 };

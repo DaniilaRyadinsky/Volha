@@ -11,18 +11,6 @@ const FilterWiget = (props: FilterWidgetProps) => {
     const [isFilter, setIsFilter] = useState(false)
     const [isUpdate, setIsUpdate] = useState(false)
 
-
-    useEffect(() => {
-        if (isFilter) {
-            const originalStyle = window.getComputedStyle(document.body).overflow;
-            document.body.style.overflow = 'hidden';
-
-            return () => {
-                document.body.style.overflow = originalStyle;
-            };
-        }
-    }, [isFilter]);
-
     useEffect(() => {
         if (isUpdate) {
             props.callback()
