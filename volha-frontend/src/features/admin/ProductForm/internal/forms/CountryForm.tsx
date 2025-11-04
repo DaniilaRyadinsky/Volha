@@ -5,7 +5,7 @@ import { Button } from '../../../../../shared/ui/Button/Button'
 import Input from '../../../../../shared/ui/Input/Input'
 import { useAdminData } from '../../../AdminLayout/lib/useAdminData'
 import { postCountry } from '../../api/fetchCreate'
-import styles from '../ProductForm.module.css'
+import styles from '../../ui/ProductForm.module.css'
 
 const CountryForm = ({ closecallback }: IForm) => {
     const { refetchCountries} = useAdminData()

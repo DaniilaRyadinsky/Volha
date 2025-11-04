@@ -6,7 +6,7 @@ import Input from '../../../../../shared/ui/Input/Input'
 import { useAdminData } from '../../../AdminLayout/lib/useAdminData'
 import { postMaterial } from '../../api/fetchCreate'
 
-import styles from '../ProductForm.module.css'
+import styles from '../../ui/ProductForm.module.css'
 
 const MaterialForm = ({ closecallback }: IForm) => {
   const { refetchMaterials} = useAdminData()

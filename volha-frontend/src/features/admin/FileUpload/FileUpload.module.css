@@ -1,0 +1,19 @@
+.upload_container {
+    display: block;
+    width: fit-content;
+}
+
+.upload_label {
+    background-color: var(--on-main-container);
+    padding: 10px 40px;
+    border-radius: 4px;
+    display: flex;
+    flex-direction: row;
+    gap: 30px;
+    align-items: center;
+    cursor: pointer;
+}
+
+.upload_label:active {
+    background-color: var(--on-main);
+}

@@ -1,4 +1,4 @@
-import BASE_URL from "../../../../../../shared/const/base_url";
+import BASE_URL from "../../../../shared/const/base_url";
 
 export const uploadFile = (
     file: File,

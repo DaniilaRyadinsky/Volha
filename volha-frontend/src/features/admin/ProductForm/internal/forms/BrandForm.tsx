@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import styles from '../ProductForm.module.css'
+import styles from '../../ui/ProductForm.module.css'
 import type { Brand } from '../../../../../entities/Product/types/ProductTypes'
 import Input from '../../../../../shared/ui/Input/Input'
 import { Button } from '../../../../../shared/ui/Button/Button'

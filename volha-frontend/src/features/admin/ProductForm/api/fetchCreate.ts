@@ -1,10 +1,11 @@
 import type { Brand, Category, Country, Material } from "../../../../entities/Product/types/ProductTypes";
 import BASE_URL from "../../../../shared/const/base_url"
+import type { NewProduct } from "../types/types";
 
 
 const postTable = async (
-    table: "brand" | "category" | "material"| "country",
-    data: Brand|Category|Material|Country,
+    table: "brand" | "category" | "material" | "country" | "product",
+    data: Brand | Category | Material | Country | NewProduct,
     onSuccess: () => void,
     onError: (err: string) => void
 ) => {
@@ -68,4 +69,12 @@ export const postCountry = async (
     return postTable("country", data, onSuccess, onError)
 }
 
+
+export const postProduct = async (
+    data: NewProduct,
+    onSuccess: () => void,
+    onError: (err: string) => void
+) => {
+    return postTable("product", data, onSuccess, onError)
+}
 

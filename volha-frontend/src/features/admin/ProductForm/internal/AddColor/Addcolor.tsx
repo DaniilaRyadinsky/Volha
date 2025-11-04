@@ -3,7 +3,6 @@ import { useState } from "react";
 import Backdrop from "../../../../../shared/ui/Backdrop/Backdrop";
 import type { ISelect } from "../../../../../shared/ui/Select/Select";
 import plus from '../../../../../shared/assets/icons/add.svg'
-
 import styles from './AddColor.module.css'
 
 export const AddColor = ({ title, options, value, onChange, lastChild, lastOnClick }: ISelect) => {
@@ -11,12 +10,13 @@ export const AddColor = ({ title, options, value, onChange, lastChild, lastOnCli
 
     const handleToggle = () => {
         setIsOpen(!isOpen);
-    };
+    }
 
     const handleOptionClick = (optionValue: string) => {
         onChange(optionValue);
         setIsOpen(false);
-    };
+    }
+
 
     const handleLastClick = () => {
         setIsOpen(false);
