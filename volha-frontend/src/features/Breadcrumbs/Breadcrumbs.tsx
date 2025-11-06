@@ -1,16 +1,16 @@
 // Breadcrumbs.tsx
-import { Link, useMatches } from "react-router-dom";
+import { Link, useMatches, type LoaderFunctionArgs } from "react-router-dom";
 
 import styles from './Breadcrumbs.module.css'
 
 interface MatchHandle {
-  crumb?: string | ((data: any, params: Record<string, string>) => React.ReactNode);
+  crumb?: string | ((data: LoaderFunctionArgs, params: Record<string, string>) => React.ReactNode);
 }
 interface Match {
   id: string;
   pathname: string;
   pathnameBase: string;
-  data: any;
+  data: LoaderFunctionArgs;
   params: Record<string, string>;
   handle?: MatchHandle;
 }
@@ -24,7 +24,7 @@ const Breadcrumbs = () => {
   const matches = useMatches() as unknown as Match[];
 
   const crumbs: BreadcrumbItem[] = matches
-    .filter((m): m is Match & { handle: { crumb: any } } => Boolean(m.handle?.crumb))
+    .filter((m): m is Match & { handle: { crumb: LoaderFunctionArgs } } => Boolean(m.handle?.crumb))
     .map((m, idx, arr) => {
       const value = m.handle!.crumb;
       const label = typeof value === "function" ? value(m.data, m.params) : value;

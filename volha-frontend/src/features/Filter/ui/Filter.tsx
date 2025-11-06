@@ -142,11 +142,11 @@ const Filter = ({ filterState, filterMetadata, onFilterChange, callback, isLoadi
                 <div className={styles.filter_scroll_container}>
                     {renderRange("Цена", "min_price", "max_price")}
 
-                    {renderCheckbox({
+                    {/* {renderCheckbox({
                         title: "Категории",
                         items: filterMetadata.categories,
                         filterKey: "categories"
-                    })}
+                    })} */}
 
                     {renderCheckbox({
                         title: "Бренды",

@@ -6,8 +6,10 @@
 .img {
   width: 100%;
   height: auto;
+  object-fit: cover;
   aspect-ratio: 1.5;
   display: block;
+  border-radius: 4px;
 }
 
 .delete_area {
@@ -22,6 +24,7 @@
   pointer-events: none;
   opacity: 0;
   transition: opacity 0.2s ease;
+  border-radius: 4px;
 }
 
 .image_container:hover .delete_area {

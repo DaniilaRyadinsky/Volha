@@ -6,24 +6,34 @@ import upload from '../../../shared/assets/icons/upload_file.svg'
 
 
 interface IFileUpload {
-    callback: (filename: string) => void
+    onUpload: (filename: string) => void,
+    // onDelete: (filename: string) => void
 }
-const FileUpload = ({ callback }: IFileUpload) => {
+const FileUpload = ({ onUpload }: IFileUpload) => {
     const id = useId()
     const [isLoading, setIsLoading] = useState(false)
+    const [err, setErr] = useState('')
 
     const handleUploadImage = (event: React.ChangeEvent<HTMLInputElement>) => {
         const file = event.target.files?.[0]
 
         if (file) {
+
+            if (file.size > 10 * 1024 * 1024) {
+                setErr('Максимальный размер файла 10MB')
+                return;
+            }
+
+            setErr('')
+
             setIsLoading(true)
             uploadFile(
                 file,
-                (e) => { console.log(e); callback(e.name)},
+                (e) => { console.log(e); onUpload(e.name) },
                 (e) => { console.log(e) }
             )
             setIsLoading(false)
-            
+
         }
     }
 
@@ -43,7 +53,7 @@ const FileUpload = ({ callback }: IFileUpload) => {
                     accept="image/*"
                     onChange={handleUploadImage} />
             </label>
-
+            {err != '' && <p className={styles.err}>{err}</p>}
         </div>
     )
 }

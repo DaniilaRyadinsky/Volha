@@ -1,8 +1,13 @@
 import BASE_URL from "../../../../shared/const/base_url";
 
+type fileResponse = {
+    mime: string,
+    name: string
+}
+
 export const uploadFile = (
     file: File,
-    onSuccess: (e: any) => void,
+    onSuccess: (e: fileResponse) => void,
     onError: (e: string) => void
 ) => {
     const formData = new FormData();
@@ -23,6 +28,7 @@ export const uploadFile = (
             onSuccess(data);
         })
         .catch(error => {
+            console.log(error.message);
             onError(error.message)
         })
 

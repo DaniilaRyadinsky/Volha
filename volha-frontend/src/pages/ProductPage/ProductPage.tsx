@@ -21,9 +21,10 @@ const ProductPage = () => {
 
   const getMaterials = () => {
     let res = ''
-    product.materials.forEach((material) => {
-      res += material.title + ', '
-    })
+    if (product.materials)
+      product.materials.forEach((material) => {
+        res += material.title + ', '
+      })
 
     return res.slice(0, res.length - 2)
   }
@@ -41,12 +42,7 @@ const ProductPage = () => {
     <div className={styles.container}>
       <div className={styles.product_info}>
         <div className={styles.info_left_container}>
-          <ProductImages name={"Шкаф"} images={["https://garagespace.ru/images/5624c2526e872.jpg",
-            "https://garagespace.ru/images/5661d215c3143.jpg",
-            "https://garagespace.ru/images/666efe065f84f.png",
-            "https://garagespace.ru/images/5624c2526e872.jpg",
-            "https://garagespace.ru/images/5661d215c3143.jpg",
-            "https://garagespace.ru/images/666efe065f84f.png"]} />
+          <ProductImages name={"Шкаф"} images={product.photos} />
         </div>
         <div className={styles.info_right_container}>
           <h1 className={styles.title}>{product.title}</h1>
@@ -107,28 +103,28 @@ const ProductPage = () => {
           className="mySwiper"
         >
           <SwiperSlide>
-            <ProductCard isAbsolutePath={true} id='1' title="Шкаф металлический очень крутой налетайте" price={2300000} width={1200} height={1200} depth={1200} photos={['https://garagespace.ru/images/5e4320afe986a.jpg']} colors={[{ id: '1', name: 'red', hex: '#121231' }, { id: '2', name: 'red', hex: '#242463' }]} />
+            <ProductCard article='1234' isAbsolutePath={true} id='1' title="Шкаф металлический очень крутой налетайте" price={2300000} width={1200} height={1200} depth={1200} photos={['https://garagespace.ru/images/5e4320afe986a.jpg']} colors={[{ id: '1', name: 'red', hex: '#121231' }, { id: '2', name: 'red', hex: '#242463' }]} />
           </SwiperSlide>
           <SwiperSlide>
-            <ProductCard isAbsolutePath={true} id='2' title="Шкаф металлический очень крутой налетайте" price={23000} width={1200} height={1200} depth={1200} photos={['https://garagespace.ru/images/5e4320afe986a.jpg']} colors={[{ id: '1', name: 'red', hex: '#121231' }, { id: '2', name: 'red', hex: '#242463' }]} />
+            <ProductCard  article='1234' isAbsolutePath={true} id='2' title="Шкаф металлический очень крутой налетайте" price={23000} width={1200} height={1200} depth={1200} photos={['https://garagespace.ru/images/5e4320afe986a.jpg']} colors={[{ id: '1', name: 'red', hex: '#121231' }, { id: '2', name: 'red', hex: '#242463' }]} />
           </SwiperSlide>
           <SwiperSlide>
-            <ProductCard isAbsolutePath={true} id='3' title="Шкаф металлический очень крутой налетайте" price={23000} width={1200} height={1200} depth={1200} photos={['https://garagespace.ru/images/5e4320afe986a.jpg']} colors={[{ id: '1', name: 'red', hex: '#121231' }, { id: '2', name: 'red', hex: '#242463' }]} />
+            <ProductCard article='1234' isAbsolutePath={true} id='3' title="Шкаф металлический очень крутой налетайте" price={23000} width={1200} height={1200} depth={1200} photos={['https://garagespace.ru/images/5e4320afe986a.jpg']} colors={[{ id: '1', name: 'red', hex: '#121231' }, { id: '2', name: 'red', hex: '#242463' }]} />
           </SwiperSlide>
           <SwiperSlide>
-            <ProductCard isAbsolutePath={true} id='4' title="Шкаф металлический очень крутой налетайте" price={23000} width={1200} height={1200} depth={1200} photos={['https://garagespace.ru/images/5e4320afe986a.jpg']} colors={[{ id: '1', name: 'red', hex: '#121231' }, { id: '2', name: 'red', hex: '#242463' }]} />
+            <ProductCard article='1234' isAbsolutePath={true} id='4' title="Шкаф металлический очень крутой налетайте" price={23000} width={1200} height={1200} depth={1200} photos={['https://garagespace.ru/images/5e4320afe986a.jpg']} colors={[{ id: '1', name: 'red', hex: '#121231' }, { id: '2', name: 'red', hex: '#242463' }]} />
           </SwiperSlide>
           <SwiperSlide>
-            <ProductCard isAbsolutePath={true} id='5' title="Шкаф металлический очень крутой налетайте" price={23000} width={1200} height={1200} depth={1200} photos={['https://garagespace.ru/images/5e4320afe986a.jpg']} colors={[{ id: '1', name: 'red', hex: '#121231' }, { id: '2', name: 'red', hex: '#242463' }]} />
+            <ProductCard article='1234' isAbsolutePath={true} id='5' title="Шкаф металлический очень крутой налетайте" price={23000} width={1200} height={1200} depth={1200} photos={['https://garagespace.ru/images/5e4320afe986a.jpg']} colors={[{ id: '1', name: 'red', hex: '#121231' }, { id: '2', name: 'red', hex: '#242463' }]} />
           </SwiperSlide>
           <SwiperSlide>
-            <ProductCard isAbsolutePath={true} id='6' title="Шкаф металлический очень крутой налетайте" price={23000} width={1200} height={1200} depth={1200} photos={['https://garagespace.ru/images/5e4320afe986a.jpg']} colors={[{ id: '1', name: 'red', hex: '#121231' }, { id: '2', name: 'red', hex: '#242463' }]} />
+            <ProductCard article='1234' isAbsolutePath={true} id='6' title="Шкаф металлический очень крутой налетайте" price={23000} width={1200} height={1200} depth={1200} photos={['https://garagespace.ru/images/5e4320afe986a.jpg']} colors={[{ id: '1', name: 'red', hex: '#121231' }, { id: '2', name: 'red', hex: '#242463' }]} />
           </SwiperSlide>
           <SwiperSlide>
-            <ProductCard isAbsolutePath={true} id='7' title="Шкаф металлический очень крутой налетайте" price={23000} width={1200} height={1200} depth={1200} photos={['https://garagespace.ru/images/5e4320afe986a.jpg']} colors={[{ id: '1', name: 'red', hex: '#121231' }, { id: '2', name: 'red', hex: '#242463' }]} />
+            <ProductCard article='1234' isAbsolutePath={true} id='7' title="Шкаф металлический очень крутой налетайте" price={23000} width={1200} height={1200} depth={1200} photos={['https://garagespace.ru/images/5e4320afe986a.jpg']} colors={[{ id: '1', name: 'red', hex: '#121231' }, { id: '2', name: 'red', hex: '#242463' }]} />
           </SwiperSlide>
           <SwiperSlide>
-            <ProductCard isAbsolutePath={true} id='8' title="Шкаф металлический очень крутой налетайте" price={23000} width={1200} height={1200} depth={1200} photos={['https://garagespace.ru/images/5e4320afe986a.jpg']} colors={[{ id: '1', name: 'red', hex: '#121231' }, { id: '2', name: 'red', hex: '#242463' }]} />
+            <ProductCard article='1234' isAbsolutePath={true} id='8' title="Шкаф металлический очень крутой налетайте" price={23000} width={1200} height={1200} depth={1200} photos={['https://garagespace.ru/images/5e4320afe986a.jpg']} colors={[{ id: '1', name: 'red', hex: '#121231' }, { id: '2', name: 'red', hex: '#242463' }]} />
           </SwiperSlide>
         </Swiper>
       </div>

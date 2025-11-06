@@ -6,7 +6,8 @@ export type Color = {
 
 export type Category = {
     id: string,
-    title: string
+    img: string,
+    title: string,
     uri: string
 }
 

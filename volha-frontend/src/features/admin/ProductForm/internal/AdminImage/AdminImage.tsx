@@ -3,11 +3,13 @@ import styles from './AdminImage.module.css'
 import { deleteFile } from './api/delete'
 
 interface IAdminImage {
-    src: string
+    src: string,
+    onDelete: (filename: string) => void
 }
-const AdminImage = ({ src }: IAdminImage) => {
+const AdminImage = ({ src, onDelete }: IAdminImage) => {
     const handleDeleteClick = () => {
         deleteFile(src, () => alert("Файл удален"), (e) => alert(e))
+        onDelete(src)
     }
 
     return (

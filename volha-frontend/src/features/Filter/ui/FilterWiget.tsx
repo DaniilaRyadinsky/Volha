@@ -16,7 +16,7 @@ const FilterWiget = (props: FilterWidgetProps) => {
             props.callback()
             setIsUpdate(false)
         }
-    }, [props.filterState]);
+    }, [props.filterState, isUpdate, props]);
 
     const filterClick = () => {
         setIsFilter(!isFilter)

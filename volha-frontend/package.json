@@ -6,8 +6,9 @@
   "scripts": {
     "dev": "vite --host",
     "build": "tsc -b && vite build",
-    "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "lint": "eslint \"src/**/*.{ts,tsx}\"",
+    "lint:fix": "eslint \"src/**/*.{ts,tsx}\" --fix"
   },
   "dependencies": {
     "@tanstack/react-query": "^5.83.0",
@@ -20,7 +21,8 @@
     "react-router-dom-dom": "^7.9.2",
     "react-scrollbars-custom": "^4.1.1",
     "react-spinners": "^0.17.0",
-    "swiper": "^11.2.10"
+    "swiper": "^11.2.10",
+    "zod": "^4.1.12"
   },
   "devDependencies": {
     "@eslint/js": "^9.30.1",

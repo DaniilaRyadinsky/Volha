@@ -34,7 +34,7 @@ export type FilterMetadata = {
     max_depth: number
 }
 
-export type FilterCheckboxType = "categories" | "brands" | "countries" | "materials" | "colors";
+ export type FilterCheckboxType = "categories"|  "brands" | "countries" | "materials" | "colors";
 
 export type CheckboxItem = {
     id: string,

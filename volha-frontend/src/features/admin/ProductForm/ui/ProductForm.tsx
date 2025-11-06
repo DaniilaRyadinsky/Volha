@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import type { Brand, Category, Color, Country, Material, Product } from '../../../../entities/Product/types/ProductTypes'
+import type { Brand, Category, Country, Material, Product } from '../../../../entities/Product/types/ProductTypes'
 import Input from '../../../../shared/ui/Input/Input'
 import styles from './ProductForm.module.css'
 import Select from '../../../../shared/ui/Select/Select'
@@ -20,6 +20,27 @@ import { postProduct } from '../api/fetchCreate'
 export const ProductForm = () => {
     const { categories, brands, materials, countries } = useAdminData();
     const [modalMode, setModalMode] = useState<"none" | "brand" | "category" | "country" | "material">("none")
+    const [errors, setErrors] = useState<Partial<Record<keyof NewProduct, "empty" | "limit">>>({});
+
+    const validateForm = () => {
+        const newErrors: Partial<Record<keyof NewProduct, "empty" | "limit">> = {};
+
+        if (newProduct.title == '') newErrors.title = "empty";
+        if (newProduct.article == '') newErrors.article = "empty";
+        if (newProduct.article.length !== 8 ) newErrors.article = "limit";
+        if (!newProduct.brand) newErrors.brand = "empty";
+        if (!newProduct.category) newErrors.category = "empty";
+        if (!newProduct.country) newErrors.country = "empty";
+        if (!newProduct.price || newProduct.price <= 0) newErrors.price = "empty";
+        if (newProduct.width == 0) newErrors.width = "empty";
+        if (newProduct.height == 0) newErrors.height = "empty";
+        if (newProduct.depth == 0) newErrors.depth = "empty";
+
+
+        setErrors(newErrors);
+
+        return Object.keys(newErrors).length === 0;
+    };
 
     const [newProduct, setNewProduct] = useState<NewProduct>({
         id: '',
@@ -41,7 +62,7 @@ export const ProductForm = () => {
 
     const [colorList, setColorList] = useState<ColorItem[]>([])
 
-    const onInputChange = (key: keyof Product, value: string|number) => {
+    const onInputChange = (key: keyof Product, value: string | number) => {
         setNewProduct(prev => ({
             ...prev,
             [key]: value
@@ -49,32 +70,53 @@ export const ProductForm = () => {
     }
 
     const handleSaveClick = () => {
-        // if (colorList.length < 0) {
-        console.log("click")
-        setNewProduct(prev => ({ ...prev, colors: colorList.map(item => item.color.id), photos: colorList[0].images }))
+        const isValid = validateForm();
+        if (!isValid) return;
+        if (colorList.length > 0)
+            setNewProduct(prev => ({ ...prev, colors: colorList.map(item => item.color.id), photos: colorList[0].images }))
         postProduct(newProduct, () => console.log("succ"), (e) => console.log(e))
-        // }
     }
 
     return (
-        <div>
-            <h1>Новый товар</h1>
-            <Button onClick={() => handleSaveClick()}>Сохранить</Button>
+        <div >
+            <div className={styles.title_container}>
+                <h1 className={styles.title}>Новый товар</h1>
+                <Button onClick={() => handleSaveClick()}>Сохранить</Button>
+            </div>
             <div className={styles.form_container}>
                 <div className={styles.left_container}>
                     <label className={styles.label}>
                         Название товара
-                        <Input type='text' placeholder='Введите название товара' value={newProduct.title} onChange={(e) => onInputChange("title", e)} />
+                        <Input
+                            type='text'
+                            placeholder='Введите название товара'
+                            value={newProduct.title}
+                            onChange={(e) => onInputChange("title", e)}
+                            style={{ border: errors.title ? '2px solid var(--red)' : undefined }}
+                        />
                     </label>
 
                     <label className={styles.label}>
                         Артикул
-                        <Input type='text' placeholder='Введите артикул' value={newProduct.article} onChange={(e) => onInputChange("article", e)} />
+                        <Input
+                            type='text'
+                            placeholder='Введите артикул'
+                            value={newProduct.article}
+                            onChange={(e) => onInputChange("article", e)}
+                            style={{ border: errors.article ? '2px solid var(--red)' : undefined }}
+                        />
                     </label>
+                    {errors.article == "limit" && <p>Длина артикула должна быть 8 символов</p>}
 
                     <label className={styles.label}>
                         Цена
-                        <Input type='number' placeholder='Высота' style={{ width: "100px" }} value={String(newProduct.height)} onChange={(e) => onInputChange("height", parseInt(e))} />
+                        <Input
+                            type='number'
+                            placeholder='Высота'
+                            value={String(newProduct.price)}
+                            onChange={(e) => onInputChange("price", parseInt(e))}
+                            style={{ width: "150px", border: errors.price ? '2px solid var(--red)' : undefined }}
+                        />
                     </label>
 
                     <label className={styles.label}>
@@ -129,17 +171,35 @@ export const ProductForm = () => {
                     <div className={styles.width_container}>
                         <label className={styles.label}>
                             Длина
-                            <Input type='number' style={{ width: "70px" }} placeholder='Введите длину' value={String(newProduct.width)} onChange={(e) => onInputChange("width", parseInt(e))} />
+                            <Input
+                                type='number'
+                                placeholder='Введите длину'
+                                value={String(newProduct.width)}
+                                onChange={(e) => onInputChange("width", parseInt(e))}
+                                style={{ width: "120px", border: errors.width ? '2px solid var(--red)' : undefined }}
+                            />
                         </label>
 
                         <label className={styles.label}>
                             Ширина
-                            <Input type='number' placeholder='Ширина' style={{ width: "70px" }} value={String(newProduct.depth)} onChange={(e) => onInputChange("depth", parseInt(e))} />
+                            <Input
+                                type='number'
+                                placeholder='Ширина'
+                                value={String(newProduct.depth)}
+                                onChange={(e) => onInputChange("depth", parseInt(e))}
+                                style={{ width: "120px", border: errors.depth ? '2px solid var(--red)' : undefined }}
+                            />
                         </label>
 
                         <label className={styles.label}>
                             Высота
-                            <Input type='number' placeholder='Высота' style={{ width: "70px" }} value={String(newProduct.height)} onChange={(e) => onInputChange("height", parseInt(e))} />
+                            <Input
+                                type='number'
+                                placeholder='Высота'
+                                value={String(newProduct.height)}
+                                onChange={(e) => onInputChange("height", parseInt(e))}
+                                style={{ width: "120px", border: errors.height ? '2px solid var(--red)' : undefined }}
+                            />
                         </label>
                     </div>
 

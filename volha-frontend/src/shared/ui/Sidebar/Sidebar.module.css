@@ -1,7 +1,6 @@
 .sidebar {
     position: fixed;
     top: 0;
-    right: -500px;
     z-index: 100;
     opacity: 0;
     visibility: hidden;
@@ -10,7 +9,21 @@
     height: 100vh;
 }
 
+.offset_left {
+    left: -500px;
+}
+
+.offset_right{
+    right: -500px;
+}
+
 .sidebar_active {
+    opacity: 1;
+    visibility: visible;
+    left: 0px;
+}
+
+.sidebar_active_right {
     opacity: 1;
     visibility: visible;
     right: 0px;

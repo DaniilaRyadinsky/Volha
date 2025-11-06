@@ -5,10 +5,12 @@ interface IInput {
     value: string,
     placeholder: string,
     onChange: (text: string) => void,
-    style?: React.CSSProperties
+    style?: React.CSSProperties,
 }
 
 const Input = ({ value, type, placeholder, onChange, style }: IInput) => {
+    
+
     return (
         <>
             <input

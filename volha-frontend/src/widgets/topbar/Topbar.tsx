@@ -24,7 +24,7 @@ const Topbar = ({ categories }: ITopbar) => {
                 <nav >
                     <ul className={styles.navlist}>
                         {categories.slice(0, 4).map((category) =>
-                            <Link key={category.id} to={`/catalog/category/${category.uri}`} style={{ textDecoration: "none" }}><li className={styles.navlist_item}>{category.title}</li></Link>)}
+                            <Link key={category.uri} to={`/catalog/category/${category.uri}`} style={{ textDecoration: "none" }}><li className={styles.navlist_item}>{category.title}</li></Link>)}
                         <Link to="/catalog" style={{ textDecoration: "none" }}><li className={styles.navlist_item}>Все товары</li></Link>
                     </ul>
                 </nav>
@@ -36,12 +36,12 @@ const Topbar = ({ categories }: ITopbar) => {
                         <img src={search} className={styles.icons} />
                         <img src={menu} className={styles.icons} />
                     </div>
-                    <Sidebar isOpen={isOpen} closeCallback={() => setIsOpen(false)}>
+                    <Sidebar isOpen={isOpen} closeCallback={() => setIsOpen(false)} isRight={true}>
                         <div className={styles.sidebar_navlist}>
                             <Search />
-                            {categories.slice(0, 4).map((category) =>
-                                <Link key={category.id} to={`/catalog/category/${category.uri}`} style={{ textDecoration: "none" }}><li className={styles.navlist_item}>{category.title}</li></Link>)}
-                            <Link to="/catalog" style={{ textDecoration: "none" }}><li className={styles.navlist_item}>Все товары</li></Link>
+                            {categories.map((category) =>
+                                <Link onClick={() => setIsOpen(false)} key={category.id} to={`/catalog/category/${category.uri}`} style={{ textDecoration: "none" }}><li className={styles.navlist_item}>{category.title}</li></Link>)}
+                            <Link to="/catalog" onClick={() => setIsOpen(false)} style={{ textDecoration: "none" }}><li className={styles.navlist_item}>Все товары</li></Link>
                         </div>
                     </Sidebar>
                 </div>

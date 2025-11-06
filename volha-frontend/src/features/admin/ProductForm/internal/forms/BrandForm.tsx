@@ -32,7 +32,12 @@ const BrandForm = ({ closecallback }: IForm) => {
             <h2 className={styles.form_title}>Новый бренд</h2>
             {/* <label className={styles.label}>
                 Название */}
-            <Input type='text' placeholder='Введите название' value={newBrand.name} onChange={(e) => setNewBrand((prev) => ({ ...prev, name: e }))} />
+            <Input 
+            style={{width: "100%"}} 
+            type='text' 
+            placeholder='Введите название' 
+            value={newBrand.name} 
+            onChange={(e) => setNewBrand((prev) => ({ ...prev, name: e }))} />
             {/* </label> */}
             {err != '' && <p className={styles.err}>{err}</p>}
             <Button style={{ width: "100%" }} onClick={handleClick} mode='primary'>Сохранить</Button>

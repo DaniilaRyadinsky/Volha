@@ -1,13 +1,11 @@
-// import { Link } from 'react-router-dom'
 import styles from './ProductCard.module.css'
 import { Button } from '../../../shared/ui/Button/Button'
 import { ColorMarker } from '../../../shared/ui/Color/Color'
 import type { Color } from '../types/ProductTypes'
-import fallbackImage from '../../../shared/assets/img/666ef3d869c6d.jpg';
 import { Link } from 'react-router-dom';
 
 import CyrillicToTranslit from 'cyrillic-to-translit-js';
-import BASE_URL from '../../../shared/const/base_url';
+import ProductCardImages from '../../../widgets/ProductCardImages/ProductCardImages';
 
 
 interface IProduct {
@@ -23,11 +21,6 @@ interface IProduct {
   isAbsolutePath?: boolean
 }
 
-// export declare class CyrillicToTranslit {
-//   reverse: (input: string, spaceReplacement?: string) => string;
-//   transform: (input: string, spaceReplacement?: string) => string;
-//   constructor(config?: { preset: 'ru' | 'uk' | 'mn' });
-// }
 
 const ProductCard = ({id, title, price, colors, width, height, depth, photos, isAbsolutePath=false}: IProduct) => {
   return (
@@ -35,7 +28,8 @@ const ProductCard = ({id, title, price, colors, width, height, depth, photos, is
     className={styles.main_link} 
     to={`${isAbsolutePath ? "/" : ""}product/${id}/${CyrillicToTranslit().transform(title, '-').toLowerCase()}`}>
     <li className={styles.card_unit} key={id}>
-      <img src={`${BASE_URL}${photos[0]}`} alt={title} className={styles.card_img} /> {/*УБРАТЬ ОБЯЗАТЕЛЬНО*/}
+
+      <ProductCardImages img={photos} />
       <div className={styles.card_unit_description_container}>
         <h3 className={styles.card_title}>{title}</h3>
         <p className={styles.card_dimensions}>{width}*{depth}*{height}мм</p>

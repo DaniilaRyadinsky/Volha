@@ -5,7 +5,7 @@ import type { Color } from '../../../../../entities/Product/types/ProductTypes'
 import { AddColor } from '../AddColor/Addcolor'
 import { ColorMarker } from '../../../../../shared/ui/Color/Color'
 import FileUpload from '../../../FileUpload/FileUpload'
-import AdminImage from '../Image/AdminImage'
+import AdminImage from '../AdminImage/AdminImage'
 import type { ColorItem } from '../../types/types'
 
 
@@ -32,18 +32,41 @@ const ColorForm = ({ colorList, setColorList }: IColorForm) => {
     }
 
     const handleAddImg = (filename: string) => {
-        if (!selectedColor) {
-            console.warn('No color selected')
+        if (!filename) {
+            console.error('No filename provided')
             return
         }
-
-        setColorList(prev => prev.map(item =>
-            item.color.id === selectedColor
-                ? { ...item, images: [...item.images, filename] }
-                : item
-        ))
+    
+        if (!selectedColor) {
+            console.error('No color selected')
+            return
+        }
+    
+        setColorList(prev => {
+            const updatedList = prev.map(item => {
+                if (item.color.id === selectedColor) {
+                    // Проверяем, нет ли уже такого изображения
+                    if (item.images.includes(filename)) {
+                        console.warn(`Image ${filename} already exists for this color`)
+                        return item
+                    }
+                    return { ...item, images: [...item.images, filename] }
+                }
+                return item
+            })
+    
+            console.log('Updated color list:', updatedList)
+            return updatedList
+        })
     }
 
+    const handleDeleteImg = (filename: string) => {
+    setColorList(prev => prev.map(item => 
+        item.color.id === selectedColor
+            ? { ...item, images: item.images.filter(img => img !== filename) }
+            : item
+    ))
+}
     return (
         <div className={styles.color_form}>
             <h3 className={styles.color_form_title}>Цвета</h3>
@@ -66,10 +89,10 @@ const ColorForm = ({ colorList, setColorList }: IColorForm) => {
             </div>
             {selectedColor && <>
                 <div className={styles.upload_container}>
-                    <FileUpload callback={handleAddImg} />
+                    <FileUpload onUpload={handleAddImg} />
                 </div>
                 <div className={styles.image_list}>
-                    {colorList.find(u => u.color.id === selectedColor)?.images.map(img => <AdminImage src={img} />)}
+                    {colorList.find(u => u.color.id === selectedColor)?.images.map(img => <AdminImage src={img} onDelete={(filename) => handleDeleteImg(filename)} />)}
                 </div>
             </>}
         </div>

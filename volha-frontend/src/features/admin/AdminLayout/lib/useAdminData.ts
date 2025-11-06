@@ -1,4 +1,4 @@
-import { useQuery } from '@tanstack/react-query';
+import { QueryClient, useQuery } from '@tanstack/react-query';
 import { commonQueries } from '../api/common-queries';
 
 export const useAdminData = () => {
@@ -37,3 +37,13 @@ export const useAdminData = () => {
     refetchCountries: countriesQ.refetch,
   };
 };
+
+export const queryClient = new QueryClient({
+    defaultOptions: {
+        queries: {
+            refetchOnWindowFocus: false,
+            retry: 1,
+            staleTime: 5 * 60 * 1000,
+        },
+    },
+});

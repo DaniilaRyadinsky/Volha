@@ -17,3 +17,8 @@
 .upload_label:active {
     background-color: var(--on-main);
 }
+
+.err {
+    color: var(--red);
+    font-size: .825rem;
+}

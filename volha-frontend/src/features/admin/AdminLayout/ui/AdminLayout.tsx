@@ -5,15 +5,7 @@ import { ScrollToTop } from '../../../../shared/lib/ScrollToTop'
 import { AdminDataProvider } from '../../providers/admin-data-provider'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
-export const queryClient = new QueryClient({
-    defaultOptions: {
-        queries: {
-            refetchOnWindowFocus: false,
-            retry: 1,
-            staleTime: 5 * 60 * 1000,
-        },
-    },
-});
+const queryClient = new QueryClient();
 
 const AdminLayout = () => {
     return (

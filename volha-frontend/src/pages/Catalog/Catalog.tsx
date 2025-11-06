@@ -1,6 +1,6 @@
 import styles from './Catalog.module.css';
 import ProductCard from '../../entities/Product/ProductCard/ProductCard';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import BASE_URL from '../../shared/const/base_url';
@@ -65,13 +65,18 @@ const Catalog = () => {
 
     const [shouldUpdate, setShouldUpdate] = useState(false)
 
+    const fetchCatalog = useCallback(async () => {
+        setIsLoading(true);
+        await fetchProducts(filterState, setProductList, (e) => { alert(e) });
+        setIsLoading(false);
+    }, [filterState]); 
+
     useEffect(() => {
         if (shouldUpdate) {
-            fetchCatalog()
-            setShouldUpdate(false)
+            fetchCatalog();
+            setShouldUpdate(false);
         }
-
-    }, [filterState])
+    }, [filterState, shouldUpdate, fetchCatalog]);
 
     const { uri } = useParams();
     const [title, setTitle] = useState('Все товары')
@@ -92,18 +97,9 @@ const Catalog = () => {
                 }
             }
         }
-    }, [uri, filterMetaData]);
+    }, [uri, filterMetaData, queryClient]);
 
-    const fetchCatalog = async () => {
-        console.log(filterState)
-        setIsLoading(true)
-        fetchProducts(filterState,
-            setProductList,
-            (e) => { alert(e) }
-        )
-        setIsLoading(false)
 
-    }
 
     const [productList, setProductList] = useState<Product[]>([])
     const [isLoading, setIsLoading] = useState(false)

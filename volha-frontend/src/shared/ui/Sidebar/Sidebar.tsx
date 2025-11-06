@@ -5,10 +5,11 @@ import clsx from 'clsx'
 interface ISidebar {
     children: React.ReactNode,
     isOpen: boolean,
-    closeCallback: () => void
+    closeCallback: () => void,
+    isRight?: boolean
 }
 
-const Sidebar = ({ children, isOpen, closeCallback }: ISidebar) => {
+const Sidebar = ({ children, isOpen, closeCallback, isRight=false }: ISidebar) => {
     useEffect(() => {
         if (isOpen) {
             const originalStyle = window.getComputedStyle(document.body).overflow;
@@ -22,8 +23,12 @@ const Sidebar = ({ children, isOpen, closeCallback }: ISidebar) => {
 
     return (
         <>
-            <div className={clsx(styles.sidebar, {
-                [styles.sidebar_active]: isOpen
+            <div 
+            className={clsx(styles.sidebar, {
+                [styles.offset_left]: !isRight,
+                [styles.offset_right]: isRight,
+                [styles.sidebar_active]: isOpen && !isRight,
+                [styles.sidebar_active_right]: isOpen && isRight,
             })}>
                 {children}
             </div>

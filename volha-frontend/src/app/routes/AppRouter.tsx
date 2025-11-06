@@ -5,12 +5,13 @@ import Catalog from "../../pages/Catalog/Catalog"
 import ProductPage from "../../pages/ProductPage/ProductPage"
 import { productPageLoader } from "../../pages/ProductPage/api/productPageLoader"
 import { useQueryClient } from "@tanstack/react-query"
-import type { Category } from "../../entities/Product/types/ProductTypes"
+import type { Category, Product } from "../../entities/Product/types/ProductTypes"
 import AdminLayout from "../../features/admin/AdminLayout/ui/AdminLayout"
 import { ProductForm } from "../../features/admin/ProductForm/ui/ProductForm"
+import ProductList from "../../features/admin/ProductList/ui/ProductList"
 
 
-const getCategoryCrumb = (_data: any, params: any) => {
+const useCategoryCrumb = (_data: Category & {breadcrumb: string}, params: Category) => {
     const queryClient = useQueryClient();
     const categories = queryClient.getQueryData<Category[]>(['categories']) ?? [];
 
@@ -19,7 +20,7 @@ const getCategoryCrumb = (_data: any, params: any) => {
     return category ? category.title : decodeURIComponent(params.uri ?? "Категория");
 }
 
-const getProductCrumb = (data: any) => data?.breadcrumb || "Товар"
+const getProductCrumb = (data: Product & {breadcrumb: string}) => data?.breadcrumb || "Товар"
 
 const router = createBrowserRouter([
     {
@@ -39,7 +40,7 @@ const router = createBrowserRouter([
                         path: "category/:uri",
                         element: <Outlet />,
                         handle: {
-                            crumb: getCategoryCrumb
+                            crumb: useCategoryCrumb
                         },
                         children: [
                             { index: true, element: <Catalog /> },
@@ -85,6 +86,19 @@ const router = createBrowserRouter([
         element: <AdminLayout />,
         children: [
             { index: true, element: <ProductForm /> },
+            {
+                path: "product/all",
+                element: <ProductList />
+            },
+            {
+                path: "product/new",
+                element: <ProductForm />
+            },
+            {
+                path: "product/:id/edit",
+                element: <ProductForm />
+            },
+
         ]
     }
 ]);

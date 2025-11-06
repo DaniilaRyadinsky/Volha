@@ -31,7 +31,7 @@ const CountryForm = ({ closecallback }: IForm) => {
             <h2 className={styles.form_title}>Новая страна</h2>
             {/* <label className={styles.label}>
                 Название */}
-            <Input type='text' placeholder='Введите название' value={newCountry.title} onChange={(e) => setNewCountry((prev) => ({ ...prev, title: e }))} />
+            <Input style={{width: "100%"}} type='text' placeholder='Введите название' value={newCountry.title} onChange={(e) => setNewCountry((prev) => ({ ...prev, title: e }))} />
             {/* </label> */}
             {err != '' && <p className={styles.err}>{err}</p>}
             <Button style={{ width: "100%" }} onClick={handleClick} mode='primary'>Сохранить</Button>

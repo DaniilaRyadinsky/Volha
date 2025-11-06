@@ -5,9 +5,9 @@ import type { ICheckbox } from './Checkbox';
 
 const ColorCheckbox = ({ text, checked, onClick, hex }: ICheckbox) => {
     if (!hex) return;
-    let r = parseInt(hex.substring(1, 3), 16)
-    let g = parseInt(hex.substring(3, 5), 16)
-    let b = parseInt(hex.substring(5), 16)
+    const r = parseInt(hex.substring(1, 3), 16)
+    const g = parseInt(hex.substring(3, 5), 16)
+    const b = parseInt(hex.substring(5), 16)
 
     const isDark = ((r + g + b) / 3) > 128
 
