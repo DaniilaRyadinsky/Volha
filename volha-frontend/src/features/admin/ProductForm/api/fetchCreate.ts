@@ -6,7 +6,7 @@ import type { NewProduct } from "../types/types";
 const postTable = async (
     table: "brand" | "category" | "material" | "country" | "product",
     data: Brand | Category | Material | Country | NewProduct,
-    onSuccess: () => void,
+    onSuccess: (id?: string) => void,
     onError: (err: string) => void
 ) => {
     fetch(`${BASE_URL}api/${table}/create`, {
@@ -14,21 +14,24 @@ const postTable = async (
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(data)
     })
-        .then(response => response.status)
-        .then(res => {
-            switch (res) {
-                case 200:
-                    onSuccess();
-                    break;
-                case 400:
-                    onError("Неправильные данные")
-                    break;
-                case 500:
-                    onError("Ошибка сервера 500")
-                    break;
-                case 502:
-                    onError("Ошибка сервера 502")
-                    break;
+        .then(async response => {
+            const status = response.status;
+            if (status === 200) {
+                const json = await response.json();
+                const id = json.id;
+                onSuccess(id);
+            } else {
+                switch (status) {
+                    case 400:
+                        onError("Неправильные данные")
+                        break;
+                    case 500:
+                        onError("Ошибка сервера 500")
+                        break;
+                    case 502:
+                        onError("Ошибка сервера 502")
+                        break;
+                }
             }
         })
         .catch(err => {
@@ -72,9 +75,44 @@ export const postCountry = async (
 
 export const postProduct = async (
     data: NewProduct,
-    onSuccess: () => void,
+    onSuccess: (id?: string) => void,
     onError: (err: string) => void
 ) => {
     return postTable("product", data, onSuccess, onError)
 }
 
+
+export const postColorImg = async (
+    color_id: string,
+    photos: string[],
+    product_id: string,
+    onSuccess: () => void,
+    onError: (err: string) => void
+) => {
+    fetch(`${BASE_URL}api/productcolorphotos/create`, {
+        method: "POST",
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({color_id, photos, product_id})
+    })
+        .then(async response => response.status)
+        .then(status => {
+            switch (status) {
+                case 200:
+                    onSuccess();
+                    break;
+                case 400:
+                    onError("Неправильные данные")
+                    break;
+                case 500:
+                    onError("Ошибка сервера 500")
+                    break;
+                case 502:
+                    onError("Ошибка сервера 502")
+
+            }
+        })
+        .catch(err => {
+            console.error("Ошибка сети:", err);
+            onError("Ошибка сети");
+        })
+}

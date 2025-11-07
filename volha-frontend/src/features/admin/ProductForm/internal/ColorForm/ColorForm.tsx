@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { type WheelEvent as ReactWheelEvent } from 'react'
 import { useAdminData } from '../../../AdminLayout/lib/useAdminData'
 import styles from './ColorForm.module.css'
 import type { Color } from '../../../../../entities/Product/types/ProductTypes'
@@ -12,10 +12,11 @@ import type { ColorItem } from '../../types/types'
 interface IColorForm {
     colorList: ColorItem[];
     setColorList: (updater: (prev: ColorItem[]) => ColorItem[]) => void;
+    selectedColor: string,
+    setSelectedColor: (value: string) => void
 }
-const ColorForm = ({ colorList, setColorList }: IColorForm) => {
+const ColorForm = ({ colorList, setColorList, selectedColor, setSelectedColor }: IColorForm) => {
     const { colors } = useAdminData() as { colors: Color[] }
-    const [selectedColor, setSelectedColor] = useState('')
 
     const addToColorlist = (newColor: Color) => {
         setColorList(prev => [...prev, { color: newColor, images: [] }])
@@ -67,6 +68,23 @@ const ColorForm = ({ colorList, setColorList }: IColorForm) => {
             : item
     ))
 }
+    const handleImageListWheel = (event: ReactWheelEvent<HTMLDivElement>) => {
+        const container = event.currentTarget
+        const canScrollHorizontally = container.scrollWidth > container.clientWidth
+
+        const delta = Math.abs(event.deltaX) > Math.abs(event.deltaY)
+            ? event.deltaX
+            : event.deltaY
+
+        if (!canScrollHorizontally || delta === 0) {
+            return
+        }
+
+        event.preventDefault()
+        event.stopPropagation()
+        container.scrollLeft += delta
+    }
+
     return (
         <div className={styles.color_form}>
             <h3 className={styles.color_form_title}>Цвета</h3>
@@ -91,8 +109,16 @@ const ColorForm = ({ colorList, setColorList }: IColorForm) => {
                 <div className={styles.upload_container}>
                     <FileUpload onUpload={handleAddImg} />
                 </div>
-                <div className={styles.image_list}>
-                    {colorList.find(u => u.color.id === selectedColor)?.images.map(img => <AdminImage src={img} onDelete={(filename) => handleDeleteImg(filename)} />)}
+                <div className={styles.image_list} onWheel={handleImageListWheel}>
+                    {colorList
+                        .find(u => u.color.id === selectedColor)?.images
+                        .map((img) => (
+                            <AdminImage
+                                key={img}
+                                src={img}
+                                onDelete={(filename) => handleDeleteImg(filename)}
+                            />
+                        ))}
                 </div>
             </>}
         </div>

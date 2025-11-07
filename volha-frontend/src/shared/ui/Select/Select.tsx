@@ -53,21 +53,22 @@ const Select = ({ title, options, value, onChange, lastChild, lastOnClick }: ISe
                     })} src={arrow} />
                 </div>
 
-                <div style={{ visibility: isOpen ? "visible" : "hidden" }} className={styles.options}>
+                <div style={{ visibility: isOpen ? "visible" : "hidden" }} className={styles.options_container}>
                     <div className={styles.title_container} onClick={handleToggle}>
                         <div className={styles.title}>{title}</div>
                         <img className={clsx([styles.arrow], {
                             [styles.arrow_active]: isOpen
                         })} src={arrow} />
                     </div>
-
-                    {options.map((option) =>
-                        <div key={option.value}
-                            className={styles.option}
-                            onClick={() => handleOptionClick(option.value)}>
-                            {option.label}
-                        </div>)}
-                    <div className={styles.option} onClick={handleLastClick}>{lastChild}</div>
+                    <div className={styles.options}>
+                        {options.map((option) =>
+                            <div key={option.value}
+                                className={styles.option}
+                                onClick={() => handleOptionClick(option.value)}>
+                                {option.label}
+                            </div>)}
+                        <div className={styles.option} onClick={handleLastClick}>{lastChild}</div>
+                    </div>
                 </div>
 
 

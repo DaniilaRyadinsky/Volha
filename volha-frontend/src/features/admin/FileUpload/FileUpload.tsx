@@ -3,12 +3,13 @@ import styles from './FileUpload.module.css'
 import { uploadFile } from './api/upload'
 import { ClipLoader } from 'react-spinners'
 import upload from '../../../shared/assets/icons/upload_file.svg'
+import { showAlert, showErr } from '../../../shared/ui/customAlert/showAlert'
 
 
 interface IFileUpload {
-    onUpload: (filename: string) => void,
-    // onDelete: (filename: string) => void
+    onUpload: (filename: string) => void
 }
+
 const FileUpload = ({ onUpload }: IFileUpload) => {
     const id = useId()
     const [isLoading, setIsLoading] = useState(false)
@@ -29,8 +30,8 @@ const FileUpload = ({ onUpload }: IFileUpload) => {
             setIsLoading(true)
             uploadFile(
                 file,
-                (e) => { console.log(e); onUpload(e.name) },
-                (e) => { console.log(e) }
+                (e) => { showAlert("Файл добавлен"); onUpload(e.name) },
+                (e) => { showErr("Ошибка: " + e) }
             )
             setIsLoading(false)
 

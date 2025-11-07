@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import type { Brand, Category, Country, Material, Product } from '../../../../entities/Product/types/ProductTypes'
 import Input from '../../../../shared/ui/Input/Input'
 import styles from './ProductForm.module.css'
@@ -14,20 +14,28 @@ import { getLabel, getLabelTitle } from '../lib/find'
 import ColorForm from '../internal/ColorForm/ColorForm'
 import { Button } from '../../../../shared/ui/Button/Button'
 import type { ColorItem, NewProduct } from '../types/types'
-import { postProduct } from '../api/fetchCreate'
+import { postColorImg, postProduct } from '../api/fetchCreate'
+import { showAlert, showErr } from '../../../../shared/ui/customAlert/showAlert'
+import { defaultNewProduct } from '../model/defaults'
 
 
 export const ProductForm = () => {
     const { categories, brands, materials, countries } = useAdminData();
     const [modalMode, setModalMode] = useState<"none" | "brand" | "category" | "country" | "material">("none")
     const [errors, setErrors] = useState<Partial<Record<keyof NewProduct, "empty" | "limit">>>({});
+    const [shouldPost, setShouldPost] = useState(false);
+
+    const [newProduct, setNewProduct] = useState<NewProduct>(defaultNewProduct)
+    const [colorList, setColorList] = useState<ColorItem[]>([])
+    const [selectedColor, setSelectedColor] = useState('')
+
 
     const validateForm = () => {
         const newErrors: Partial<Record<keyof NewProduct, "empty" | "limit">> = {};
 
         if (newProduct.title == '') newErrors.title = "empty";
         if (newProduct.article == '') newErrors.article = "empty";
-        if (newProduct.article.length !== 8 ) newErrors.article = "limit";
+        if (newProduct.article.length !== 8) newErrors.article = "limit";
         if (!newProduct.brand) newErrors.brand = "empty";
         if (!newProduct.category) newErrors.category = "empty";
         if (!newProduct.country) newErrors.country = "empty";
@@ -36,31 +44,10 @@ export const ProductForm = () => {
         if (newProduct.height == 0) newErrors.height = "empty";
         if (newProduct.depth == 0) newErrors.depth = "empty";
 
-
         setErrors(newErrors);
 
         return Object.keys(newErrors).length === 0;
     };
-
-    const [newProduct, setNewProduct] = useState<NewProduct>({
-        id: '',
-        article: '',
-        title: '',
-        brand: undefined,
-        category: undefined,
-        country: undefined,
-        width: 0,
-        height: 0,
-        depth: 0,
-        materials: [],
-        colors: [],
-        photos: [],
-        seems: [],
-        price: 0,
-        description: ''
-    })
-
-    const [colorList, setColorList] = useState<ColorItem[]>([])
 
     const onInputChange = (key: keyof Product, value: string | number) => {
         setNewProduct(prev => ({
@@ -74,8 +61,39 @@ export const ProductForm = () => {
         if (!isValid) return;
         if (colorList.length > 0)
             setNewProduct(prev => ({ ...prev, colors: colorList.map(item => item.color.id), photos: colorList[0].images }))
-        postProduct(newProduct, () => console.log("succ"), (e) => console.log(e))
+
+        console.log("handlesave")
+        setShouldPost(true);
     }
+
+    useEffect(() => {
+        console.log("effect")
+        if (shouldPost) {
+            postProduct(newProduct, (id) => {
+                colorList.map((item) => {
+                    if (!id) {
+                        showAlert("Нет id товара")
+                        return
+                    }
+                    postColorImg(item.color.id, item.images, id,
+                        () => {
+                            showAlert("Продукт создан")
+                            setNewProduct(defaultNewProduct)
+                            setColorList([])
+                        },
+                        (e) => {
+                            showAlert("Ошибка передачи фото" + e)
+                        }
+                    )
+                })
+
+            }, (e) => {
+                showErr("Ошибка:" + e)
+            })
+            setShouldPost(false)
+
+        }
+    }, [shouldPost])
 
     return (
         <div >
@@ -209,7 +227,7 @@ export const ProductForm = () => {
                     </label>
                 </div>
                 <div className={styles.right_container}>
-                    <ColorForm colorList={colorList} setColorList={setColorList} />
+                    <ColorForm colorList={colorList} setColorList={setColorList} selectedColor={selectedColor} setSelectedColor={setSelectedColor} />
                 </div>
 
 

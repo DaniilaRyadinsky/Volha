@@ -1,0 +1,29 @@
+.alert {
+    position: fixed;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: lightgreen;
+    border-radius: 4px;
+    border: 1px solid green;
+    padding: 15px 10px;
+}
+
+.alert_text {
+    color: green;
+}
+
+.err {
+    position: fixed;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: lightpink;
+    border-radius: 4px;
+    border: 1px solid var(--red);
+    padding: 15px 10px;
+}
+
+.err_text {
+    color: var(--red);
+}

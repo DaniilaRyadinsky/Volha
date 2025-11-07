@@ -76,7 +76,7 @@ const Catalog = () => {
             fetchCatalog();
             setShouldUpdate(false);
         }
-    }, [filterState, shouldUpdate, fetchCatalog]);
+    }, [shouldUpdate]);
 
     const { uri } = useParams();
     const [title, setTitle] = useState('Все товары')
@@ -97,7 +97,7 @@ const Catalog = () => {
                 }
             }
         }
-    }, [uri, filterMetaData, queryClient]);
+    }, [uri]);
 
 
 

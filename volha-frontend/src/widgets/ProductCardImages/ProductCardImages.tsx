@@ -8,9 +8,10 @@ interface IProductImages {
 
 const ProductCardImages = ({ img }: IProductImages) => {
   const [activeImage, setActiveImage] = useState(0)
-  
+  const [isCursor, setIsCursor] = useState(false)
+
   const segments = img.length > 5 ? 5 : img.length
-  
+
   return (
     <div className={styles.container}>
       <img
@@ -26,13 +27,13 @@ const ProductCardImages = ({ img }: IProductImages) => {
           >
             <div
               className={styles.trigger}
-              onMouseEnter={() => setActiveImage(index)}
-              onMouseLeave={() => setActiveImage(0)}
+              onMouseEnter={() => { setActiveImage(index); setIsCursor(true) }}
+              onMouseLeave={() => { setActiveImage(0); setIsCursor(false) }}
             />
             <div
               className={styles.indicator}
               style={{
-                opacity: activeImage === index ? 1 : 0
+                opacity: activeImage === index && isCursor && segments != 1 ? 1 : 0
               }}
             />
           </div>

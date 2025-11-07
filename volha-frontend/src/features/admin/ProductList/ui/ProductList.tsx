@@ -7,12 +7,24 @@ import BASE_URL from '../../../../shared/const/base_url'
 import editIcon from '../../../../shared/assets/icons/edit.svg'
 import deleteIcon from '../../../../shared/assets/icons/delete_forever.svg'
 import { ClipLoader } from 'react-spinners'
+import { fetchDeleteProduct } from '../api/fetchDeleteProduct'
+import { showAlert } from '../../../../shared/ui/customAlert/showAlert'
 
 const ProductList = () => {
-    const { data: products, isLoading } = useQuery<Product[]>({
+    const { data: products, isLoading, refetch } = useQuery<Product[]>({
         queryKey: ['products'],
         queryFn: fetchProducts,
     })
+
+
+    const handleDelete = (id: string) => {
+        fetchDeleteProduct(id, () => {
+            showAlert('Товар удален');
+            refetch();
+        }, (err) => {
+            alert(err);
+        })
+    }
 
     if (isLoading) {
         return <div><ClipLoader loading size={50} cssOverride={{ color: 'var(--main)' }} /></div>
@@ -34,14 +46,14 @@ const ProductList = () => {
                     <div className={styles.cell}>Цена</div>
                     <div className={styles.cell}>Действия</div>
                 </div>
-                
+
                 {products?.map(product => (
                     <div key={product.id} className={styles.row}>
                         <div className={styles.cell}>
-                            <img 
-                                src={`${BASE_URL}images/${product.photos[0]}`} 
+                            <img
+                                src={`${BASE_URL}images/${product.photos[0]}`}
                                 alt={product.title}
-                                className={styles.product_image} 
+                                className={styles.product_image}
                             />
                         </div>
                         <div className={styles.cell}>{product.category?.title}</div>
@@ -51,8 +63,11 @@ const ProductList = () => {
                         <div className={styles.cell}>{product.price} ₽</div>
                         <div className={styles.cell}>
                             <div className={styles.actions}>
-                                <img className={styles.action_icon} src={editIcon}/>
-                                <img className={styles.action_icon} src={deleteIcon}/>                               
+                                <img 
+                                className={styles.action_icon} 
+                                src={editIcon} 
+                                onClick={() => showAlert("создание")} />
+                                <img className={styles.action_icon} src={deleteIcon} onClick={() => handleDelete(product.id)} />
                             </div>
                         </div>
                     </div>
