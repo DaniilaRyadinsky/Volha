@@ -1,11 +1,11 @@
-import type { Brand, Category, Country, Material } from "../../../../entities/Product/types/ProductTypes";
+import type { Brand, Category, Color, Country, Material } from "../../../../entities/Product/types/ProductTypes";
 import BASE_URL from "../../../../shared/const/base_url"
 import type { NewProduct } from "../types/types";
 
 
 const postTable = async (
-    table: "brand" | "category" | "material" | "country" | "product",
-    data: Brand | Category | Material | Country | NewProduct,
+    table: "brand" | "category" | "material" | "country" | "product" | "color",
+    data: Brand | Category | Material | Country | NewProduct | Color,
     onSuccess: (id?: string) => void,
     onError: (err: string) => void
 ) => {
@@ -79,6 +79,14 @@ export const postProduct = async (
     onError: (err: string) => void
 ) => {
     return postTable("product", data, onSuccess, onError)
+}
+
+export const postColor = async (
+    data: Color,
+    onSuccess: (id?: string) => void,
+    onError: (err: string) => void
+)=> {
+    return postTable("color", data, onSuccess, onError)
 }
 
 

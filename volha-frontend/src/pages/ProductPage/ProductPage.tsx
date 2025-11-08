@@ -1,4 +1,4 @@
-import { Swiper, SwiperSlide } from 'swiper/react';
+import { Swiper, SwiperSlide, type SwiperRef } from 'swiper/react';
 import { Button } from '../../shared/ui/Button/Button'
 import ProductImages from '../../widgets/ProductImages/ProductImages'
 import 'swiper/swiper-bundle.css';
@@ -13,6 +13,8 @@ import { useEffect, useState } from 'react';
 import { ColorMarker } from '../../shared/ui/Color/Color';
 import { fetchColorImg } from './api/fetchColorImages';
 
+import arrow from '../../shared/assets/icons/expand_more.svg'
+
 interface LoaderResult {
   product: Product;
   breadcrumb: string;
@@ -23,7 +25,18 @@ const ProductPage = () => {
   console.log(product)
 
   const [selectedColor, setSelectedColor] = useState(product.colors[0])
-  const [img, setImg] = useState<string[]>([])
+  const [img, setImg] = useState<string[]>([]);
+
+  const [swiper, setSwiper] = useState<SwiperRef['swiper'] | null>(null);
+
+
+  const nextHandler = () => {
+    swiper?.slideNext();
+  };
+
+  const prevHandler = () => {
+    swiper?.slidePrev();
+  };
 
   const getMaterials = () => {
     let res = ''
@@ -129,40 +142,45 @@ const ProductPage = () => {
 
       <div className={styles.product_seems}>
         <h2 className={styles.title2}>С этим сочетается</h2>
-        <Swiper
-          slidesPerView={getSlidesPerView()}
-          spaceBetween={20}
-          pagination={{
-            clickable: true,
-          }}
-          modules={[Pagination, Navigation]}
-          className="mySwiper"
-        >
-          <SwiperSlide>
-            <ProductCard article='1234' isAbsolutePath={true} id='1' title="Шкаф металлический очень крутой налетайте" price={2300000} width={1200} height={1200} depth={1200} photos={['https://garagespace.ru/images/5e4320afe986a.jpg']} colors={[{ id: '1', name: 'red', hex: '#121231' }, { id: '2', name: 'red', hex: '#242463' }]} />
-          </SwiperSlide>
-          <SwiperSlide>
-            <ProductCard article='1234' isAbsolutePath={true} id='2' title="Шкаф металлический очень крутой налетайте" price={23000} width={1200} height={1200} depth={1200} photos={['https://garagespace.ru/images/5e4320afe986a.jpg']} colors={[{ id: '1', name: 'red', hex: '#121231' }, { id: '2', name: 'red', hex: '#242463' }]} />
-          </SwiperSlide>
-          <SwiperSlide>
-            <ProductCard article='1234' isAbsolutePath={true} id='3' title="Шкаф металлический очень крутой налетайте" price={23000} width={1200} height={1200} depth={1200} photos={['https://garagespace.ru/images/5e4320afe986a.jpg']} colors={[{ id: '1', name: 'red', hex: '#121231' }, { id: '2', name: 'red', hex: '#242463' }]} />
-          </SwiperSlide>
-          <SwiperSlide>
-            <ProductCard article='1234' isAbsolutePath={true} id='4' title="Шкаф металлический очень крутой налетайте" price={23000} width={1200} height={1200} depth={1200} photos={['https://garagespace.ru/images/5e4320afe986a.jpg']} colors={[{ id: '1', name: 'red', hex: '#121231' }, { id: '2', name: 'red', hex: '#242463' }]} />
-          </SwiperSlide>
-          <SwiperSlide>
-            <ProductCard article='1234' isAbsolutePath={true} id='5' title="Шкаф металлический очень крутой налетайте" price={23000} width={1200} height={1200} depth={1200} photos={['https://garagespace.ru/images/5e4320afe986a.jpg']} colors={[{ id: '1', name: 'red', hex: '#121231' }, { id: '2', name: 'red', hex: '#242463' }]} />
-          </SwiperSlide>
-          <SwiperSlide>
-            <ProductCard article='1234' isAbsolutePath={true} id='6' title="Шкаф металлический очень крутой налетайте" price={23000} width={1200} height={1200} depth={1200} photos={['https://garagespace.ru/images/5e4320afe986a.jpg']} colors={[{ id: '1', name: 'red', hex: '#121231' }, { id: '2', name: 'red', hex: '#242463' }]} />
-          </SwiperSlide>
-          <SwiperSlide>
-            <ProductCard article='1234' isAbsolutePath={true} id='7' title="Шкаф металлический очень крутой налетайте" price={23000} width={1200} height={1200} depth={1200} photos={['https://garagespace.ru/images/5e4320afe986a.jpg']} colors={[{ id: '1', name: 'red', hex: '#121231' }, { id: '2', name: 'red', hex: '#242463' }]} />
-          </SwiperSlide>
-          <SwiperSlide>
-            <ProductCard article='1234' isAbsolutePath={true} id='8' title="Шкаф металлический очень крутой налетайте" price={23000} width={1200} height={1200} depth={1200} photos={['https://garagespace.ru/images/5e4320afe986a.jpg']} colors={[{ id: '1', name: 'red', hex: '#121231' }, { id: '2', name: 'red', hex: '#242463' }]} />
-          </SwiperSlide>
-        </Swiper>
+        <div className={styles.swiper_container}>
+          <img className={styles.swiper_prev_button} src={arrow} onClick={() => prevHandler()}/>
+          <Swiper
+            slidesPerView={getSlidesPerView()}
+            spaceBetween={20}
+            pagination={{
+              clickable: true,
+            }}
+            onSwiper={(swiper) => setSwiper(swiper)}
+            modules={[Navigation, Pagination]}
+            className={styles.mySwiper}
+          >
+            <SwiperSlide>
+              <ProductCard article='1234' isAbsolutePath={true} id='1' title="Шкаф металлический очень крутой налетайте" price={2300000} width={1200} height={1200} depth={1200} photos={['https://garagespace.ru/images/5e4320afe986a.jpg']} colors={[{ id: '1', name: 'red', hex: '#121231' }, { id: '2', name: 'red', hex: '#242463' }]} />
+            </SwiperSlide>
+            <SwiperSlide>
+              <ProductCard article='1234' isAbsolutePath={true} id='2' title="Шкаф металлический очень крутой налетайте" price={23000} width={1200} height={1200} depth={1200} photos={['https://garagespace.ru/images/5e4320afe986a.jpg']} colors={[{ id: '1', name: 'red', hex: '#121231' }, { id: '2', name: 'red', hex: '#242463' }]} />
+            </SwiperSlide>
+            <SwiperSlide>
+              <ProductCard article='1234' isAbsolutePath={true} id='3' title="Шкаф металлический очень крутой налетайте" price={23000} width={1200} height={1200} depth={1200} photos={['https://garagespace.ru/images/5e4320afe986a.jpg']} colors={[{ id: '1', name: 'red', hex: '#121231' }, { id: '2', name: 'red', hex: '#242463' }]} />
+            </SwiperSlide>
+            <SwiperSlide>
+              <ProductCard article='1234' isAbsolutePath={true} id='4' title="Шкаф металлический очень крутой налетайте" price={23000} width={1200} height={1200} depth={1200} photos={['https://garagespace.ru/images/5e4320afe986a.jpg']} colors={[{ id: '1', name: 'red', hex: '#121231' }, { id: '2', name: 'red', hex: '#242463' }]} />
+            </SwiperSlide>
+            <SwiperSlide>
+              <ProductCard article='1234' isAbsolutePath={true} id='5' title="Шкаф металлический очень крутой налетайте" price={23000} width={1200} height={1200} depth={1200} photos={['https://garagespace.ru/images/5e4320afe986a.jpg']} colors={[{ id: '1', name: 'red', hex: '#121231' }, { id: '2', name: 'red', hex: '#242463' }]} />
+            </SwiperSlide>
+            <SwiperSlide>
+              <ProductCard article='1234' isAbsolutePath={true} id='6' title="Шкаф металлический очень крутой налетайте" price={23000} width={1200} height={1200} depth={1200} photos={['https://garagespace.ru/images/5e4320afe986a.jpg']} colors={[{ id: '1', name: 'red', hex: '#121231' }, { id: '2', name: 'red', hex: '#242463' }]} />
+            </SwiperSlide>
+            <SwiperSlide>
+              <ProductCard article='1234' isAbsolutePath={true} id='7' title="Шкаф металлический очень крутой налетайте" price={23000} width={1200} height={1200} depth={1200} photos={['https://garagespace.ru/images/5e4320afe986a.jpg']} colors={[{ id: '1', name: 'red', hex: '#121231' }, { id: '2', name: 'red', hex: '#242463' }]} />
+            </SwiperSlide>
+            <SwiperSlide>
+              <ProductCard article='1234' isAbsolutePath={true} id='8' title="Шкаф металлический очень крутой налетайте" price={23000} width={1200} height={1200} depth={1200} photos={['https://garagespace.ru/images/5e4320afe986a.jpg']} colors={[{ id: '1', name: 'red', hex: '#121231' }, { id: '2', name: 'red', hex: '#242463' }]} />
+            </SwiperSlide>
+          </Swiper>
+          <img className={styles.swiper_next_button} src={arrow} onClick={() => nextHandler()}/>
+        </div>
       </div>
 
     </div >

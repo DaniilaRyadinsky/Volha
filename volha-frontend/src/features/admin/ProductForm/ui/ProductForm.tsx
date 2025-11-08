@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import type { Brand, Category, Country, Material, Product } from '../../../../entities/Product/types/ProductTypes'
+import type { Brand, Category, Country } from '../../../../entities/Product/types/ProductTypes'
 import Input from '../../../../shared/ui/Input/Input'
 import styles from './ProductForm.module.css'
 import Select from '../../../../shared/ui/Select/Select'
@@ -11,23 +11,24 @@ import MaterialForm from '../internal/forms/MaterialForm'
 import CategoryForm from '../internal/forms/CategoryForm'
 import CountryForm from '../internal/forms/CountryForm'
 import { getLabel, getLabelTitle } from '../lib/find'
-import ColorForm from '../internal/ColorForm/ColorForm'
 import { Button } from '../../../../shared/ui/Button/Button'
-import type { ColorItem, NewProduct } from '../types/types'
+import type { NewProduct } from '../types/types'
 import { postColorImg, postProduct } from '../api/fetchCreate'
 import { showAlert, showErr } from '../../../../shared/ui/customAlert/showAlert'
-import { defaultNewProduct } from '../model/defaults'
+import ColorInput from '../internal/ColorInput/ColorInput'
+import ColorForm from '../internal/forms/ColorForm'
+import { ProductFormProvider } from '../context/ProductFormContext'
+import { useProductForm } from '../context/useProductForm'
+import MaterialInput from '../internal/MaterialInput/MaterialInput'
 
 
-export const ProductForm = () => {
-    const { categories, brands, materials, countries } = useAdminData();
-    const [modalMode, setModalMode] = useState<"none" | "brand" | "category" | "country" | "material">("none")
-    const [errors, setErrors] = useState<Partial<Record<keyof NewProduct, "empty" | "limit">>>({});
+const ProductFormContent = () => {
+    const { categories, brands, countries } = useAdminData();
+
+    const { newProduct, setNewProduct, colorList, resetForm, onInputChange, errors, setErrors } = useProductForm();
+
+    const [modalMode, setModalMode] = useState<"none" | "brand" | "category" | "country" | "material" | "color">("none")
     const [shouldPost, setShouldPost] = useState(false);
-
-    const [newProduct, setNewProduct] = useState<NewProduct>(defaultNewProduct)
-    const [colorList, setColorList] = useState<ColorItem[]>([])
-    const [selectedColor, setSelectedColor] = useState('')
 
 
     const validateForm = () => {
@@ -38,29 +39,23 @@ export const ProductForm = () => {
         if (newProduct.article.length !== 8) newErrors.article = "limit";
         if (!newProduct.brand) newErrors.brand = "empty";
         if (!newProduct.category) newErrors.category = "empty";
+        if (!newProduct.materials || newProduct.materials.length === 0) newErrors.materials = "empty";
         if (!newProduct.country) newErrors.country = "empty";
         if (!newProduct.price || newProduct.price <= 0) newErrors.price = "empty";
         if (newProduct.width == 0) newErrors.width = "empty";
         if (newProduct.height == 0) newErrors.height = "empty";
         if (newProduct.depth == 0) newErrors.depth = "empty";
+        if (!colorList || colorList.length === 0) newErrors.colors = "empty";
 
         setErrors(newErrors);
 
         return Object.keys(newErrors).length === 0;
     };
 
-    const onInputChange = (key: keyof Product, value: string | number) => {
-        setNewProduct(prev => ({
-            ...prev,
-            [key]: value
-        }))
-    }
-
     const handleSaveClick = () => {
         const isValid = validateForm();
         if (!isValid) return;
-        if (colorList.length > 0)
-            setNewProduct(prev => ({ ...prev, colors: colorList.map(item => item.color.id), photos: colorList[0].images }))
+        setNewProduct(prev => ({ ...prev, colors: colorList.map(item => item.color.id), photos: colorList[0].images }))
 
         console.log("handlesave")
         setShouldPost(true);
@@ -78,8 +73,7 @@ export const ProductForm = () => {
                     postColorImg(item.color.id, item.images, id,
                         () => {
                             showAlert("Продукт создан")
-                            setNewProduct(defaultNewProduct)
-                            setColorList([])
+                            resetForm()
                         },
                         (e) => {
                             showAlert("Ошибка передачи фото" + e)
@@ -104,41 +98,41 @@ export const ProductForm = () => {
             <div className={styles.form_container}>
                 <div className={styles.left_container}>
                     <label className={styles.label}>
-                        Название товара
+                        Название товара*
                         <Input
                             type='text'
                             placeholder='Введите название товара'
                             value={newProduct.title}
                             onChange={(e) => onInputChange("title", e)}
-                            style={{ border: errors.title ? '2px solid var(--red)' : undefined }}
+                            style={{ borderColor: errors.title ? 'var(--red)' : undefined }}
                         />
                     </label>
 
                     <label className={styles.label}>
-                        Артикул
+                        Артикул*
                         <Input
                             type='text'
                             placeholder='Введите артикул'
                             value={newProduct.article}
                             onChange={(e) => onInputChange("article", e)}
-                            style={{ border: errors.article ? '2px solid var(--red)' : undefined }}
+                            style={{ borderColor: errors.article ? 'var(--red)' : undefined }}
                         />
                     </label>
-                    {errors.article == "limit" && <p>Длина артикула должна быть 8 символов</p>}
+                    {errors.article == "limit" && <p className={styles.err}>Длина артикула должна быть 8 символов</p>}
 
                     <label className={styles.label}>
-                        Цена
+                        Цена*
                         <Input
                             type='number'
                             placeholder='Высота'
                             value={String(newProduct.price)}
                             onChange={(e) => onInputChange("price", parseInt(e))}
-                            style={{ width: "150px", border: errors.price ? '2px solid var(--red)' : undefined }}
+                            style={{ width: "150px", borderColor: errors.price ? 'var(--red)' : undefined }}
                         />
                     </label>
 
                     <label className={styles.label}>
-                        Бренд
+                        Бренд*
                         <Select
                             value={getLabel(brands, newProduct.brand)}
                             title='Бренд'
@@ -146,11 +140,12 @@ export const ProductForm = () => {
                             onChange={(e) => { onInputChange("brand", e) }}
                             lastChild={<div >Добавить бренд...</div>}
                             lastOnClick={() => { setModalMode("brand") }}
+                            style={{ borderColor: errors.brand ? 'var(--red)' : undefined }}
                         />
                     </label>
 
                     <label className={styles.label}>
-                        Категория
+                        Категория*
                         <Select
                             value={getLabelTitle(categories, newProduct.category)}
                             title='Категория'
@@ -158,24 +153,15 @@ export const ProductForm = () => {
                             onChange={(e) => onInputChange("category", e)}
                             lastChild={<div >Добавить категорию...</div>}
                             lastOnClick={() => { setModalMode("category") }}
+                            style={{ borderColor: errors.category ? 'var(--red)' : undefined }}
                         />
 
                     </label>
 
-                    <label className={styles.label}>
-                        Материалы
-                        <Select
-                            title='Материалы'
-                            options={materials.map((c: Material) => ({ value: c.id, label: c.title }))}
-                            onChange={() => { }}
-                            lastChild={<div >Добавить материал...</div>}
-                            lastOnClick={() => { setModalMode("material") }}
-                        />
+                    <MaterialInput setModalMode={setModalMode} style={{ border: errors.materials ? '2px solid var(--red)' : undefined }} />
 
-                    </label>
-
-                    <label className={styles.label}>
-                        Страна
+                    <label className={styles.label} >
+                        Страна*
                         <Select
                             value={getLabelTitle(countries, newProduct.country)}
                             title='Страна'
@@ -183,40 +169,41 @@ export const ProductForm = () => {
                             onChange={(e) => onInputChange("country", e)}
                             lastChild={<div>Добавить страну...</div>}
                             lastOnClick={() => { setModalMode("country") }}
+                            style={{ borderColor: errors.country ? 'var(--red)' : undefined }}
                         />
                     </label>
 
                     <div className={styles.width_container}>
                         <label className={styles.label}>
-                            Длина
+                            Длина*
                             <Input
                                 type='number'
                                 placeholder='Введите длину'
                                 value={String(newProduct.width)}
                                 onChange={(e) => onInputChange("width", parseInt(e))}
-                                style={{ width: "120px", border: errors.width ? '2px solid var(--red)' : undefined }}
+                                style={{ width: "120px", borderColor: errors.width ? 'var(--red)' : undefined }}
                             />
                         </label>
 
                         <label className={styles.label}>
-                            Ширина
+                            Ширина*
                             <Input
                                 type='number'
                                 placeholder='Ширина'
                                 value={String(newProduct.depth)}
                                 onChange={(e) => onInputChange("depth", parseInt(e))}
-                                style={{ width: "120px", border: errors.depth ? '2px solid var(--red)' : undefined }}
+                                style={{ width: "120px", borderColor: errors.depth ? 'var(--red)' : undefined }}
                             />
                         </label>
 
                         <label className={styles.label}>
-                            Высота
+                            Высота*
                             <Input
                                 type='number'
                                 placeholder='Высота'
                                 value={String(newProduct.height)}
                                 onChange={(e) => onInputChange("height", parseInt(e))}
-                                style={{ width: "120px", border: errors.height ? '2px solid var(--red)' : undefined }}
+                                style={{ width: "120px", borderColor: errors.height ? 'var(--red)' : undefined }}
                             />
                         </label>
                     </div>
@@ -227,7 +214,7 @@ export const ProductForm = () => {
                     </label>
                 </div>
                 <div className={styles.right_container}>
-                    <ColorForm colorList={colorList} setColorList={setColorList} selectedColor={selectedColor} setSelectedColor={setSelectedColor} />
+                    <ColorInput setModalMode={setModalMode}  style={{ borderColor: errors.colors ? 'var(--red)' : undefined }}/>
                 </div>
 
 
@@ -236,9 +223,18 @@ export const ProductForm = () => {
                     {modalMode === 'material' && <MaterialForm closecallback={() => setModalMode("none")} />}
                     {modalMode === 'category' && <CategoryForm closecallback={() => setModalMode("none")} />}
                     {modalMode == "country" && <CountryForm closecallback={() => setModalMode("none")} />}
+                    {modalMode === "color" && <ColorForm closecallback={() => setModalMode("none")} />}
 
                 </Modal>}
             </div>
         </div>
+    )
+}
+
+export const ProductForm = () => {
+    return (
+        <ProductFormProvider>
+            <ProductFormContent />
+        </ProductFormProvider>
     )
 }

@@ -1,4 +1,4 @@
-import { Link, useNavigate } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import NewsSubscr from '../../features/NewsSubscr/NewsSubscr'
 import styles from './Footer.module.css'
 import type { Category } from '../../entities/Product/types/ProductTypes'
@@ -8,7 +8,6 @@ interface IFooter {
 }
 
 const Footer = ({ categories }: IFooter) => {
-    const navigate = useNavigate();
 
     return (
         <footer className={styles.footer}>
@@ -17,6 +16,7 @@ const Footer = ({ categories }: IFooter) => {
                     <h3 className={styles.footer_title}>О магазине</h3>
                     <ul className={styles.footer_list_items}>
                         <Link to="/about"><li className={styles.footer_item}>О нас</li></Link>
+                        <Link to="/contacts"><li className={styles.footer_item}>Контакты</li></Link>
                         <Link to="/contacts"><li className={styles.footer_item}>Оставить заявку</li></Link>
                         <li className={styles.footer_item}>Пользовательское соглашение</li>
                     </ul>
@@ -29,12 +29,11 @@ const Footer = ({ categories }: IFooter) => {
                         <Link to="/catalog" style={{ textDecoration: "none" }}><li className={styles.footer_item}>Все товары</li></Link>
                     </ul>
                 </nav>
-                <div className={styles.footer_list} style={{ gridArea: "c"}}>
-                    <h3 className={styles.footer_title}>Контакты</h3>
-                    <ul className={styles.footer_list_items}
-                    style={{ cursor: "pointer"}}
-                    onClick={() => navigate("/contacts")}
-                    >
+                <div className={styles.footer_list} style={{ gridArea: "c" }}>
+
+                    <div className={styles.fake_title} />
+
+                    <ul className={styles.footer_list_items}>
                         <li className={styles.footer_item}>
                             <p className={styles.footer_item}>188653, Ленинградская область,</p>
                             <p className={styles.footer_item}>д.Агалатово 178</p></li>

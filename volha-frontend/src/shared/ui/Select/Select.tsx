@@ -15,10 +15,11 @@ export interface ISelect {
     value?: string;
     onChange: (value: string) => void;
     lastChild?: React.ReactNode;
-    lastOnClick?: () => void
+    lastOnClick?: () => void,
+    style?: React.CSSProperties
 }
 
-const Select = ({ title, options, value, onChange, lastChild, lastOnClick }: ISelect) => {
+const Select = ({ title, options, value, onChange, lastChild, lastOnClick, style }: ISelect) => {
     const [isOpen, setIsOpen] = useState(false)
 
     const handleToggle = () => {
@@ -39,7 +40,7 @@ const Select = ({ title, options, value, onChange, lastChild, lastOnClick }: ISe
 
     return (
         <>
-            <div className={styles.container}>
+            <div className={styles.container} style={style}>
                 <div
                     className={styles.title_container}
                     onClick={handleToggle}

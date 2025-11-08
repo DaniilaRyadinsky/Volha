@@ -9,6 +9,7 @@ import type { Category, Product } from '../../entities/Product/types/ProductType
 import type { FilterMetadata, IFilter } from '../../features/Filter/model/FilterType';
 import FilterWiget from '../../features/Filter/ui/FilterWiget';
 import { fetchProducts } from './api/Fetch';
+import { defaultFilter } from './consts/consts';
 
 const Catalog = () => {
     const { data: filterMetaData, isLoading: isLoadingFilterMeta, error } = useQuery<FilterMetadata>({
@@ -21,23 +22,7 @@ const Catalog = () => {
         staleTime: Infinity
     });
 
-    const [filterState, setFilterState] = useState<IFilter>({
-        categories: [],
-        brands: [],
-        colors: [],
-        countries: [],
-        materials: [],
-        min_height: 0,
-        max_height: 1000,
-        min_width: 0,
-        max_width: 1000,
-        min_depth: 0,
-        max_depth: 1000,
-        min_price: 0,
-        max_price: 1000,
-        sort_by: "",
-        sort_order: ""
-    })
+    const [filterState, setFilterState] = useState<IFilter>(defaultFilter)
 
     useEffect(() => {
         if (filterMetaData) {
@@ -62,6 +47,8 @@ const Catalog = () => {
         }
     }, [filterMetaData])
 
+    const [productList, setProductList] = useState<Product[]>([])
+    const [isLoading, setIsLoading] = useState(false)
 
     const [shouldUpdate, setShouldUpdate] = useState(false)
 
@@ -69,7 +56,7 @@ const Catalog = () => {
         setIsLoading(true);
         await fetchProducts(filterState, setProductList, (e) => { alert(e) });
         setIsLoading(false);
-    }, [filterState]); 
+    }, [filterState]);
 
     useEffect(() => {
         if (shouldUpdate) {
@@ -98,11 +85,6 @@ const Catalog = () => {
             }
         }
     }, [uri]);
-
-
-
-    const [productList, setProductList] = useState<Product[]>([])
-    const [isLoading, setIsLoading] = useState(false)
 
 
     if (isLoading) return <ClipLoader loading cssOverride={{ color: 'var(--main)' }} size={50} />;

@@ -1,28 +1,28 @@
 import { type WheelEvent as ReactWheelEvent } from 'react'
 import { useAdminData } from '../../../AdminLayout/lib/useAdminData'
-import styles from './ColorForm.module.css'
+import styles from './ColorInput.module.css'
 import type { Color } from '../../../../../entities/Product/types/ProductTypes'
 import { AddColor } from '../AddColor/Addcolor'
 import { ColorMarker } from '../../../../../shared/ui/Color/Color'
 import FileUpload from '../../../FileUpload/FileUpload'
 import AdminImage from '../AdminImage/AdminImage'
-import type { ColorItem } from '../../types/types'
+import type { ColorItem, ICustomInput } from '../../types/types'
+import { useProductForm } from '../../context/useProductForm'
+import close from '../../../../../shared/assets/icons/close.svg'
 
 
-interface IColorForm {
-    colorList: ColorItem[];
-    setColorList: (updater: (prev: ColorItem[]) => ColorItem[]) => void;
-    selectedColor: string,
-    setSelectedColor: (value: string) => void
-}
-const ColorForm = ({ colorList, setColorList, selectedColor, setSelectedColor }: IColorForm) => {
+const ColorInput = ({ setModalMode, style }: ICustomInput) => {
     const { colors } = useAdminData() as { colors: Color[] }
+
+    const { colorList, setColorList, selectedColor, setSelectedColor, setErrors } = useProductForm()
 
     const addToColorlist = (newColor: Color) => {
         setColorList(prev => [...prev, { color: newColor, images: [] }])
     }
 
     const handleAddColor = (id: string) => {
+        setErrors(prev => ({ ...prev, colors: undefined }));
+
         const colorToAdd = colors.find(color => color.id === id)
         if (colorToAdd) {
             if (!colorList.find(item => item.color.id === id)) {
@@ -37,12 +37,12 @@ const ColorForm = ({ colorList, setColorList, selectedColor, setSelectedColor }:
             console.error('No filename provided')
             return
         }
-    
+
         if (!selectedColor) {
             console.error('No color selected')
             return
         }
-    
+
         setColorList(prev => {
             const updatedList = prev.map(item => {
                 if (item.color.id === selectedColor) {
@@ -55,19 +55,21 @@ const ColorForm = ({ colorList, setColorList, selectedColor, setSelectedColor }:
                 }
                 return item
             })
-    
+
             console.log('Updated color list:', updatedList)
             return updatedList
         })
     }
 
     const handleDeleteImg = (filename: string) => {
-    setColorList(prev => prev.map(item => 
-        item.color.id === selectedColor
-            ? { ...item, images: item.images.filter(img => img !== filename) }
-            : item
-    ))
-}
+        setColorList(prev => prev.map(item =>
+            item.color.id === selectedColor
+                ? { ...item, images: item.images.filter(img => img !== filename) }
+                : item
+        ))
+    }
+
+
     const handleImageListWheel = (event: ReactWheelEvent<HTMLDivElement>) => {
         const container = event.currentTarget
         const canScrollHorizontally = container.scrollWidth > container.clientWidth
@@ -86,8 +88,8 @@ const ColorForm = ({ colorList, setColorList, selectedColor, setSelectedColor }:
     }
 
     return (
-        <div className={styles.color_form}>
-            <h3 className={styles.color_form_title}>Цвета</h3>
+        <div className={styles.color_form} style={style}>
+            <h3 className={styles.color_form_title}>Цвета*</h3>
 
             <div className={styles.color_top}>
                 <div className={styles.color_list}>
@@ -103,6 +105,8 @@ const ColorForm = ({ colorList, setColorList, selectedColor, setSelectedColor }:
                     title={"Добавить цвет"}
                     options={colors.map((b: Color) => ({ value: b.id, label: b.name }))}
                     onChange={(e) => handleAddColor(e)}
+                    lastChild={<div >Добавить цвет...</div>}
+                    lastOnClick={() => setModalMode('color')}
                 />
             </div>
             {selectedColor && <>
@@ -125,7 +129,7 @@ const ColorForm = ({ colorList, setColorList, selectedColor, setSelectedColor }:
     )
 }
 
-export default ColorForm
+export default ColorInput
 
 
 interface IColorItem {
@@ -134,14 +138,28 @@ interface IColorItem {
     onClick: (id: string) => void
 }
 const ColorItem = ({ color, isSelected, onClick }: IColorItem) => {
+    const { setColorList } = useProductForm()
+
+    const deteleFromColorlist = (id: string) => {
+        setColorList(prev => prev.filter(u => u.color.id != id))
+    }
+
+    const handleDeleteColor = (id: string) => {
+        deteleFromColorlist(id);
+    }
+
     return (
         <div
+            key={color.id}
             className={styles.color_item}
             style={{ borderColor: isSelected ? "var(--main)" : "var(--outline)" }}
             onClick={() => onClick(color.id)}
         >
-            {color.name}
             <ColorMarker name={color.name} hex={color.hex} />
+            {color.name}
+            <div className={styles.icon_container} >
+              <img src={close} onClick={() => handleDeleteColor(color.id)} className={styles.close_icon}/>
+            </div>
         </div>
     )
 }

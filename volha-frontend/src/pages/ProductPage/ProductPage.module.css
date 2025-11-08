@@ -165,3 +165,26 @@
         width: 100%;
     }
 }
+
+.swiper_container {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    align-items: center;
+}
+
+.swiper_prev_button {
+    width: 40px;
+    height: 40px;
+    transform: rotate(90deg);
+}
+
+.swiper_next_button {
+    width: 40px;
+    height: 40px;
+    transform: rotate(-90deg);
+}
+
+.mySwiper :global(.swiper-pagination-bullet) {
+    background-color: var(--main);
+}

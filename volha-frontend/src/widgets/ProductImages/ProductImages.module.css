@@ -6,10 +6,6 @@
     align-items: start;
 }
 
-/* .miniatures_container {
-    width: 100px;
-    height: 100%;
-} */
 
 .miniatures {
     box-sizing: border-box;
@@ -24,7 +20,7 @@
     object-fit: cover;
 }
 
-/* ПРАВИЛЬНЫЕ стили для слайдов */
+
 .miniatures :global(.swiper-slide) {
     width: 98px !important;
     height: 65px !important;

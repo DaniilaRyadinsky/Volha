@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Swiper as SwiperTypes } from 'swiper';
 import { Swiper as SwiperComponent, SwiperSlide } from 'swiper/react';
-import { FreeMode, Navigation, Thumbs } from 'swiper/modules';
+import { FreeMode, Thumbs } from 'swiper/modules';
 
 import 'swiper/swiper-bundle.css';
 import styles from './ProductImages.module.css'
@@ -24,7 +24,7 @@ const ProductImages = ({ images, name }: IProductImages) => {
                     slidesPerView={5}
                     freeMode={true}
                     watchSlidesProgress={true}
-                    modules={[FreeMode, Navigation, Thumbs]}
+                    modules={[FreeMode, Thumbs]}
                     className={styles.miniatures}
                     direction={window.innerWidth > 1400 ? "vertical" : "horizontal"}
                 >
@@ -38,10 +38,10 @@ const ProductImages = ({ images, name }: IProductImages) => {
 
             <SwiperComponent
                 slidesPerView={1}
-                navigation={true}
                 thumbs={{ swiper: thumbsSwiper }}
-                modules={[FreeMode, Navigation, Thumbs]}
-                className={styles.image_container}>
+                modules={[FreeMode, Thumbs]}
+                className={styles.image_container}
+                >
                 {images.map((img) =>
                     <SwiperSlide>
                         <img src={`${BASE_URL}images/${img}`} alt={`Фото ${name}`} className={styles.image} />

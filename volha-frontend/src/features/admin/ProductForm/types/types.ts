@@ -4,6 +4,11 @@ export interface IForm {
     closecallback: () => void
 }
 
+export interface ICustomInput {
+    setModalMode: (value: "none" | "brand" | "category" | "country" | "material" | "color") => void,
+    style?: React.CSSProperties
+}
+
 export type NewProduct = {
     id: string,
     article: string,

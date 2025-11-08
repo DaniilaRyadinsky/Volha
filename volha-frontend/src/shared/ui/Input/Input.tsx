@@ -9,7 +9,7 @@ interface IInput {
 }
 
 const Input = ({ value, type, placeholder, onChange, style }: IInput) => {
-    
+
 
     return (
         <>
@@ -19,6 +19,7 @@ const Input = ({ value, type, placeholder, onChange, style }: IInput) => {
                 type={type}
                 value={value}
                 style={style}
+                min={0}
                 onChange={(e) => onChange(e.target.value)} />
         </>
     )

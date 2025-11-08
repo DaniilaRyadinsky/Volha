@@ -12,7 +12,7 @@ export const ColorMarker = ({name,hex, children, style, onClick}: IColor) => {
     return (
         <div 
         className={styles.color} 
-        style={{backgroundColor: hex, ...style}} 
+        style={{backgroundColor: hex, cursor: onClick? "pointer": "auto", ...style}} 
         title={name}
         onClick={onClick}
         >{children}</div>

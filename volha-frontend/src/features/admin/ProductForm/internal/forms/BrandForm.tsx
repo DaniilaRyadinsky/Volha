@@ -7,9 +7,11 @@ import type { IForm } from '../../types/types'
 import { postBrand } from '../../api/fetchCreate'
 import { useAdminData } from '../../../AdminLayout/lib/useAdminData'
 import { showAlert, showErr } from '../../../../../shared/ui/customAlert/showAlert'
+import { useProductForm } from '../../context/useProductForm'
 
 
 const BrandForm = ({ closecallback }: IForm) => {
+    const {setNewProduct} = useProductForm()
     const { refetchBrands } = useAdminData()
     const [err, setErr] = useState('')
     const [newBrand, setNewBrand] = useState<Brand>({ id: '', name: '' }

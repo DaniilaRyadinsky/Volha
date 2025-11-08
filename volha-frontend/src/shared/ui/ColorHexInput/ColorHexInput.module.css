@@ -1,0 +1,36 @@
+.colorHexInput {
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 16px 25px;
+    background-color: #fff;
+    color: var(--main);
+    font-size: 1rem;
+    border: 2px solid transparent;
+    border-radius: 4px;
+}
+
+.input {
+    flex: 1;
+    border: none;
+    outline: none;
+    background: transparent;
+    color: var(--main);
+    font-size: 1rem;
+    padding: 0;
+    min-width: 0;
+}
+
+.input::placeholder {
+    color: #6d6d71;
+}
+
+.hiddenColorInput {
+    position: absolute;
+    width: 0;
+    height: 0;
+    opacity: 0;
+    pointer-events: none;
+}
+
