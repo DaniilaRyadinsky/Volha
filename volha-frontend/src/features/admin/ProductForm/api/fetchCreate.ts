@@ -6,7 +6,7 @@ import type { NewProduct } from "../types/types";
 const postTable = async (
     table: "brand" | "category" | "material" | "country" | "product" | "color",
     data: Brand | Category | Material | Country | NewProduct | Color,
-    onSuccess: (id?: string) => void,
+    onSuccess: (id: string) => void,
     onError: (err: string) => void
 ) => {
     fetch(`${BASE_URL}api/${table}/create`, {
@@ -42,7 +42,7 @@ const postTable = async (
 
 export const postBrand = async (
     data: Brand,
-    onSuccess: () => void,
+    onSuccess: (id: string) => void,
     onError: (err: string) => void
 ) => {
     return postTable("brand", data, onSuccess, onError)
@@ -50,7 +50,7 @@ export const postBrand = async (
 
 export const postCategory = async (
     data: Category,
-    onSuccess: () => void,
+    onSuccess: (id: string) => void,
     onError: (err: string) => void
 ) => {
     return postTable("category", data, onSuccess, onError)
@@ -58,7 +58,7 @@ export const postCategory = async (
 
 export const postMaterial = async (
     data: Material,
-    onSuccess: () => void,
+    onSuccess: (id: string) => void,
     onError: (err: string) => void
 ) => {
     return postTable("material", data, onSuccess, onError)
@@ -66,7 +66,7 @@ export const postMaterial = async (
 
 export const postCountry = async (
     data: Country,
-    onSuccess: () => void,
+    onSuccess: (id: string) => void,
     onError: (err: string) => void
 ) => {
     return postTable("country", data, onSuccess, onError)
@@ -75,7 +75,7 @@ export const postCountry = async (
 
 export const postProduct = async (
     data: NewProduct,
-    onSuccess: (id?: string) => void,
+    onSuccess: (id: string) => void,
     onError: (err: string) => void
 ) => {
     return postTable("product", data, onSuccess, onError)
@@ -83,7 +83,7 @@ export const postProduct = async (
 
 export const postColor = async (
     data: Color,
-    onSuccess: (id?: string) => void,
+    onSuccess: (id: string) => void,
     onError: (err: string) => void
 )=> {
     return postTable("color", data, onSuccess, onError)

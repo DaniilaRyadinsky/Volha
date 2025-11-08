@@ -24,9 +24,10 @@ const BrandForm = ({ closecallback }: IForm) => {
             setErr('')
             postBrand(
                 newBrand,
-                () => {
+                (id) => {
                     closecallback();
                     showAlert("Бренд добавлен")
+                    setNewProduct(prev => ({...prev, brand: id}))
                     refetchBrands();
                 },
                 (e) => {

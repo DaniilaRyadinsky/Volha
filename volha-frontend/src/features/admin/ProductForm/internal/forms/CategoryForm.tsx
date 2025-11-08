@@ -10,9 +10,12 @@ import FileUpload from '../../../FileUpload/FileUpload'
 import AdminImage from '../AdminImage/AdminImage'
 import CyrillicToTranslit from 'cyrillic-to-translit-js'
 import { showAlert, showErr } from '../../../../../shared/ui/customAlert/showAlert'
+import { useProductForm } from '../../context/useProductForm'
 
 const CategoryForm = ({ closecallback }: IForm) => {
   const { refetchCategories } = useAdminData()
+  const { setNewProduct } = useProductForm()
+
   const [err, setErr] = useState<"none" | "emptyName" | "emptyImg">('none')
   const [newCategory, setNewCategory] = useState<Category>(
     { id: '', img: '', title: '', uri: '' })
@@ -39,9 +42,11 @@ const CategoryForm = ({ closecallback }: IForm) => {
 
   useEffect(() => {
     if (shouldPost) {
-      postCategory(newCategory, () => {
+      postCategory(newCategory, 
+        (id) => {
         closecallback();
         showAlert("Категория добавлена")
+        setNewProduct(prev => ({ ...prev, category: id }))
         refetchCategories();
         setShouldPost(false)
       }, (e) => {
@@ -53,7 +58,7 @@ const CategoryForm = ({ closecallback }: IForm) => {
   return (
     <div className={styles.form}>
       <h2 className={styles.form_title}>Новый материал</h2>
-      <Input style={{ width: "100%" , borderColor: err == "emptyName"? "var(--red)":''}} type='text' placeholder='Введите название' value={newCategory.title} onChange={(e) => setNewCategory((prev) => ({ ...prev, title: e }))} />
+      <Input style={{ width: "100%", borderColor: err == "emptyName" ? "var(--red)" : '' }} type='text' placeholder='Введите название' value={newCategory.title} onChange={(e) => setNewCategory((prev) => ({ ...prev, title: e }))} />
       {err == 'emptyName' && <p className={styles.err}>Введите название</p>}
       {newCategory.img === '' && <FileUpload onUpload={(filename) => setNewCategory((prev) => ({ ...prev, img: filename }))} />}
       {newCategory.img !== '' && <AdminImage src={newCategory.img} onDelete={() => setNewCategory((prev) => ({ ...prev, img: '' }))} />}

@@ -31,7 +31,10 @@ const MaterialInput = ({ setModalMode, style }: ICustomInput) => {
         Материалы*
         <Select
           title='Материалы'
-          options={materials.map((c: Material) => ({ value: c.id, label: c.title }))}
+          options={materials.map((m: Material) => ({ 
+            value: m.id, 
+            label: m.title 
+          }))}
           onChange={(id) => { handleAddMaterial(id) }}
           lastChild={<div >Добавить материал...</div>}
           lastOnClick={() => { setModalMode("material") }}
@@ -42,6 +45,8 @@ const MaterialInput = ({ setModalMode, style }: ICustomInput) => {
       <div className={styles.materials_container}>
         {newProduct.materials.map(m => {
           const material: Material = materials.find((u: Material) => u.id === m) as Material
+          if (!material) return null
+          
           return (<div className={styles.material_item} key={material.id}>
             {material.title}
             <div className={styles.icon_container} >

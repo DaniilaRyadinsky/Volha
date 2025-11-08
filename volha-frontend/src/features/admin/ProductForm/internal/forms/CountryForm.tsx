@@ -7,9 +7,12 @@ import { useAdminData } from '../../../AdminLayout/lib/useAdminData'
 import { postCountry } from '../../api/fetchCreate'
 import styles from '../../ui/ProductForm.module.css'
 import { showAlert, showErr } from '../../../../../shared/ui/customAlert/showAlert'
+import { useProductForm } from '../../context/useProductForm'
 
 const CountryForm = ({ closecallback }: IForm) => {
     const { refetchCountries } = useAdminData()
+    const { setNewProduct } = useProductForm()
+    
     const [err, setErr] = useState('')
     const [newCountry, setNewCountry] = useState<Country>({ id: '', title: '', friendly: "yes" }
     )
@@ -21,9 +24,10 @@ const CountryForm = ({ closecallback }: IForm) => {
             setErr('')
             postCountry(
                 newCountry,
-                () => {
+                (id) => {
                     closecallback();
-                    showAlert("Страна добавленф")
+                    showAlert("Страна добавлена")
+                    setNewProduct(prev => ({ ...prev, country: id }))
                     refetchCountries();
                 },
                 (e) => {

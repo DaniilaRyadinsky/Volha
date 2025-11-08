@@ -8,9 +8,11 @@ import { postMaterial } from '../../api/fetchCreate'
 
 import styles from '../../ui/ProductForm.module.css'
 import { showAlert, showErr } from '../../../../../shared/ui/customAlert/showAlert'
+import { useProductForm } from '../../context/useProductForm'
 
 const MaterialForm = ({ closecallback }: IForm) => {
     const { refetchMaterials } = useAdminData()
+    const { newProduct, setNewProduct } = useProductForm()
     const [err, setErr] = useState('')
     const [newMaterial, setNewMaterial] = useState<Material>({ id: '', title: '' }
     )
@@ -22,9 +24,11 @@ const MaterialForm = ({ closecallback }: IForm) => {
             setErr('')
             postMaterial(
                 newMaterial,
-                () => {
+                (id) => {
                     closecallback();
                     showAlert("Материал добавлен")
+                    const newM = [...newProduct.materials, id]
+                    setNewProduct(prev => ({ ...prev, materials: newM }))
                     refetchMaterials();
                 },
                 (e) => {
