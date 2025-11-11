@@ -1,4 +1,36 @@
 import BASE_URL from "../../../shared/const/base_url";
+import type { Product } from "../types/ProductTypes";
+
+export const fetchProduct = async (
+    id: string,
+    onSuccess: (res: Product) => void,
+    onError: (err: string) => void
+) => {
+    fetch(`${BASE_URL}api/product/get?id=${id}`, {
+        method: 'GET',
+        headers: { 'Content-Type': 'application/json' }
+    })
+        .then(async response => {
+            const status = response.status;
+            if (status === 200) {
+                const json = await response.json();
+                onSuccess(json);
+            } else {
+                switch (status) {
+                    case 500:
+                        onError("Ошибка сервера 500")
+                        break;
+                    case 502:
+                        onError("Ошибка сервера 502")
+                        break;
+                }
+            }
+        })
+        .catch((e) => {
+            onError(e.error)
+        })
+}
+
 
 export const fetchColorImg = async(
     color_id: string,

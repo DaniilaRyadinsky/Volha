@@ -1,23 +1,23 @@
+
 import { Swiper as SwiperTypes } from 'swiper';
 import { Swiper as SwiperComponent, SwiperSlide } from 'swiper/react';
 import { FreeMode, Thumbs } from 'swiper/modules';
 
 import 'swiper/swiper-bundle.css';
-import styles from './ProductImages.module.css'
+
+import styles from './ImgView.module.css'
+
 import BASE_URL from '../../shared/const/base_url';
 
-interface IProductImages {
+interface IImgView {
     images: string[];
-    name: string,
     thumbsSwiper: SwiperTypes | null,
     setThumbsSwiper: (swiper: SwiperTypes | null) => void,
-    onClick?: () => void,
+    close?: () => void,
 }
-
-const ProductImages = ({ images, name, thumbsSwiper, setThumbsSwiper, onClick }: IProductImages) => {
-
+const ImgView = ({ images, thumbsSwiper, setThumbsSwiper, close }: IImgView) => {
     return (
-        <div className={styles.container}>
+        <div className={styles.container} >
             <div className={styles.miniatures_container}>
                 <SwiperComponent
                     onSwiper={setThumbsSwiper}
@@ -44,7 +44,7 @@ const ProductImages = ({ images, name, thumbsSwiper, setThumbsSwiper, onClick }:
                 className={styles.image_container}
                 >
                 {images.map((img) =>
-                    <SwiperSlide onClick={onClick}>
+                    <SwiperSlide key={img}>
                         <img src={`${BASE_URL}images/${img}`} alt={`Фото ${name}`} className={styles.image} />
                     </SwiperSlide>
                 )}
@@ -53,4 +53,4 @@ const ProductImages = ({ images, name, thumbsSwiper, setThumbsSwiper, onClick }:
     )
 }
 
-export default ProductImages
+export default ImgView

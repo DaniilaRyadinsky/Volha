@@ -9,12 +9,16 @@ import deleteIcon from '../../../../shared/assets/icons/delete_forever.svg'
 import { ClipLoader } from 'react-spinners'
 import { fetchDeleteProduct } from '../api/fetchDeleteProduct'
 import { showAlert } from '../../../../shared/ui/customAlert/showAlert'
+import { useNavigate } from 'react-router-dom'
+import { Button } from '../../../../shared/ui/Button/Button'
 
 const ProductList = () => {
     const { data: products, isLoading, refetch } = useQuery<Product[]>({
         queryKey: ['products'],
         queryFn: fetchProducts,
     })
+
+    const navigate = useNavigate();
 
 
     const handleDelete = (id: string) => {
@@ -34,6 +38,7 @@ const ProductList = () => {
         <div>
             <div className={styles.title_container}>
                 <h1 className={styles.title}>Все товары</h1>
+                <Button onClick={() => navigate("/admin/product/new")}>Добавить</Button>
             </div>
 
             <div className={styles.table}>
@@ -63,16 +68,16 @@ const ProductList = () => {
                         <div className={styles.cell}>{product.price} ₽</div>
                         <div className={styles.cell}>
                             <div className={styles.actions}>
-                                <img 
-                                className={styles.action_icon} 
-                                src={editIcon} 
-                                onClick={() => showAlert("создание")} />
+                                <img
+                                    className={styles.action_icon}
+                                    src={editIcon}
+                                    onClick={() => navigate(`/admin/product/${product.id}/edit`)} />
                                 <img className={styles.action_icon} src={deleteIcon} onClick={() => handleDelete(product.id)} />
                             </div>
                         </div>
                     </div>
                 ))}
-            </div>
+            </div>      
         </div>
     )
 }

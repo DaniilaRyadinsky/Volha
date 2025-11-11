@@ -14,3 +14,13 @@
     border-bottom: 1px solid #8D8D93;
     background-color: #F6F6F6;
 }
+
+.admin_nav {
+    display: flex;
+    flex-direction: row;
+    gap: 15px;
+}
+.admin_nav a {
+    text-decoration: none;
+    color: inherit;
+}

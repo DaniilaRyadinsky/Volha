@@ -85,7 +85,7 @@ export const postColor = async (
     data: Color,
     onSuccess: (id: string) => void,
     onError: (err: string) => void
-)=> {
+) => {
     return postTable("color", data, onSuccess, onError)
 }
 
@@ -95,12 +95,86 @@ export const postColorImg = async (
     photos: string[],
     product_id: string,
     onSuccess: () => void,
-    onError: (err: string) => void
+    onError: (err: string) => void,
+    mode?: "post" | "put"
 ) => {
     fetch(`${BASE_URL}api/productcolorphotos/create`, {
         method: "POST",
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({color_id, photos, product_id})
+        body: JSON.stringify({ color_id, photos, product_id })
+    })
+        .then(async response => response.status)
+        .then(status => {
+            switch (status) {
+                case 200:
+                    onSuccess();
+                    break;
+                case 400:
+                    onError("Неправильные данные")
+                    break;
+                case 500:
+                    onError("Ошибка сервера 500")
+                    break;
+                case 502:
+                    if (mode === "put")
+                        return putColorImg(
+                            color_id,
+                            photos,
+                            product_id,
+                            onSuccess,
+                            onError
+                        )
+                    onError("Ошибка сервера 502")
+
+            }
+        })
+        .catch(err => {
+            console.error("Ошибка сети:", err);
+            onError("Ошибка сети");
+        })
+}
+
+
+export const putProduct = async (
+    data: NewProduct,
+    onSuccess: () => void,
+    onError: (e: string) => void
+) => {
+    fetch(`${BASE_URL}api/product/update?id=${data.id}`, {
+        method: "PUT",
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+    })
+        .then(res => res.status)
+        .then(status => {
+            switch (status) {
+                case 200:
+                    onSuccess();
+                    break
+                case 400:
+                    throw new Error("Неверные данные")
+                case 500:
+                    throw new Error("Ошибка на сервере")
+                case 502:
+                    throw new Error("Неверный ID")
+            }
+        })
+        .catch((e) => {
+            onError(e.error)
+        })
+}
+
+export const putColorImg = async (
+    color_id: string,
+    photos: string[],
+    product_id: string,
+    onSuccess: () => void,
+    onError: (err: string) => void
+) => {
+    fetch(`${BASE_URL}api/productcolorphotos/update`, {
+        method: "PUT",
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ color_id, photos, product_id })
     })
         .then(async response => response.status)
         .then(status => {

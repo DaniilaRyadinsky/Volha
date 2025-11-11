@@ -9,6 +9,11 @@ import type { Category, Product } from "../../entities/Product/types/ProductType
 import AdminLayout from "../../features/admin/AdminLayout/ui/AdminLayout"
 import { ProductForm } from "../../features/admin/ProductForm/ui/ProductForm"
 import ProductList from "../../features/admin/ProductList/ui/ProductList"
+import CategoryList from "../../features/admin/CategoryList/ui/CategoryList"
+import MaterialList from "../../features/admin/MaterialList/ui/MaterialList"
+import BrandList from "../../features/admin/BrandList/ui/BrandList"
+import CountryList from "../../features/admin/CountryList/ui/CountryList"
+import ColorList from "../../features/admin/ColorList/ui/ColorList"
 
 
 const useCategoryCrumb = (_data: Category & {breadcrumb: string}, params: Category) => {
@@ -97,8 +102,27 @@ const router = createBrowserRouter([
             {
                 path: "product/:id/edit",
                 element: <ProductForm />
-            },
-
+			},
+			{
+				path: "category/all",
+				element: <CategoryList />
+			},
+			{
+				path: "material/all",
+				element: <MaterialList />
+			},
+			{
+				path: "brand/all",
+				element: <BrandList />
+			},
+			{
+				path: "country/all",
+				element: <CountryList />
+			},
+			{
+				path: "color/all",
+				element: <ColorList />
+			},
         ]
     }
 ]);
