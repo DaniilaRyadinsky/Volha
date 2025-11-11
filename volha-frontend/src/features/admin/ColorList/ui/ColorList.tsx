@@ -1,27 +1,27 @@
 import styles from './ColorList.module.css'
-import { useQuery } from '@tanstack/react-query'
 import type { Color } from '../../../../entities/Product/types/ProductTypes'
-import fetchColor from '../api/fetchColor'
-
 import editIcon from '../../../../shared/assets/icons/edit.svg'
 import deleteIcon from '../../../../shared/assets/icons/delete_forever.svg'
 import { ClipLoader } from 'react-spinners'
 import { fetchDeleteColor } from '../api/fetchDeleteColor'
-import { showAlert } from '../../../../shared/ui/customAlert/showAlert'
+import { showAlert, showErr } from '../../../../shared/ui/customAlert/showAlert'
+import { useAdminData } from '../../AdminLayout/lib/useAdminData'
+import { useState } from 'react'
+import ColorForm from '../../forms/ColorForm'
+import Modal from '../../../../shared/ui/Modal/Modal'
+import { Button } from '../../../../shared/ui/Button/Button'
 
 const ColorList = () => {
-    const { data: colors, isLoading, refetch } = useQuery<Color[]>({
-        queryKey: ['colors'],
-        queryFn: fetchColor,
-    })
-
+    const { colors, isLoading, refetchColors } = useAdminData()
+    const [editColor, setEditColor] = useState<Color | undefined>(undefined);
+    const [isModal, setIsModal] = useState(false)
 
     const handleDelete = (id: string) => {
         fetchDeleteColor(id, () => {
             showAlert('Цвет удален');
-            refetch();
+            refetchColors();
         }, (err) => {
-            alert(err);
+            showErr(err);
         })
     }
 
@@ -33,6 +33,7 @@ const ColorList = () => {
         <div>
             <div className={styles.title_container}>
                 <h1 className={styles.title}>Все цвета</h1>
+                <Button onClick={() => setIsModal(true)}>Новый цвет</Button>
             </div>
 
             <div className={styles.table}>
@@ -43,11 +44,11 @@ const ColorList = () => {
                     <div className={styles.cell}>Действия</div>
                 </div>
 
-                {colors?.map(color => (
+                {colors?.map((color: Color) => (
                     <div key={color.id} className={styles.row}>
                         <div className={styles.cell}>{color.name}</div>
                         <div className={styles.cell}>
-                            <div 
+                            <div
                                 className={styles.color_preview}
                                 style={{ backgroundColor: color.hex }}
                             />
@@ -55,16 +56,26 @@ const ColorList = () => {
                         <div className={styles.cell}>{color.hex}</div>
                         <div className={styles.cell}>
                             <div className={styles.actions}>
-                                <img 
-                                className={styles.action_icon} 
-                                src={editIcon} 
-                                onClick={() => showAlert("создание")} />
+                                <img
+                                    className={styles.action_icon}
+                                    src={editIcon}
+                                    onClick={() => setEditColor(color)} />
                                 <img className={styles.action_icon} src={deleteIcon} onClick={() => handleDelete(color.id)} />
                             </div>
                         </div>
                     </div>
                 ))}
             </div>
+            {editColor &&
+                <Modal closeCallback={() => setEditColor(undefined)}>
+                    <ColorForm data={editColor} closecallback={() => setEditColor(undefined)} />
+                </Modal>}
+
+            {isModal &&
+                <Modal closeCallback={() => setIsModal(false)}>
+                    <ColorForm closecallback={() => setIsModal(false)} />
+                </Modal>
+            }
         </div>
     )
 }

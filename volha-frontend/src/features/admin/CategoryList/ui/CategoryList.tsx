@@ -1,28 +1,28 @@
 import styles from './CategoryList.module.css'
-import { useQuery } from '@tanstack/react-query'
 import type { Category } from '../../../../entities/Product/types/ProductTypes'
-import fetchCategory from '../api/fetchCategory'
 import BASE_URL from '../../../../shared/const/base_url'
-
 import editIcon from '../../../../shared/assets/icons/edit.svg'
 import deleteIcon from '../../../../shared/assets/icons/delete_forever.svg'
 import { ClipLoader } from 'react-spinners'
 import { fetchDeleteCategory } from '../api/fetchDeleteCategory'
-import { showAlert } from '../../../../shared/ui/customAlert/showAlert'
+import { showAlert, showErr } from '../../../../shared/ui/customAlert/showAlert'
+import { useAdminData } from '../../AdminLayout/lib/useAdminData'
+import { useState } from 'react'
+import CategoryForm from '../../forms/CategoryForm'
+import Modal from '../../../../shared/ui/Modal/Modal'
+import { Button } from '../../../../shared/ui/Button/Button'
 
 const CategoryList = () => {
-    const { data: categories, isLoading, refetch } = useQuery<Category[]>({
-        queryKey: ['categories'],
-        queryFn: fetchCategory,
-    })
-
+    const { categories, refetchCategories, isLoading } = useAdminData()
+    const [editCategory, setEditCategory] = useState<Category | undefined>(undefined);
+    const [isModal, setIsModal] = useState(false)
 
     const handleDelete = (id: string) => {
         fetchDeleteCategory(id, () => {
             showAlert('Категория удалена');
-            refetch();
+            refetchCategories();
         }, (err) => {
-            alert(err);
+            showErr(err);
         })
     }
 
@@ -34,6 +34,7 @@ const CategoryList = () => {
         <div>
             <div className={styles.title_container}>
                 <h1 className={styles.title}>Все категории</h1>
+                <Button onClick={() => setIsModal(true)}>Новая категория</Button>
             </div>
 
             <div className={styles.table}>
@@ -44,7 +45,7 @@ const CategoryList = () => {
                     <div className={styles.cell}>Действия</div>
                 </div>
 
-                {categories?.map(category => (
+                {categories?.map((category: Category) => (
                     <div key={category.id} className={styles.row}>
                         <div className={styles.cell}>
                             <img
@@ -57,16 +58,26 @@ const CategoryList = () => {
                         <div className={styles.cell}>{category.uri}</div>
                         <div className={styles.cell}>
                             <div className={styles.actions}>
-                                <img 
-                                className={styles.action_icon} 
-                                src={editIcon} 
-                                onClick={() => showAlert("создание")} />
+                                <img
+                                    className={styles.action_icon}
+                                    src={editIcon}
+                                    onClick={() => setEditCategory(category)} />
                                 <img className={styles.action_icon} src={deleteIcon} onClick={() => handleDelete(category.id)} />
                             </div>
                         </div>
                     </div>
                 ))}
             </div>
+            {editCategory &&
+                <Modal closeCallback={() => setEditCategory(undefined)}>
+                    <CategoryForm data={editCategory} closecallback={() => setEditCategory(undefined)} />
+                </Modal>}
+
+            {isModal &&
+                <Modal closeCallback={() => setIsModal(false)}>
+                    <CategoryForm closecallback={() => setIsModal(false)} />
+                </Modal>
+            }
         </div>
     )
 }

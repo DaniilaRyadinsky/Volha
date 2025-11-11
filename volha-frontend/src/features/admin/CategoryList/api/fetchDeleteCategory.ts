@@ -22,7 +22,7 @@ export const fetchDeleteCategory = async (
                 onError('Ошибка сервера 500');
                 break;
             case 502:
-                onError('Ошибка сервера 502');
+                onError('Категория привязана к существующему товару. Удалите товар и повторите снова');
                 break;
         }
     })

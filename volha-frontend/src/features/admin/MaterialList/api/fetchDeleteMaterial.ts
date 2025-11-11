@@ -22,7 +22,7 @@ export const fetchDeleteMaterial = async (
                 onError('Ошибка сервера 500');
                 break;
             case 502:
-                onError('Ошибка сервера 502');
+                onError('Материал привязан к существующему товару. Удалите товар и повторите снова');
                 break;
         }
     })

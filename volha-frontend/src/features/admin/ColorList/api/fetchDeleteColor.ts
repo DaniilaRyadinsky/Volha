@@ -22,7 +22,7 @@ export const fetchDeleteColor = async (
                 onError('Ошибка сервера 500');
                 break;
             case 502:
-                onError('Ошибка сервера 502');
+                onError('Цвет привязан к существующему товару. Удалите товар и повторите снова');
                 break;
         }
     })

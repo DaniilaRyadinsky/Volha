@@ -1,6 +1,7 @@
-import type { Color } from "../../../../entities/Product/types/ProductTypes";
+import type { Brand, Category, Color, Country, Material } from "../../../../entities/Product/types/ProductTypes";
 
 export interface IForm {
+    data?: Brand | Category | Country | Material | Color
     closecallback: () => void
 }
 

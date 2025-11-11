@@ -1,27 +1,29 @@
 import styles from './MaterialList.module.css'
-import { useQuery } from '@tanstack/react-query'
 import type { Material } from '../../../../entities/Product/types/ProductTypes'
-import fetchMaterial from '../api/fetchMaterial'
 
 import editIcon from '../../../../shared/assets/icons/edit.svg'
 import deleteIcon from '../../../../shared/assets/icons/delete_forever.svg'
 import { ClipLoader } from 'react-spinners'
 import { fetchDeleteMaterial } from '../api/fetchDeleteMaterial'
-import { showAlert } from '../../../../shared/ui/customAlert/showAlert'
+import { showAlert, showErr } from '../../../../shared/ui/customAlert/showAlert'
+import { useAdminData } from '../../AdminLayout/lib/useAdminData'
+import { useState } from 'react'
+import MaterialForm from '../../forms/MaterialForm'
+import Modal from '../../../../shared/ui/Modal/Modal'
+import { Button } from '../../../../shared/ui/Button/Button'
 
 const MaterialList = () => {
-    const { data: materials, isLoading, refetch } = useQuery<Material[]>({
-        queryKey: ['materials'],
-        queryFn: fetchMaterial,
-    })
+    const {materials, isLoading, refetchMaterials} = useAdminData()
+    const [editMaterial, setEditMaterial] = useState<Material | undefined>(undefined);
+    const [isModal, setIsModal] = useState(false)
 
 
     const handleDelete = (id: string) => {
         fetchDeleteMaterial(id, () => {
             showAlert('Материал удален');
-            refetch();
+            refetchMaterials();
         }, (err) => {
-            alert(err);
+            showErr(err);
         })
     }
 
@@ -33,6 +35,7 @@ const MaterialList = () => {
         <div>
             <div className={styles.title_container}>
                 <h1 className={styles.title}>Все материалы</h1>
+                <Button onClick={() => setIsModal(true)}>Новый материал</Button>
             </div>
 
             <div className={styles.table}>
@@ -41,7 +44,7 @@ const MaterialList = () => {
                     <div className={styles.cell}>Действия</div>
                 </div>
 
-                {materials?.map(material => (
+                {materials?.map((material:Material) => (
                     <div key={material.id} className={styles.row}>
                         <div className={styles.cell}>{material.title}</div>
                         <div className={styles.cell}>
@@ -49,13 +52,23 @@ const MaterialList = () => {
                                 <img 
                                 className={styles.action_icon} 
                                 src={editIcon} 
-                                onClick={() => showAlert("создание")} />
+                                onClick={() => setEditMaterial(material)} />
                                 <img className={styles.action_icon} src={deleteIcon} onClick={() => handleDelete(material.id)} />
                             </div>
                         </div>
                     </div>
                 ))}
             </div>
+            {editMaterial &&
+                <Modal closeCallback={() => setEditMaterial(undefined)}>
+                    <MaterialForm data={editMaterial} closecallback={() => setEditMaterial(undefined)} />
+                </Modal>}
+
+            {isModal &&
+                <Modal closeCallback={() => setIsModal(false)}>
+                    <MaterialForm closecallback={() => setIsModal(false)} />
+                </Modal>
+            }
         </div>
     )
 }

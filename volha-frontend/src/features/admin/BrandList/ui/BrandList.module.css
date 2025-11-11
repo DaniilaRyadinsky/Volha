@@ -5,6 +5,19 @@
     width: 600px;
 }
 
+.title_container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 20px 80px;
+    margin-bottom: 10px;
+}
+
+.title {
+    font-size: var(--title1-xxl);
+}
+
+
 .header {
     display: grid;
     grid-template-columns: 3fr 110px;
@@ -56,14 +69,3 @@
     filter: brightness(0.8);
     background: var(--on-main);
 }
-
-.title_container {
-    margin-bottom: 20px;
-}
-
-.title {
-    font-size: 24px;
-    font-weight: 600;
-    color: var(--on-surface);
-}
-

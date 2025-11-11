@@ -1,27 +1,27 @@
 import styles from './CountryList.module.css'
-import { useQuery } from '@tanstack/react-query'
-import type { Country } from '../../../../entities/Product/types/ProductTypes'
-import fetchCountry from '../api/fetchCountry'
-
 import editIcon from '../../../../shared/assets/icons/edit.svg'
 import deleteIcon from '../../../../shared/assets/icons/delete_forever.svg'
 import { ClipLoader } from 'react-spinners'
 import { fetchDeleteCountry } from '../api/fetchDeleteCountry'
-import { showAlert } from '../../../../shared/ui/customAlert/showAlert'
+import { showAlert, showErr } from '../../../../shared/ui/customAlert/showAlert'
+import { useAdminData } from '../../AdminLayout/lib/useAdminData'
+import type { Country } from '../../../../entities/Product/types/ProductTypes'
+import { useState } from 'react'
+import CountryForm from '../../forms/CountryForm'
+import Modal from '../../../../shared/ui/Modal/Modal'
+import { Button } from '../../../../shared/ui/Button/Button'
 
 const CountryList = () => {
-    const { data: countries, isLoading, refetch } = useQuery<Country[]>({
-        queryKey: ['countries'],
-        queryFn: fetchCountry,
-    })
-
+    const { countries, isLoading, refetchCountries } = useAdminData()
+    const [editCountry, setEditCountry] = useState<Country | undefined>(undefined);
+    const [isModal, setIsModal] = useState(false)
 
     const handleDelete = (id: string) => {
         fetchDeleteCountry(id, () => {
             showAlert('Страна удалена');
-            refetch();
+            refetchCountries();
         }, (err) => {
-            alert(err);
+            showErr(err);
         })
     }
 
@@ -33,6 +33,7 @@ const CountryList = () => {
         <div>
             <div className={styles.title_container}>
                 <h1 className={styles.title}>Все страны</h1>
+                <Button onClick={() => setIsModal(true)}>Новая страна</Button>
             </div>
 
             <div className={styles.table}>
@@ -42,22 +43,32 @@ const CountryList = () => {
                     <div className={styles.cell}>Действия</div>
                 </div>
 
-                {countries?.map(country => (
+                {countries?.map((country: Country) => (
                     <div key={country.id} className={styles.row}>
                         <div className={styles.cell}>{country.title}</div>
                         <div className={styles.cell}>{country.friendly}</div>
                         <div className={styles.cell}>
                             <div className={styles.actions}>
-                                <img 
-                                className={styles.action_icon} 
-                                src={editIcon} 
-                                onClick={() => showAlert("создание")} />
+                                <img
+                                    className={styles.action_icon}
+                                    src={editIcon}
+                                    onClick={() => setEditCountry(country)} />
                                 <img className={styles.action_icon} src={deleteIcon} onClick={() => handleDelete(country.id)} />
                             </div>
                         </div>
                     </div>
                 ))}
             </div>
+            {editCountry &&
+                <Modal closeCallback={() => setEditCountry(undefined)}>
+                    <CountryForm data={editCountry} closecallback={() => setEditCountry(undefined)} />
+                </Modal>}
+
+            {isModal &&
+                <Modal closeCallback={() => setIsModal(false)}>
+                    <CountryForm closecallback={() => setIsModal(false)} />
+                </Modal>
+            }
         </div>
     )
 }

@@ -6,14 +6,14 @@ import Select from '../../../../shared/ui/Select/Select'
 import Textarea from '../../../../shared/ui/Textarea/Textarea'
 import { useAdminData } from '../../AdminLayout/lib/useAdminData'
 import Modal from '../../../../shared/ui/Modal/Modal'
-import BrandForm from '../internal/forms/BrandForm'
-import MaterialForm from '../internal/forms/MaterialForm'
-import CategoryForm from '../internal/forms/CategoryForm'
-import CountryForm from '../internal/forms/CountryForm'
+import BrandForm from '../../forms/BrandForm'
+import MaterialForm from '../../forms/MaterialForm'
+import CategoryForm from '../../forms/CategoryForm'
+import CountryForm from '../../forms/CountryForm'
 import { getLabel, getLabelTitle, validateForm } from '../lib/utils'
 import { Button } from '../../../../shared/ui/Button/Button'
 import ColorInput from '../internal/ColorInput/ColorInput'
-import ColorForm from '../internal/forms/ColorForm'
+import ColorForm from '../../forms/ColorForm'
 import { ProductFormProvider } from '../context/ProductFormContext'
 import { useProductForm } from '../context/useProductForm'
 import MaterialInput from '../internal/MaterialInput/MaterialInput'
@@ -182,11 +182,11 @@ const ProductFormContent = () => {
 
 
                 {modalMode != "none" && <Modal closeCallback={() => setModalMode("none")}>
-                    {modalMode === 'brand' && <BrandForm closecallback={() => setModalMode("none")} />}
-                    {modalMode === 'material' && <MaterialForm closecallback={() => setModalMode("none")} />}
-                    {modalMode === 'category' && <CategoryForm closecallback={() => setModalMode("none")} />}
-                    {modalMode == "country" && <CountryForm closecallback={() => setModalMode("none")} />}
-                    {modalMode === "color" && <ColorForm closecallback={() => setModalMode("none")} />}
+                    {modalMode === 'brand' && <BrandForm closecallback={() => setModalMode("none")} setNewProduct={setNewProduct} />}
+                    {modalMode === 'material' && <MaterialForm closecallback={() => setModalMode("none")} setNewProduct={setNewProduct} />}
+                    {modalMode === 'category' && <CategoryForm closecallback={() => setModalMode("none")} setNewProduct={setNewProduct} />}
+                    {modalMode == "country" && <CountryForm closecallback={() => setModalMode("none")} setNewProduct={setNewProduct} />}
+                    {modalMode === "color" && <ColorForm closecallback={() => setModalMode("none")} setColorList={setColorList} setSelectedColor={setSelectedColor} />}
 
                 </Modal>}
             </div>

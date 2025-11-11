@@ -65,12 +65,14 @@
 }
 
 .title_container {
-    margin-bottom: 20px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 20px 80px;
+    margin-bottom: 10px;
 }
 
 .title {
-    font-size: 24px;
-    font-weight: 600;
-    color: var(--on-surface);
+    font-size: var(--title1-xxl);
 }
 

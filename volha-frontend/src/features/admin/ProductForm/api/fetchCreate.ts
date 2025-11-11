@@ -135,12 +135,13 @@ export const postColorImg = async (
 }
 
 
-export const putProduct = async (
-    data: NewProduct,
+export const putTable= async (
+    table: "brand" | "category" | "material" | "country" | "product" | "color",
+    data: Brand | Category | Material | Country | NewProduct | Color,
     onSuccess: () => void,
-    onError: (e: string) => void
+    onError: (err: string) => void
 ) => {
-    fetch(`${BASE_URL}api/product/update?id=${data.id}`, {
+    fetch(`${BASE_URL}api/${table}/update?id=${data.id}`, {
         method: "PUT",
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(data)
@@ -162,6 +163,54 @@ export const putProduct = async (
         .catch((e) => {
             onError(e.error)
         })
+}
+
+export const putProduct = async (
+    data: NewProduct,
+    onSuccess: () => void,
+    onError: (e: string) => void
+) => {
+    return putTable("product", data, onSuccess, onError)
+}
+
+export const putBrand = async (
+    data: Brand,
+    onSuccess: () => void,
+    onError: (e: string) => void
+) => {
+    return putTable("brand", data, onSuccess, onError)
+}
+
+export const putCategory = async (
+    data: Category,
+    onSuccess: () => void,
+    onError: (e: string) => void
+) => {
+    return putTable("category", data, onSuccess, onError)
+}
+
+export const putColor = async (
+    data: Color,
+    onSuccess: () => void,
+    onError: (e: string) => void
+) => {
+    return putTable("color", data, onSuccess, onError)
+}
+
+export const putCountry = async (
+    data: Country,
+    onSuccess: () => void,
+    onError: (e: string) => void
+) => {
+    return putTable("country", data, onSuccess, onError)
+}
+
+export const putMaterial = async (
+    data: Material,
+    onSuccess: () => void,
+    onError: (e: string) => void
+) => {
+    return putTable("material", data, onSuccess, onError)
 }
 
 export const putColorImg = async (
