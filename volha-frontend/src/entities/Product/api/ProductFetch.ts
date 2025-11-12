@@ -62,3 +62,29 @@ export const fetchColorImg = async(
         }
     })
 }
+
+export const productSearch = async(
+    query: string,
+    onSuccess: (res: Product[])=> void,
+    onError: (e: string) => void
+) => {
+    fetch(`${BASE_URL}api/product/search?query=${query}`, {
+        method: 'GET',
+        headers: { 'Content-Type': 'application/json' }
+    })
+    .then(response => {
+        const status = response.status;
+        switch (status) {
+            case 200:
+                return response.json().then(data => {
+                    onSuccess(data);
+                });
+            case 400:
+                onError('Неправильные данные');
+                break;
+            case 502:
+                onError('Ошибка сервера 502');
+                break;
+        }
+    })
+}

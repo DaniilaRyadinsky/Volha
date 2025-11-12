@@ -19,6 +19,7 @@ import { useProductForm } from '../context/useProductForm'
 import MaterialInput from '../internal/MaterialInput/MaterialInput'
 import { useParams } from 'react-router-dom'
 import { useProductFormEffects } from '../lib/useProductFormEffects'
+import AdminSearch from '../../AdminSearch/AdminSearch'
 
 
 const ProductFormContent = () => {
@@ -178,6 +179,7 @@ const ProductFormContent = () => {
                 </div>
                 <div className={styles.right_container}>
                     <ColorInput setModalMode={setModalMode} style={{ borderColor: errors.colors ? 'var(--red)' : undefined }} />
+                    <AdminSearch/>
                 </div>
 
 
