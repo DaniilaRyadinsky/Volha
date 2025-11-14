@@ -40,7 +40,7 @@ export type Product = {
     materials: Material[],
     colors: Color[],
     photos: string[],
-    seems: string[],
+    seems: Product[],
     price: number,
     description: string
 }

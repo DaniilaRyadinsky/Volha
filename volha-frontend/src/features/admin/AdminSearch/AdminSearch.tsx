@@ -5,8 +5,9 @@ import styles from './AdminSearch.module.css'
 import BASE_URL from '../../../shared/const/base_url';
 import { productSearch } from '../../../entities/Product/api/ProductFetch';
 import { showErr } from '../../../shared/ui/customAlert/showAlert';
+import Backdrop from '../../../shared/ui/Backdrop/Backdrop';
 
-const AdminSearch = () => {
+const AdminSearch = ({ onClick }: { onClick: (id: string) => void }) => {
     const [query, setQuery] = useState('')
     const [searchResult, setSearchResult] = useState<Product[]>([]);
 
@@ -35,14 +36,22 @@ const AdminSearch = () => {
                 placeholder="Поиск..."
             />
             {query !== '' && searchResult.length == 0 && <p>Товары не найдены</p>}
-            {searchResult.length != 0 && <div className={styles.productList_result}>
-                {searchResult.map((product) =>
-                    <div key={product.id} className={styles.product_item}>
-                        <img className={styles.product_img} src={`${BASE_URL}images/${product.photos[0]}`} alt={product.title} />
-                        <h3 className={styles.cell} >{product.title}</h3>
-                        <p className={styles.cell}>{product.article}</p>
-                    </div>)}
-            </div>}
+            {searchResult.length != 0 &&
+                <>
+                    <div className={styles.productList_result}>
+                        {searchResult.map((product) =>
+
+                            <div key={product.id} className={styles.product_item} onClick={(e) => {e.stopPropagation(); onClick(product.id); setQuery(''); console.log(product.id)}}>
+                                <img className={styles.product_img} src={`${BASE_URL}images/${product.photos[0]}`} alt={product.title} />
+                                <h3 className={styles.cell} >{product.title}</h3>
+                                <p className={styles.cell}>{product.article}</p>
+                            </div>
+
+                        )}
+                   </div>
+                    <Backdrop onClick={() => setQuery('')}/>
+                </>
+            }
         </div>
     )
 }

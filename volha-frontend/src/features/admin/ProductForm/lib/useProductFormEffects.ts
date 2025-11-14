@@ -53,7 +53,7 @@ export const useProductFormEffects = ({
                         materials: product.materials?.map(m => m.id) ?? [],
                         colors: product.colors?.map(c => c.id) ?? [],
                         photos: product.photos ?? [],
-                        seems: product.seems ?? [],
+                        seems: product.seems!= null? product.seems.map(s => s.id) : [],
                         price: product.price,
                         description: product.description ?? ''
                     }));

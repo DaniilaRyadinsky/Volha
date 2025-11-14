@@ -19,7 +19,7 @@ import { useProductForm } from '../context/useProductForm'
 import MaterialInput from '../internal/MaterialInput/MaterialInput'
 import { useParams } from 'react-router-dom'
 import { useProductFormEffects } from '../lib/useProductFormEffects'
-import AdminSearch from '../../AdminSearch/AdminSearch'
+import SeemsInput from '../internal/SeemsInput/SeemsInput'
 
 
 const ProductFormContent = () => {
@@ -56,7 +56,7 @@ const ProductFormContent = () => {
     return (
         <div >
             <div className={styles.title_container}>
-                <h1 className={styles.title}>Новый товар</h1>
+                <h1 className={styles.title}>{id ? "Редактирование товара" :     "Новый товар"}</h1>
                 <Button onClick={() => handleSaveClick()}>Сохранить</Button>
             </div>
             <div className={styles.form_container}>
@@ -179,7 +179,7 @@ const ProductFormContent = () => {
                 </div>
                 <div className={styles.right_container}>
                     <ColorInput setModalMode={setModalMode} style={{ borderColor: errors.colors ? 'var(--red)' : undefined }} />
-                    <AdminSearch/>
+                    <SeemsInput/>
                 </div>
 
 

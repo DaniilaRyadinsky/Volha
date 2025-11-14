@@ -158,6 +158,7 @@ const ProductPage = () => {
             <Swiper
               slidesPerView={getSlidesPerView()}
               spaceBetween={20}
+              loop={true }
               pagination={{
                 clickable: true,
               }}
@@ -165,30 +166,12 @@ const ProductPage = () => {
               modules={[Navigation, Pagination]}
               className={styles.mySwiper}
             >
-              <SwiperSlide>
-                <ProductCard article='1234' isAbsolutePath={true} id='1' title="Шкаф металлический очень крутой налетайте" price={2300000} width={1200} height={1200} depth={1200} photos={['https://garagespace.ru/images/5e4320afe986a.jpg']} colors={[{ id: '1', name: 'red', hex: '#121231' }, { id: '2', name: 'red', hex: '#242463' }]} />
-              </SwiperSlide>
-              <SwiperSlide>
-                <ProductCard article='1234' isAbsolutePath={true} id='2' title="Шкаф металлический очень крутой налетайте" price={23000} width={1200} height={1200} depth={1200} photos={['https://garagespace.ru/images/5e4320afe986a.jpg']} colors={[{ id: '1', name: 'red', hex: '#121231' }, { id: '2', name: 'red', hex: '#242463' }]} />
-              </SwiperSlide>
-              <SwiperSlide>
-                <ProductCard article='1234' isAbsolutePath={true} id='3' title="Шкаф металлический очень крутой налетайте" price={23000} width={1200} height={1200} depth={1200} photos={['https://garagespace.ru/images/5e4320afe986a.jpg']} colors={[{ id: '1', name: 'red', hex: '#121231' }, { id: '2', name: 'red', hex: '#242463' }]} />
-              </SwiperSlide>
-              <SwiperSlide>
-                <ProductCard article='1234' isAbsolutePath={true} id='4' title="Шкаф металлический очень крутой налетайте" price={23000} width={1200} height={1200} depth={1200} photos={['https://garagespace.ru/images/5e4320afe986a.jpg']} colors={[{ id: '1', name: 'red', hex: '#121231' }, { id: '2', name: 'red', hex: '#242463' }]} />
-              </SwiperSlide>
-              <SwiperSlide>
-                <ProductCard article='1234' isAbsolutePath={true} id='5' title="Шкаф металлический очень крутой налетайте" price={23000} width={1200} height={1200} depth={1200} photos={['https://garagespace.ru/images/5e4320afe986a.jpg']} colors={[{ id: '1', name: 'red', hex: '#121231' }, { id: '2', name: 'red', hex: '#242463' }]} />
-              </SwiperSlide>
-              <SwiperSlide>
-                <ProductCard article='1234' isAbsolutePath={true} id='6' title="Шкаф металлический очень крутой налетайте" price={23000} width={1200} height={1200} depth={1200} photos={['https://garagespace.ru/images/5e4320afe986a.jpg']} colors={[{ id: '1', name: 'red', hex: '#121231' }, { id: '2', name: 'red', hex: '#242463' }]} />
-              </SwiperSlide>
-              <SwiperSlide>
-                <ProductCard article='1234' isAbsolutePath={true} id='7' title="Шкаф металлический очень крутой налетайте" price={23000} width={1200} height={1200} depth={1200} photos={['https://garagespace.ru/images/5e4320afe986a.jpg']} colors={[{ id: '1', name: 'red', hex: '#121231' }, { id: '2', name: 'red', hex: '#242463' }]} />
-              </SwiperSlide>
-              <SwiperSlide>
-                <ProductCard article='1234' isAbsolutePath={true} id='8' title="Шкаф металлический очень крутой налетайте" price={23000} width={1200} height={1200} depth={1200} photos={['https://garagespace.ru/images/5e4320afe986a.jpg']} colors={[{ id: '1', name: 'red', hex: '#121231' }, { id: '2', name: 'red', hex: '#242463' }]} />
-              </SwiperSlide>
+              {product.seems  && product.seems.map(seem => (
+                <SwiperSlide key={seem.id}>
+                  <ProductCard article={seem.article} isAbsolutePath={true} id={seem.id} title={seem.title} price={seem.price} width={seem.width} height={seem.height} depth={seem.depth} photos={seem.photos} colors={seem.colors} />
+                </SwiperSlide>
+              ))}
+              
             </Swiper>
             <img className={styles.swiper_next_button} src={arrow} onClick={() => nextHandler()} />
           </div>

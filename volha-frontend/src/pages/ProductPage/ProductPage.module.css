@@ -189,6 +189,11 @@
     background-color: var(--main);
 }
 
+.mySwiper :global(.swiper-slide) {
+    width: auto !important;
+    height: auto;
+}
+
 .img_viewer {
     position: fixed;
     top: 0;

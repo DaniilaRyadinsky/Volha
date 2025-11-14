@@ -1,0 +1,51 @@
+.seems_form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.seems_title {
+    font-size: 1rem;
+}
+
+.seems_list {
+    display: flex;
+    flex-direction: column;
+}
+
+.seem_item {
+    display: grid;
+    grid-template-columns: 110px 1fr 1fr auto;
+    padding: 5px;
+    border-bottom: 1px solid var(--outline);
+}
+.seem_item:last-child {
+    border-bottom: none;
+}
+
+.seem_img {
+    width: 110px;
+    height: 73px;
+    object-fit: cover;
+    border-radius: 4px;
+}
+
+.cell {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0px 10px;
+    
+}
+
+.delete_icon {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    padding: 5px;
+    border-radius: 4px;
+}
+
+.delete_icon:hover {
+    background-color: var(--on-main-container);
+}
