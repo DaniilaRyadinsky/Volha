@@ -61,8 +61,8 @@ const CategoryForm = ({ closecallback, data, setNewProduct }: ICategoryForm) => 
         postCategory(
           categoryToSave,
           (id) => {
+            refetchCategories()
             if (id) {
-              refetchCategories()
               if (setNewProduct) {
                 setNewProduct(prev => ({ ...prev, category: id }))
               }

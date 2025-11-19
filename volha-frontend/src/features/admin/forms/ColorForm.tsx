@@ -39,6 +39,7 @@ const ColorForm = ({ closecallback, data, setColorList, setSelectedColor }: ICol
                     newColor,
                     () => {
                         refetchColors()
+                        
                         closecallback();
                         showAlert("Цвет изменен")
                     },
@@ -51,8 +52,8 @@ const ColorForm = ({ closecallback, data, setColorList, setSelectedColor }: ICol
                 postColor(
                     newColor,
                     (id) => {
+                        refetchColors()
                         if (id) {
-                            refetchColors()
                             if (setColorList && setSelectedColor) {
                                 const createdColor: Color = { ...newColor, id }
                                 setColorList((prev) => {

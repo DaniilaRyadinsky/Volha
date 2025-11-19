@@ -2,6 +2,7 @@
     display: flex;
     flex-direction: column;
     gap: 20px;
+    margin-top: 30px;
 }
 
 .product_info {
@@ -101,7 +102,7 @@
 }
 
 .product_seems {
-    padding: 0px 60px;
+    /* padding: 0px 60px; */
 }
 
 
@@ -190,7 +191,6 @@
 }
 
 .mySwiper :global(.swiper-slide) {
-    width: auto !important;
     height: auto;
 }
 

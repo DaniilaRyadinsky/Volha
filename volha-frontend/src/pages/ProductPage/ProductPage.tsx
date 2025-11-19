@@ -3,19 +3,20 @@ import { Swiper as SwiperTypes } from 'swiper';
 import { Button } from '../../shared/ui/Button/Button'
 import ProductImages from '../../widgets/ProductImages/ProductImages'
 import 'swiper/swiper-bundle.css';
-
-
-import styles from './ProductPage.module.css'
 import { Navigation, Pagination } from 'swiper/modules';
 import ProductCard from '../../entities/Product/ProductCard/ProductCard';
 import type { Product } from '../../entities/Product/types/ProductTypes';
 import { useLoaderData } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { ColorMarker } from '../../shared/ui/Color/Color';
-
 import arrow from '../../shared/assets/icons/expand_more.svg'
 import ImgView from '../../widgets/ImgView/ImgView';
 import { fetchColorImg } from '../../entities/Product/api/ProductFetch';
+import Markdown from 'react-markdown';
+import { MDXEditor } from '@mdxeditor/editor'
+import '@mdxeditor/editor/style.css'
+
+import styles from './ProductPage.module.css'
 
 interface LoaderResult {
   product: Product;
@@ -148,7 +149,12 @@ const ProductPage = () => {
 
         <div className={styles.product_description}>
           <h2 className={styles.title2}>Описание</h2>
-          <p className={styles.description} >{product.description}</p>
+          <Markdown>
+            {product.description}
+          </Markdown>
+          {/* <MDRedactor/> */}
+          <MDXEditor markdown={product.description} />
+          {/* <p className={styles.description} >{product.description}</p> */}
         </div>
 
         <div className={styles.product_seems}>
@@ -158,7 +164,7 @@ const ProductPage = () => {
             <Swiper
               slidesPerView={getSlidesPerView()}
               spaceBetween={20}
-              loop={true }
+              loop={true}
               pagination={{
                 clickable: true,
               }}
@@ -166,12 +172,12 @@ const ProductPage = () => {
               modules={[Navigation, Pagination]}
               className={styles.mySwiper}
             >
-              {product.seems  && product.seems.map(seem => (
+              {product.seems && product.seems.map(seem => (
                 <SwiperSlide key={seem.id}>
                   <ProductCard article={seem.article} isAbsolutePath={true} id={seem.id} title={seem.title} price={seem.price} width={seem.width} height={seem.height} depth={seem.depth} photos={seem.photos} colors={seem.colors} />
                 </SwiperSlide>
               ))}
-              
+
             </Swiper>
             <img className={styles.swiper_next_button} src={arrow} onClick={() => nextHandler()} />
           </div>

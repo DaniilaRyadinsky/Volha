@@ -52,8 +52,9 @@ const BrandForm = ({ closecallback, data, setNewProduct }: IBrandForm) => {
                 postBrand(
                     newBrand,
                     (id) => {
+                        console.log(id)
+                        refetchBrands()
                         if (id) {
-                            refetchBrands()
                             if (setNewProduct)
                                 setNewProduct(prev => ({ ...prev, brand: id }))
                         }

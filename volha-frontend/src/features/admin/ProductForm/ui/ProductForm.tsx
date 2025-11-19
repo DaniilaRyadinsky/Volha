@@ -3,7 +3,6 @@ import type { Brand, Category, Country } from '../../../../entities/Product/type
 import Input from '../../../../shared/ui/Input/Input'
 import styles from './ProductForm.module.css'
 import Select from '../../../../shared/ui/Select/Select'
-import Textarea from '../../../../shared/ui/Textarea/Textarea'
 import { useAdminData } from '../../AdminLayout/lib/useAdminData'
 import Modal from '../../../../shared/ui/Modal/Modal'
 import BrandForm from '../../forms/BrandForm'
@@ -14,12 +13,13 @@ import { getLabel, getLabelTitle, validateForm } from '../lib/utils'
 import { Button } from '../../../../shared/ui/Button/Button'
 import ColorInput from '../internal/ColorInput/ColorInput'
 import ColorForm from '../../forms/ColorForm'
-import { ProductFormProvider } from '../context/ProductFormContext'
+import { ProductFormProvider } from '../context/ProductFormProvider'
 import { useProductForm } from '../context/useProductForm'
 import MaterialInput from '../internal/MaterialInput/MaterialInput'
 import { useParams } from 'react-router-dom'
 import { useProductFormEffects } from '../lib/useProductFormEffects'
 import SeemsInput from '../internal/SeemsInput/SeemsInput'
+import MDRedactor from '../internal/MDRedactor/MDRedactor'
 
 
 const ProductFormContent = () => {
@@ -56,7 +56,7 @@ const ProductFormContent = () => {
     return (
         <div >
             <div className={styles.title_container}>
-                <h1 className={styles.title}>{id ? "Редактирование товара" :     "Новый товар"}</h1>
+                <h1 className={styles.title}>{id ? "Редактирование товара" : "Новый товар"}</h1>
                 <Button onClick={() => handleSaveClick()}>Сохранить</Button>
             </div>
             <div className={styles.form_container}>
@@ -172,14 +172,11 @@ const ProductFormContent = () => {
                         </label>
                     </div>
 
-                    <label className={styles.label}>
-                        Описание
-                        <Textarea style={{ height: "150px" }} value={newProduct.description} placeholder='Описание' onChange={(e) => onInputChange("description", e)} />
-                    </label>
+
                 </div>
                 <div className={styles.right_container}>
                     <ColorInput setModalMode={setModalMode} style={{ borderColor: errors.colors ? 'var(--red)' : undefined }} />
-                    <SeemsInput/>
+                    <SeemsInput />
                 </div>
 
 
@@ -192,6 +189,11 @@ const ProductFormContent = () => {
 
                 </Modal>}
             </div>
+            {/* <label className={styles.label}>
+                Описание
+            </label> */}
+
+            <MDRedactor />
         </div>
     )
 }

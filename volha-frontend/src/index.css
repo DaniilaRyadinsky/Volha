@@ -28,8 +28,6 @@ h1,
 h2,
 h3,
 h4,
-ul,
-li,
 p {
   margin: 0;
   padding: 0;
@@ -40,8 +38,9 @@ p {
 
 ul,
 li {
-  list-style: none;
-  text-decoration: none;
+  font-weight: normal;
+  color: var(--main);
+  letter-spacing: 0.15px;
 }
 
 html {
