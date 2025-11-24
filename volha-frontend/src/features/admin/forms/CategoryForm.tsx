@@ -23,6 +23,22 @@ const CategoryForm = ({ closecallback, data, setNewProduct }: ICategoryForm) => 
   const [newCategory, setNewCategory] = useState<Category>(
     { id: '', img: '', title: '', uri: '' })
 
+    useEffect(() => {
+        const handleKeyPress = (event: Event) => {
+            const keyEvent = event as unknown as KeyboardEvent
+            if (keyEvent.key === 'Enter') {
+                event.preventDefault()
+                handleClick()
+            }
+        };
+
+        window.addEventListener('keydown', handleKeyPress);
+
+        return () => {
+            window.removeEventListener('keydown', handleKeyPress);
+        };
+    }, [newCategory]);
+
   useEffect(() => {
     if (data) {
       setNewCategory(data)

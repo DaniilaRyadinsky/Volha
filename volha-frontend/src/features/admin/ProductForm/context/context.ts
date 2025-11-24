@@ -7,12 +7,18 @@ export interface ProductFormContextType {
     setNewProduct: React.Dispatch<React.SetStateAction<NewProduct>>
     colorList: ColorItem[]
     setColorList: React.Dispatch<React.SetStateAction<ColorItem[]>>
-    selectedColor: string
-    setSelectedColor: React.Dispatch<React.SetStateAction<string>>
+    selectedColor: string | null
+    setSelectedColor: React.Dispatch<React.SetStateAction<string | null>>
     resetForm: () => void,
-    onInputChange: (key: keyof Product, value: string | number) => void,
+    onInputChange: (key: keyof Product, value: string | number) => void;
     errors: Partial<Record<keyof NewProduct, "empty" | "limit">>
     setErrors: React.Dispatch<React.SetStateAction<Partial<Record<keyof NewProduct, "empty" | "limit">>>>
+    title: string
+    setTitle: React.Dispatch<React.SetStateAction<string>>
+    description: string
+    setDescription: React.Dispatch<React.SetStateAction<string>>
+    article: string
+    setArticle: React.Dispatch<React.SetStateAction<string>>
 }
 
 export const ProductFormContext = createContext<ProductFormContextType | undefined>(undefined)

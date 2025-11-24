@@ -1,6 +1,6 @@
 .header {
     padding: 20px 40px;
-    font-size: var(--title1-xxl);
+    /* font-size: var(--title1-xxl); */
 }
 
 .product_list {
@@ -12,7 +12,7 @@
 
 @media (max-width: 1400px) {
     .header {
-        font-size: var(--title1-xl);
+        /* font-size: var(--title1-xl); */
     }
 
     .product_list {
@@ -22,7 +22,7 @@
 
 @media (max-width: 1096px) {
     .header {
-        font-size: var(--title1-l);
+        /* font-size: var(--title1-l); */
     }
 
     .product_list {
@@ -32,7 +32,7 @@
 
 @media (max-width: 768px) {
     .header {
-        font-size: var(--title1-m);
+        /* font-size: var(--title1-m); */
     }
 
     .product_list {
@@ -53,13 +53,13 @@
 
     .header {
         padding: 10px 15px;
-        font-size: var(--title1-s);
+        /* font-size: var(--title1-s); */
     }
 }
 
 @media (max-width: 400px) {
     .header {
         padding: 10px 0px;
-        font-size: var(--title1-xs);
+        /* font-size: var(--title1-xs); */
     }
 }

@@ -25,7 +25,22 @@ import MDRedactor from '../internal/MDRedactor/MDRedactor'
 const ProductFormContent = () => {
     const { categories, brands, countries } = useAdminData();
 
-    const { newProduct, setNewProduct, colorList, setColorList, resetForm, onInputChange, errors, setErrors, setSelectedColor } = useProductForm();
+    const { newProduct,
+        setNewProduct,
+        colorList,
+        setColorList,
+        resetForm,
+        onInputChange,
+        errors,
+        setErrors,
+        setSelectedColor,
+        title,
+        article,
+        setTitle,
+        setArticle,
+        description,
+        setDescription
+    } = useProductForm();
 
     const [modalMode, setModalMode] = useState<"none" | "brand" | "category" | "country" | "material" | "color">("none")
     const [shouldPost, setShouldPost] = useState(false);
@@ -42,12 +57,24 @@ const ProductFormContent = () => {
         setSelectedColor,
         setShouldPost,
         resetForm,
+        description,
+        setDescription,
+        article,
+        setArticle, title,
+        setTitle
     });
 
     const handleSaveClick = () => {
-        const isValid = validateForm(newProduct, colorList, setErrors);
+        const isValid = validateForm(newProduct, title, article, colorList, setErrors);
         if (!isValid) return;
-        setNewProduct(prev => ({ ...prev, colors: colorList.map(item => item.color.id), photos: colorList[0].images }))
+        setNewProduct(prev => ({
+            ...prev,
+            title: title,
+            article: article,
+            description: description,
+            colors: colorList.map(item => item.color.id), photos: colorList[0].images
+        }
+        ))
 
         console.log("handlesave")
         setShouldPost(true);
@@ -66,8 +93,8 @@ const ProductFormContent = () => {
                         <Input
                             type='text'
                             placeholder='Введите название товара'
-                            value={newProduct.title}
-                            onChange={(e) => onInputChange("title", e)}
+                            value={title}
+                            onChange={(e) => setTitle(e)}
                             style={{ borderColor: errors.title ? 'var(--red)' : undefined }}
                         />
                     </label>
@@ -77,8 +104,8 @@ const ProductFormContent = () => {
                         <Input
                             type='text'
                             placeholder='Введите артикул'
-                            value={newProduct.article}
-                            onChange={(e) => onInputChange("article", e)}
+                            value={article}
+                            onChange={(e) => setArticle(e)}
                             style={{ borderColor: errors.article ? 'var(--red)' : undefined }}
                         />
                     </label>
@@ -88,7 +115,7 @@ const ProductFormContent = () => {
                         Цена*
                         <Input
                             type='number'
-                            placeholder='Высота'
+                            placeholder='Цена'
                             value={String(newProduct.price)}
                             onChange={(e) => onInputChange("price", parseInt(e))}
                             style={{ width: "150px", borderColor: errors.price ? 'var(--red)' : undefined }}
@@ -189,9 +216,9 @@ const ProductFormContent = () => {
 
                 </Modal>}
             </div>
-            {/* <label className={styles.label}>
+            <label className={styles.label}>
                 Описание
-            </label> */}
+            </label>
 
             <MDRedactor />
         </div>

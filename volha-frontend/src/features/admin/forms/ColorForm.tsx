@@ -28,6 +28,22 @@ const ColorForm = ({ closecallback, data, setColorList, setSelectedColor }: ICol
         }
     }, [data])
 
+    useEffect(() => {
+        const handleKeyPress = (event: Event) => {
+            const keyEvent = event as unknown as KeyboardEvent
+            if (keyEvent.key === 'Enter') {
+                event.preventDefault()
+                handleClick()
+            }
+        };
+
+        window.addEventListener('keydown', handleKeyPress);
+
+        return () => {
+            window.removeEventListener('keydown', handleKeyPress);
+        };
+    }, [newColor]);
+
     const handleClick = () => {
         if (newColor.name.trim() == "")
             setErr("emptyName")

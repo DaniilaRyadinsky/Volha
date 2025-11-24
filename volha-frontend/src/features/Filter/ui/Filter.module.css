@@ -163,7 +163,7 @@
 }
 
 .title {
-    font-size: var(--title1-xxl);
+    /* font-size: var(--title1-xxl); */
 }
 
 .button_container {
@@ -175,20 +175,20 @@
 
 @media (max-width: 1400px) {
     .title {
-        font-size: var(--title1-xl);
+        /* font-size: var(--title1-xl); */
     }
 }
 
 @media (max-width: 1096px) {
     .title {
-        font-size: var(--title1-l);
+        /* font-size: var(--title1-l); */
     }
 }
 
 
 @media (max-width: 768px) {
     .title {
-        font-size: var(--title1-m);
+        /* font-size: var(--title1-m); */
     }
 
     .filter_attr_btn {
@@ -198,12 +198,12 @@
 
 @media (max-width: 568px) {
     .title {
-    font-size: var(--title1-s);
+    /* font-size: var(--title1-s); */
 }
 }
 
 @media (max-width: 400px) {
     .title {
-    font-size: var(--title1-xs);
+    /* font-size: var(--title1-xs); */
 }
 }

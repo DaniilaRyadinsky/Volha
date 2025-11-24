@@ -30,6 +30,23 @@ const BrandForm = ({ closecallback, data, setNewProduct }: IBrandForm) => {
             setNewBrand(data)
     }, [data])
 
+    useEffect(() => {
+        const handleKeyPress = (event: Event) => {
+            const keyEvent = event as unknown as KeyboardEvent
+            if (keyEvent.key === 'Enter') {
+                event.preventDefault()
+                handleClick()
+            }
+        };
+
+        window.addEventListener('keydown', handleKeyPress);
+
+        return () => {
+            window.removeEventListener('keydown', handleKeyPress);
+        };
+    }, [newBrand]);
+
+
     const handleClick = () => {
         if (newBrand.name.trim() == "")
             setErr("emptyName")

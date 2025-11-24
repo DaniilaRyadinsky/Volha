@@ -27,6 +27,22 @@ const CountryForm = ({ closecallback, data, setNewProduct }: ICountryForm) => {
         }
     }, [data])
 
+    useEffect(() => {
+        const handleKeyPress = (event: Event) => {
+            const keyEvent = event as unknown as KeyboardEvent
+            if (keyEvent.key === 'Enter') {
+                event.preventDefault()
+                handleClick()
+            }
+        };
+
+        window.addEventListener('keydown', handleKeyPress);
+
+        return () => {
+            window.removeEventListener('keydown', handleKeyPress);
+        };
+    }, [newCountry]);
+
     const handleClick = () => {
         if (newCountry.title.trim() == "")
             setErr("emptyName")

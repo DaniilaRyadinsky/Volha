@@ -44,8 +44,8 @@ const ProductList = () => {
             <div className={styles.table}>
                 <div className={styles.header}>
                     <div className={styles.cell}>Фото</div>
-                    <div className={styles.cell}>Категория</div>
                     <div className={styles.cell}>Название</div>
+                    <div className={styles.cell}>Категория</div>
                     <div className={styles.cell}>Артикул</div>
                     <div className={styles.cell}>Бренд</div>
                     <div className={styles.cell}>Цена</div>
@@ -61,8 +61,8 @@ const ProductList = () => {
                                 className={styles.product_image}
                             />
                         </div>
-                        <div className={styles.cell}>{product.category?.title}</div>
                         <div className={styles.cell}>{product.title}</div>
+                        <div className={styles.cell}>{product.category?.title}</div>
                         <div className={styles.cell}>{product.article}</div>
                         <div className={styles.cell}>{product.brand?.name}</div>
                         <div className={styles.cell}>{product.price} ₽</div>
@@ -77,7 +77,7 @@ const ProductList = () => {
                         </div>
                     </div>
                 ))}
-            </div>      
+            </div>
         </div>
     )
 }

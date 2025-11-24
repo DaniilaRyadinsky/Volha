@@ -1,13 +1,41 @@
-:global(.mdxeditor-root-contenteditable ul) {
-  list-style-type: disc;
-  margin-left: 1.5rem;
+.md_redactor_wrapper h1 {
+  font-size: 1.875rem;
 }
 
-:global(.mdxeditor-root-contenteditable ol) {
-  list-style-type: decimal;
-  margin-left: 1.5rem;
+.md_redactor_wrapper h2 {
+  font-size: 1.75rem;
 }
 
-:global(.mdxeditor-root-contenteditable li) {
-  list-style-position: outside;
+.md_redactor_wrapper h3 {
+  font-size: 1.5rem;
+}
+
+.md_redactor_wrapper h4 {
+  font-size: 1.25rem;
+}
+
+/* основной текст */
+.md_redactor_wrapper p,
+.md_redactor_wrapper li,
+.md_redactor_wrapper td,
+.md_redactor_wrapper th {
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+/* таблицы */
+.md_redactor_wrapper table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+/* .md_redactor_wrapper table,
+.md_redactor_wrapper th,
+.md_redactor_wrapper td {
+  border: 1px solid var(--outline);
+} */
+
+.md_redactor_wrapper th,
+.md_redactor_wrapper td {
+  padding: 5px 10px;
 }

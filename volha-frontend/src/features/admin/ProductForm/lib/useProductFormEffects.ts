@@ -4,18 +4,26 @@ import { postColorImg, postProduct, putProduct } from '../api/fetchCreate';
 import { showAlert, showErr } from '../../../../shared/ui/customAlert/showAlert';
 import type { NewProduct } from '../types/types';
 import type { ColorItem } from '../types/types';
+import { useNavigate } from 'react-router-dom';
 
 interface UseProductFormEffectsParams {
     id: string | undefined;
     newProduct: NewProduct;
     colorList: ColorItem[];
     shouldPost: boolean;
+    description: string;
+    article: string;
+    title: string;
+    setTitle: (title: string) => void;
+    setDescription: (description: string) => void;
+    setArticle: (article: string) => void;
     setNewProduct: (product: NewProduct | ((prev: NewProduct) => NewProduct)) => void;
     setColorList: (colorList: ColorItem[]) => void;
     setSelectedColor: (colorId: string) => void;
     setShouldPost: (shouldPost: boolean) => void;
     resetForm: () => void;
 }
+
 
 /**
  * Хук для управления эффектами формы продукта:
@@ -27,6 +35,9 @@ export const useProductFormEffects = ({
     newProduct,
     colorList,
     shouldPost,
+    setTitle,
+    setDescription,
+    setArticle,
     setNewProduct,
     setColorList,
     setSelectedColor,
@@ -34,12 +45,16 @@ export const useProductFormEffects = ({
     resetForm,
 }: UseProductFormEffectsParams) => {
     // Эффект для загрузки продукта по ID
+    const navigate = useNavigate();
     useEffect(() => {
         if (id) {
             console.log(id);
             fetchProduct(
                 id,
                 (product) => {
+                    setTitle(product.title);
+                    setDescription(product.description ?? '');
+                    setArticle(product.article);
                     setNewProduct(() => ({
                         id: product.id,
                         article: product.article,
@@ -53,7 +68,7 @@ export const useProductFormEffects = ({
                         materials: product.materials?.map(m => m.id) ?? [],
                         colors: product.colors?.map(c => c.id) ?? [],
                         photos: product.photos ?? [],
-                        seems: product.seems!= null? product.seems.map(s => s.id) : [],
+                        seems: product.seems != null ? product.seems.map(s => s.id) : [],
                         price: product.price,
                         description: product.description ?? ''
                     }));
@@ -95,6 +110,7 @@ export const useProductFormEffects = ({
                                 () => {
                                     showAlert("Продукт изменен")
                                     // resetForm()
+                                    navigate('/admin/product/all');
                                 },
                                 (e) => {
                                     showErr("Ошибка передачи фото" + e)
@@ -119,6 +135,7 @@ export const useProductFormEffects = ({
                                 () => {
                                     showAlert("Продукт создан")
                                     resetForm()
+                                    navigate('/admin/product/all');
                                 },
                                 (e) => {
                                     showAlert("Ошибка передачи фото" + e)

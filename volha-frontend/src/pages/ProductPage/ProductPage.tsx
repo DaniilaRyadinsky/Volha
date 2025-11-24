@@ -13,8 +13,7 @@ import arrow from '../../shared/assets/icons/expand_more.svg'
 import ImgView from '../../widgets/ImgView/ImgView';
 import { fetchColorImg } from '../../entities/Product/api/ProductFetch';
 import Markdown from 'react-markdown';
-import { MDXEditor } from '@mdxeditor/editor'
-import '@mdxeditor/editor/style.css'
+import remarkGfm from 'remark-gfm'
 
 import styles from './ProductPage.module.css'
 
@@ -25,6 +24,7 @@ interface LoaderResult {
 
 const ProductPage = () => {
   const product = (useLoaderData() as LoaderResult).product;
+
   console.log(product)
 
   const [thumbsSwiper, setThumbsSwiper] = useState<SwiperTypes | null>(null);
@@ -100,6 +100,7 @@ const ProductPage = () => {
               <div className={styles.colors}>
                 {product.colors.map(c =>
                   <ColorMarker
+                    key={c.id}
                     style={{ borderColor: selectedColor.id === c.id ? "var(--main)" : undefined }}
                     name={c.name}
                     hex={c.hex}
@@ -149,39 +150,51 @@ const ProductPage = () => {
 
         <div className={styles.product_description}>
           <h2 className={styles.title2}>Описание</h2>
-          <Markdown>
-            {product.description}
-          </Markdown>
-          {/* <MDRedactor/> */}
-          <MDXEditor markdown={product.description} />
-          {/* <p className={styles.description} >{product.description}</p> */}
+          <div className={styles.description}>
+            <Markdown remarkPlugins={[remarkGfm]}>
+              {product.description}
+            </Markdown>
+          </div>
         </div>
 
-        <div className={styles.product_seems}>
+        {product.seems && <div className={styles.product_seems}>
           <h2 className={styles.title2}>С этим сочетается</h2>
           <div className={styles.swiper_container}>
-            <img className={styles.swiper_prev_button} src={arrow} onClick={() => prevHandler()} />
+            <img className={styles.swiper_prev_button} src={arrow} onClick={() => prevHandler()} style={{visibility: product.seems.length > getSlidesPerView() ? "visible" : "hidden"}}/>
             <Swiper
               slidesPerView={getSlidesPerView()}
               spaceBetween={20}
-              loop={true}
+              loop={product.seems ? product.seems.length > getSlidesPerView() : false}
               pagination={{
                 clickable: true,
               }}
               onSwiper={(swiper) => setSwiper(swiper)}
               modules={[Navigation, Pagination]}
               className={styles.mySwiper}
+            // style={{ overflow: 'visible' }}
             >
               {product.seems && product.seems.map(seem => (
-                <SwiperSlide key={seem.id}>
-                  <ProductCard article={seem.article} isAbsolutePath={true} id={seem.id} title={seem.title} price={seem.price} width={seem.width} height={seem.height} depth={seem.depth} photos={seem.photos} colors={seem.colors} />
+                <SwiperSlide key={seem.id} style={{ height: 'auto' }}>
+                  <div style={{ width: '100%' }}>
+                    <ProductCard
+                      article={seem.article}
+                      isAbsolutePath={true}
+                      id={seem.id}
+                      title={seem.title}
+                      price={seem.price}
+                      width={seem.width}
+                      height={seem.height}
+                      depth={seem.depth}
+                      photos={seem.photos}
+                      colors={seem.colors}
+                    />
+                  </div>
                 </SwiperSlide>
               ))}
-
             </Swiper>
-            <img className={styles.swiper_next_button} src={arrow} onClick={() => nextHandler()} />
+            <img className={styles.swiper_next_button} src={arrow} onClick={() => nextHandler()} style={{visibility: product.seems.length > getSlidesPerView() ? "visible" : "hidden"}}/>
           </div>
-        </div>
+        </div>}
 
       </div >
     </>

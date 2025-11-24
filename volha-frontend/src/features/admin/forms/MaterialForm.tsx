@@ -26,6 +26,22 @@ const MaterialForm = ({ closecallback, data, setNewProduct }: IMaterialForm) => 
         }
     }, [data])
 
+    useEffect(() => {
+        const handleKeyPress = (event: Event) => {
+            const keyEvent = event as unknown as KeyboardEvent
+            if (keyEvent.key === 'Enter') {
+                event.preventDefault()
+                handleClick()
+            }
+        };
+
+        window.addEventListener('keydown', handleKeyPress);
+
+        return () => {
+            window.removeEventListener('keydown', handleKeyPress);
+        };
+    }, [newMaterial]);
+
     const handleClick = () => {
         if (newMaterial.title.trim() == "")
             setErr("emptyName")

@@ -16,23 +16,14 @@ import {
     type MDXEditorMethods
 } from '@mdxeditor/editor'
 import { useProductForm } from '../../context/useProductForm'
-import { useEffect, useRef, useCallback, useMemo } from 'react'
+import { useEffect, useRef, useMemo } from 'react'
+
+import styles from './MDRedactor.module.css'
 
 const MDRedactor = () => {
-    const { newProduct, setNewProduct } = useProductForm()
+    const { description, setDescription } = useProductForm()
     const debounceTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
     const editorRef = useRef<MDXEditorMethods >(null)
-
-    // Дебаунсим обновления описания с задержкой 500мс
-    const handleDescriptionChange = useCallback((value: string) => {
-        if (debounceTimerRef.current) {
-            clearTimeout(debounceTimerRef.current)
-        }
-
-        debounceTimerRef.current = setTimeout(() => {
-            setNewProduct(prev => ({ ...prev, description: value }))
-        }, 500)
-    }, [setNewProduct])
 
     // Мемоизируем конфигурацию плагинов
     const plugins = useMemo(() => [
@@ -66,17 +57,17 @@ const MDRedactor = () => {
     }, [])
 
     useEffect(() => {
-        if (editorRef.current && typeof newProduct.description === 'string') {
-            editorRef.current.setMarkdown(newProduct.description)
+        if (editorRef.current && typeof description === 'string') {
+            editorRef.current.setMarkdown(description)
         }
-    }, [newProduct.description])
+    }, [description])
 
     return (
-        <div className="md-redactor-wrapper">
+        <div className={styles.md_redactor_wrapper}>
             <MDXEditor
                 ref={editorRef}
-                markdown={newProduct.description}
-                onChange={handleDescriptionChange}
+                markdown={description}
+                onChange={setDescription}
                 plugins={plugins}
             />
         </div>
