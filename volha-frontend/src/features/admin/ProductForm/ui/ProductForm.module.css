@@ -67,3 +67,9 @@
     color: var(--red);
     font-size: 0.875rem;
 }
+.description_container {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-top: 15px;
+}

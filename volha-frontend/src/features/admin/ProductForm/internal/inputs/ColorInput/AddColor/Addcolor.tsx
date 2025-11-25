@@ -1,8 +1,8 @@
 import clsx from "clsx";
 import { useState } from "react";
-import Backdrop from "../../../../../shared/ui/Backdrop/Backdrop";
-import type { ISelect } from "../../../../../shared/ui/Select/Select";
-import plus from '../../../../../shared/assets/icons/add.svg'
+import Backdrop from "../../../../../../../shared/ui/Backdrop/Backdrop";
+import type { ISelect } from "../../../../../../../shared/ui/Select/Select";
+import plus from '../../../../../../../shared/assets/icons/add.svg'
 import styles from './AddColor.module.css'
 
 export const AddColor = ({ title, options, value, onChange, lastChild, lastOnClick }: ISelect) => {

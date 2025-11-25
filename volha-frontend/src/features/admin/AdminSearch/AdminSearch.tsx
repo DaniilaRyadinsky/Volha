@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import type { Product } from '../../../entities/Product/types/ProductTypes';
-import Input from '../../../shared/ui/Input/Input';
+import Input from '../../../shared/ui/Input/TextInput';
 import styles from './AdminSearch.module.css'
 import BASE_URL from '../../../shared/const/base_url';
 import { productSearch } from '../../../entities/Product/api/ProductFetch';
@@ -43,7 +43,7 @@ const AdminSearch = ({ onClick }: { onClick: (id: string) => void }) => {
 
                             <div key={product.id} className={styles.product_item} onClick={(e) => {e.stopPropagation(); onClick(product.id); setQuery(''); console.log(product.id)}}>
                                 <img className={styles.product_img} src={`${BASE_URL}images/${product.photos[0]}`} alt={product.title} />
-                                <h3 className={styles.cell} >{product.title}</h3>
+                                <p className={styles.cell} >{product.title}</p>
                                 <p className={styles.cell}>{product.article}</p>
                             </div>
 

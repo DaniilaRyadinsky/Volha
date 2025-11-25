@@ -1,21 +1,19 @@
 import { useEffect, useState } from 'react'
 import type { Material } from '../../../entities/Product/types/ProductTypes'
 import { Button } from '../../../shared/ui/Button/Button'
-import Input from '../../../shared/ui/Input/Input'
+import Input from '../../../shared/ui/Input/TextInput'
 import { postMaterial, putMaterial } from '../ProductForm/api/fetchCreate'
 
 import styles from './Forms.module.css'
 import { showAlert, showErr } from '../../../shared/ui/customAlert/showAlert'
-import type { NewProduct } from '../ProductForm/types/types'
 import { useAdminData } from '../AdminLayout/lib/useAdminData'
+import type { IAdminModalForm } from '../ProductForm/types/types'
 
-interface IMaterialForm {
+interface IMaterialForm extends IAdminModalForm {
     data?: Material
-    closecallback: () => void,
-    setNewProduct?: React.Dispatch<React.SetStateAction<NewProduct>>;
 }
 
-const MaterialForm = ({ closecallback, data, setNewProduct }: IMaterialForm) => {
+const MaterialForm = ({ closecallback, data, onChange }: IMaterialForm) => {
     const { refetchMaterials } = useAdminData()
     const [err, setErr] = useState('')
     const [newMaterial, setNewMaterial] = useState<Material>({ id: '', title: '' })
@@ -67,8 +65,8 @@ const MaterialForm = ({ closecallback, data, setNewProduct }: IMaterialForm) => 
                     (id) => {
                         if (id) {
                             refetchMaterials()
-                            if (setNewProduct) {
-                                setNewProduct(prev => ({ ...prev, materials: [...prev.materials, id] }))
+                            if (onChange) {
+                                onChange(id)
                             }
                         }
                         closecallback();

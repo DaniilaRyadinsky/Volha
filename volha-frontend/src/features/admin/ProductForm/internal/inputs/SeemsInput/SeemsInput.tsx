@@ -1,30 +1,32 @@
 import { useEffect, useState } from 'react'
-import { fetchProduct } from '../../../../../entities/Product/api/ProductFetch'
-import AdminSearch from '../../../AdminSearch/AdminSearch'
-import { useProductForm } from '../../context/useProductForm'
-import type { Product } from '../../../../../entities/Product/types/ProductTypes'
+
 import styles from './SeemsInput.module.css'
 
-import BASE_URL from '../../../../../shared/const/base_url'
-import deleteIcon from '../../../../../shared/assets/icons/delete_forever.svg'
-const SeemsInput = () => {
-    const { newProduct, setNewProduct } = useProductForm()
+import deleteIcon from '../../../../../../shared/assets/icons/delete_forever.svg'
+import type { Product } from '../../../../../../entities/Product/types/ProductTypes'
+import BASE_URL from '../../../../../../shared/const/base_url'
+import AdminSearch from '../../../../AdminSearch/AdminSearch'
+import { fetchProduct } from '../../../../../../entities/Product/api/ProductFetch'
+import type { ICustomInput } from '../../../types/types'
+
+const SeemsInput = ({defaultValue, onChange}: ICustomInput) => {
+   const [value, setValue] = useState<string[]>(defaultValue as string[] || [])
     const [seemsProducts, setSeemsProducts] = useState<(Product | { id: string, error: string })[]>([])
     const [loading, setLoading] = useState(false)
 
     useEffect(() => {
-        if (newProduct.seems.length === 0) {
+        if (value.length === 0) {
             setSeemsProducts([])
             setLoading(false)
             return
         }
 
         setLoading(true)
-        const results: (Product | { id: string, error: string })[] = new Array(newProduct.seems.length)
+        const results: (Product | { id: string, error: string })[] = new Array(value.length)
         let completedRequests = 0
-        const totalRequests = newProduct.seems.length
+        const totalRequests = value.length
 
-        newProduct.seems.forEach((seemId, index) => {
+        value.forEach((seemId, index) => {
             fetchProduct(
                 seemId,
                 (data) => {
@@ -45,24 +47,25 @@ const SeemsInput = () => {
                 }
             )
         })
-    }, [newProduct.seems])
+    }, [value])
 
     const handleDeleteSeem = (id: string) => {
-        setNewProduct(prev => ({ ...prev, seems: prev.seems.filter(seem => seem !== id) }))
+        const newValue = value.filter(seem => seem !== id)
+        setValue(newValue)
+        onChange(newValue)
+    }
+
+    const handleAddSeem = (id: string) => {
+        if (value.includes(id)) return
+        const newValue = [...value, id]
+        setValue(newValue)
+        onChange(newValue)
     }
 
     return (
         <div className={styles.seems_form}>
             <h3 className={styles.seems_title}>Похожие товары</h3>
-            <AdminSearch onClick={(id) => {
-                console.log(id)
-                setNewProduct(prev => {
-                    if (prev.seems.includes(id)) {
-                        return prev
-                    }
-                    return { ...prev, seems: [...prev.seems, id] }
-                })
-            }} />
+            <AdminSearch onClick={handleAddSeem} />
             <div className={styles.seems_list}>
                 {loading && <p>Загрузка...</p>}
                 {!loading && seemsProducts.map((item) => {
@@ -76,7 +79,7 @@ const SeemsInput = () => {
                     return (
                         <div key={item.id} className={styles.seem_item}>
                             <img className={styles.seem_img} src={`${BASE_URL}images/${item.photos[0]}`} alt={item.title} />
-                            <h3 className={styles.cell}>{item.title}</h3>
+                            <p className={styles.cell}>{item.title}</p>
                             <p className={styles.cell}>{item.article}</p>
                             <div className={styles.cell}>
                                 <img className={styles.delete_icon} src={deleteIcon} onClick={() => handleDeleteSeem(item.id)} />

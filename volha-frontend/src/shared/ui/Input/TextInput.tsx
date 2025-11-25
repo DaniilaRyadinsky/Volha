@@ -1,4 +1,4 @@
-import styles from './Input.module.css'
+import styles from './TextInput.module.css'
 
 interface IInput {
     type: string,
@@ -8,8 +8,12 @@ interface IInput {
     style?: React.CSSProperties,
 }
 
-const Input = ({ value, type, placeholder, onChange, style }: IInput) => {
+const TextInput = ({ value, type, placeholder, onChange, style }: IInput) => {
 
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const v = e.target.value
+        onChange(v)
+    }
 
     return (
         <>
@@ -20,9 +24,9 @@ const Input = ({ value, type, placeholder, onChange, style }: IInput) => {
                 value={value}
                 style={style}
                 min={0}
-                onChange={(e) => onChange(e.target.value)} />
+                onChange={handleChange} />
         </>
     )
 }
 
-export default Input
+export default TextInput

@@ -1,13 +1,23 @@
-import type { Brand, Category, Color, Country, Material } from "../../../../entities/Product/types/ProductTypes";
+import type { Color } from "../../../../entities/Product/types/ProductTypes";
 
-export interface IForm {
-    data?: Brand | Category | Country | Material | Color
-    closecallback: () => void
+export interface IAdminModalForm {
+    // data?: Brand | Category | Country | Material | Color
+    closecallback: () => void,
+    onChange?: (id: string) => void;
+}
+
+export interface IAdminSelect {
+    defaultValue?: string,
+    onChange: (value: string) => void,
+    isErr: boolean,
+    setErrors: (e?:  "empty" | "limit") => void,
 }
 
 export interface ICustomInput {
-    setModalMode: (value: "none" | "brand" | "category" | "country" | "material" | "color") => void,
-    style?: React.CSSProperties
+    defaultValue: ColorItem[] | string[]
+    onChange: (value: string[] | ColorItem[]) => void,
+    isErr: boolean,
+    setErrors: (e?:  "empty" | "limit") => void,
 }
 
 export type NewProduct = {

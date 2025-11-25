@@ -1,23 +1,21 @@
 import styles from './Forms.module.css'
 import type { Category } from '../../../entities/Product/types/ProductTypes'
 import { useEffect, useState } from 'react'
-import Input from '../../../shared/ui/Input/Input'
+import Input from '../../../shared/ui/Input/TextInput'
 import { Button } from '../../../shared/ui/Button/Button'
 import { postCategory, putCategory } from '../ProductForm/api/fetchCreate'
 import FileUpload from '../FileUpload/FileUpload'
 import AdminImage from '../ProductForm/internal/AdminImage/AdminImage'
 import CyrillicToTranslit from 'cyrillic-to-translit-js'
 import { showAlert, showErr } from '../../../shared/ui/customAlert/showAlert'
-import type { NewProduct } from '../ProductForm/types/types'
 import { useAdminData } from '../AdminLayout/lib/useAdminData'
+import type { IAdminModalForm } from '../ProductForm/types/types'
 
-interface ICategoryForm {
+interface ICategoryForm extends IAdminModalForm {
     data?: Category
-    closecallback: () => void,
-    setNewProduct?: React.Dispatch<React.SetStateAction<NewProduct>>;
 }
 
-const CategoryForm = ({ closecallback, data, setNewProduct }: ICategoryForm) => {
+const CategoryForm = ({ closecallback, data, onChange }: ICategoryForm) => {
   const { refetchCategories } = useAdminData()
   const [err, setErr] = useState<"none" | "emptyName" | "emptyImg">('none')
   const [newCategory, setNewCategory] = useState<Category>(
@@ -79,8 +77,8 @@ const CategoryForm = ({ closecallback, data, setNewProduct }: ICategoryForm) => 
           (id) => {
             refetchCategories()
             if (id) {
-              if (setNewProduct) {
-                setNewProduct(prev => ({ ...prev, category: id }))
+              if (onChange) {
+                onChange(id)
               }
             }
             closecallback();

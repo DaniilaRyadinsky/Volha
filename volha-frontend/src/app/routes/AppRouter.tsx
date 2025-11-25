@@ -7,7 +7,7 @@ import { productPageLoader } from "../../pages/ProductPage/api/productPageLoader
 import { useQueryClient } from "@tanstack/react-query"
 import type { Category, Product } from "../../entities/Product/types/ProductTypes"
 import AdminLayout from "../../features/admin/AdminLayout/ui/AdminLayout"
-import { ProductForm } from "../../features/admin/ProductForm/ui/ProductForm"
+import ProductForm from "../../features/admin/ProductForm/ui/ProductForm"
 import ProductList from "../../features/admin/ProductList/ui/ProductList"
 import CategoryList from "../../features/admin/CategoryList/ui/CategoryList"
 import MaterialList from "../../features/admin/MaterialList/ui/MaterialList"

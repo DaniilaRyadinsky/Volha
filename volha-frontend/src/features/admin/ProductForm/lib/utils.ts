@@ -19,16 +19,14 @@ export const getLabelTitle = <T extends { id: string | number; title: string }>(
 
 export const validateForm = (
     newProduct: NewProduct, 
-    title: string,
-    article: string,
     colorList: ColorItem[],
     setErrors: (val: Partial<Record<keyof NewProduct, "empty" | "limit">>) => void
 ) => {
     const newErrors: Partial<Record<keyof NewProduct, "empty" | "limit">> = {};
 
-    if (title == '') newErrors.title = "empty";
-    if (article == '') newErrors.article = "empty";
-    if (article.length !== 8) newErrors.article = "limit";
+    if (newProduct.title == '') newErrors.title = "empty";
+    if (newProduct.article == '') newErrors.article = "empty";
+    if (newProduct.article.length !== 8) newErrors.article = "limit";
     if (!newProduct.brand) newErrors.brand = "empty";
     if (!newProduct.category) newErrors.category = "empty";
     if (!newProduct.materials || newProduct.materials.length === 0) newErrors.materials = "empty";

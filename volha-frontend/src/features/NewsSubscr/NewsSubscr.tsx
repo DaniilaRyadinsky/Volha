@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import Input from '../../shared/ui/Input/Input'
+import Input from '../../shared/ui/Input/TextInput'
 import styles from './NewsSubscr.module.css'
 import { Button } from '../../shared/ui/Button/Button'
 

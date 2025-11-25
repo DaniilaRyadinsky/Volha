@@ -7,17 +7,12 @@ import type { ColorItem } from '../types/types';
 import { useNavigate } from 'react-router-dom';
 
 interface UseProductFormEffectsParams {
-    id: string | undefined;
+    id?: string;
     newProduct: NewProduct;
     colorList: ColorItem[];
     shouldPost: boolean;
-    description: string;
-    article: string;
-    title: string;
-    setTitle: (title: string) => void;
-    setDescription: (description: string) => void;
-    setArticle: (article: string) => void;
-    setNewProduct: (product: NewProduct | ((prev: NewProduct) => NewProduct)) => void;
+    
+    setNewProduct: (product: NewProduct) => void;
     setColorList: (colorList: ColorItem[]) => void;
     setSelectedColor: (colorId: string) => void;
     setShouldPost: (shouldPost: boolean) => void;
@@ -35,9 +30,6 @@ export const useProductFormEffects = ({
     newProduct,
     colorList,
     shouldPost,
-    setTitle,
-    setDescription,
-    setArticle,
     setNewProduct,
     setColorList,
     setSelectedColor,
@@ -52,10 +44,8 @@ export const useProductFormEffects = ({
             fetchProduct(
                 id,
                 (product) => {
-                    setTitle(product.title);
-                    setDescription(product.description ?? '');
-                    setArticle(product.article);
-                    setNewProduct(() => ({
+
+                    setNewProduct({
                         id: product.id,
                         article: product.article,
                         title: product.title,
@@ -71,7 +61,7 @@ export const useProductFormEffects = ({
                         seems: product.seems != null ? product.seems.map(s => s.id) : [],
                         price: product.price,
                         description: product.description ?? ''
-                    }));
+                    });
                     if (product.colors.length != 0) {
                         Promise.all(
                             (product.colors ?? []).map(color => new Promise<string[]>((resolve) => {

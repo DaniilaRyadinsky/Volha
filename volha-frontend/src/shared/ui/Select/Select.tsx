@@ -71,9 +71,8 @@ const Select = ({ title, options, value, onChange, lastChild, lastOnClick, style
                         <div className={styles.option} onClick={handleLastClick}>{lastChild}</div>
                     </div>
                 </div>
-
-
             </div >
+            
             {isOpen && (
                 <Backdrop onClick={() => setIsOpen(false)} />
             )

@@ -1,21 +1,19 @@
 import { useEffect, useState } from 'react'
 import type { Country } from '../../../entities/Product/types/ProductTypes'
 import { Button } from '../../../shared/ui/Button/Button'
-import Input from '../../../shared/ui/Input/Input'
+import Input from '../../../shared/ui/Input/TextInput'
 import { postCountry, putCountry } from '../ProductForm/api/fetchCreate'
 import { showAlert, showErr } from '../../../shared/ui/customAlert/showAlert'
-import type { NewProduct } from '../ProductForm/types/types'
 import { useAdminData } from '../AdminLayout/lib/useAdminData'
+import type { IAdminModalForm } from '../ProductForm/types/types'
 
 import styles from './Forms.module.css'
 
-interface ICountryForm {
+interface ICountryForm extends IAdminModalForm {
     data?: Country
-    closecallback: () => void,
-    setNewProduct?: React.Dispatch<React.SetStateAction<NewProduct>>;
 }
 
-const CountryForm = ({ closecallback, data, setNewProduct }: ICountryForm) => {
+const CountryForm = ({ closecallback, data, onChange }: ICountryForm) => {
     const { refetchCountries } = useAdminData()
     
     const [err, setErr] = useState('')
@@ -68,8 +66,8 @@ const CountryForm = ({ closecallback, data, setNewProduct }: ICountryForm) => {
                     (id) => {
                         if (id) {
                             refetchCountries()
-                            if (setNewProduct) {
-                                setNewProduct(prev => ({ ...prev, country: id }))
+                            if (onChange) {
+                                onChange(id)
                             }
                         }
                         closecallback();

@@ -1,22 +1,18 @@
 import { useEffect, useState } from 'react'
 import type { Brand } from '../../../entities/Product/types/ProductTypes'
-import Input from '../../../shared/ui/Input/Input'
+import Input from '../../../shared/ui/Input/TextInput'
 import { Button } from '../../../shared/ui/Button/Button'
 import { postBrand, putBrand } from '../ProductForm/api/fetchCreate'
 import { showAlert, showErr } from '../../../shared/ui/customAlert/showAlert'
-
 import styles from './Forms.module.css'
-import type { NewProduct } from '../ProductForm/types/types'
 import { useAdminData } from '../AdminLayout/lib/useAdminData'
+import type { IAdminModalForm } from '../ProductForm/types/types'
 
-interface IBrandForm {
+interface IBrandForm extends IAdminModalForm {
     data?: Brand
-    closecallback: () => void,
-    setNewProduct?: React.Dispatch<React.SetStateAction<NewProduct>>;
-
 }
 
-const BrandForm = ({ closecallback, data, setNewProduct }: IBrandForm) => {
+const BrandForm = ({ closecallback, data, onChange }: IBrandForm) => {
     const { refetchBrands } = useAdminData()
     const [err, setErr] = useState('')
     const [newBrand, setNewBrand] = useState<Brand>({
@@ -72,8 +68,8 @@ const BrandForm = ({ closecallback, data, setNewProduct }: IBrandForm) => {
                         console.log(id)
                         refetchBrands()
                         if (id) {
-                            if (setNewProduct)
-                                setNewProduct(prev => ({ ...prev, brand: id }))
+                            if (onChange)
+                                onChange(id)
                         }
 
                         closecallback();

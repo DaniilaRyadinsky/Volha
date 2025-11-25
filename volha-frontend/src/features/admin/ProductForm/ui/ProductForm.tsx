@@ -1,83 +1,73 @@
-import { useState } from 'react'
-import type { Brand, Category, Country } from '../../../../entities/Product/types/ProductTypes'
-import Input from '../../../../shared/ui/Input/Input'
+import { useRef, useState } from 'react'
 import styles from './ProductForm.module.css'
-import Select from '../../../../shared/ui/Select/Select'
-import { useAdminData } from '../../AdminLayout/lib/useAdminData'
-import Modal from '../../../../shared/ui/Modal/Modal'
-import BrandForm from '../../forms/BrandForm'
-import MaterialForm from '../../forms/MaterialForm'
-import CategoryForm from '../../forms/CategoryForm'
-import CountryForm from '../../forms/CountryForm'
-import { getLabel, getLabelTitle, validateForm } from '../lib/utils'
+import { validateForm } from '../lib/utils'
 import { Button } from '../../../../shared/ui/Button/Button'
-import ColorInput from '../internal/ColorInput/ColorInput'
-import ColorForm from '../../forms/ColorForm'
-import { ProductFormProvider } from '../context/ProductFormProvider'
-import { useProductForm } from '../context/useProductForm'
-import MaterialInput from '../internal/MaterialInput/MaterialInput'
+import ColorInput from '../internal/inputs/ColorInput/ColorInput'
+import MaterialInput from '../internal/inputs/MaterialInput/MaterialInput'
 import { useParams } from 'react-router-dom'
 import { useProductFormEffects } from '../lib/useProductFormEffects'
-import SeemsInput from '../internal/SeemsInput/SeemsInput'
-import MDRedactor from '../internal/MDRedactor/MDRedactor'
+import { defaultNewProduct } from '../model/defaults'
+import { type ColorItem, type NewProduct } from '../types/types'
+import FormInput from '../internal/inputs/FormInput/FormInput'
+import BrandInput from '../internal/inputs/SelectInputs/BrandInput'
+import CategoryInput from '../internal/inputs/SelectInputs/CategoryInput'
+import CountryInput from '../internal/inputs/SelectInputs/CountryInput'
+import SeemsInput from '../internal/inputs/SeemsInput/SeemsInput'
+import DescriptionInput from '../internal/DescriptionInput/DescriptionInput'
 
 
-const ProductFormContent = () => {
-    const { categories, brands, countries } = useAdminData();
+const ProductForm = () => {
+    const formRef = useRef<NewProduct>(defaultNewProduct)
+    const colorListRef = useRef<ColorItem[]>([])
 
-    const { newProduct,
-        setNewProduct,
-        colorList,
-        setColorList,
-        resetForm,
-        onInputChange,
-        errors,
-        setErrors,
-        setSelectedColor,
-        title,
-        article,
-        setTitle,
-        setArticle,
-        description,
-        setDescription
-    } = useProductForm();
+    const [selectedColor, setSelectedColor] = useState<string|null>(null)
 
-    const [modalMode, setModalMode] = useState<"none" | "brand" | "category" | "country" | "material" | "color">("none")
+    const [errors, setErrors] = useState<Partial<Record<keyof NewProduct, "empty" | "limit">>>({});
+
     const [shouldPost, setShouldPost] = useState(false);
+    const [formKey, setFormKey] = useState(0)
+    const [colorListKey, setColorListKey] = useState(0)
 
     const { id } = useParams();
 
+    const resetForm = () => {
+        formRef.current = defaultNewProduct
+        colorListRef.current = []
+        setSelectedColor(null)
+        setFormKey(prev => prev + 1)
+        setColorListKey(prev => prev + 1)
+    }
+
+
     useProductFormEffects({
         id,
-        newProduct,
-        colorList,
+        newProduct: formRef.current,
+        colorList: colorListRef.current,
         shouldPost,
-        setNewProduct,
-        setColorList,
+        setNewProduct: (e) => {
+            formRef.current = e
+            setFormKey(prev => prev + 1)
+        },
+        setColorList: (e) => {
+            colorListRef.current = e
+            setColorListKey(prev => prev + 1)
+        },
         setSelectedColor,
         setShouldPost,
         resetForm,
-        description,
-        setDescription,
-        article,
-        setArticle, title,
-        setTitle
+
     });
 
     const handleSaveClick = () => {
-        const isValid = validateForm(newProduct, title, article, colorList, setErrors);
+        console.log(formRef.current)
+        const isValid = validateForm(formRef.current, colorListRef.current, setErrors);
         if (!isValid) return;
-        setNewProduct(prev => ({
-            ...prev,
-            title: title,
-            article: article,
-            description: description,
-            colors: colorList.map(item => item.color.id), photos: colorList[0].images
-        }
-        ))
+        formRef.current = { ...formRef.current, colors: colorListRef.current.map(item => item.color.id), photos: colorListRef.current[0].images }
 
         console.log("handlesave")
         setShouldPost(true);
+
+        
     }
 
     return (
@@ -86,149 +76,142 @@ const ProductFormContent = () => {
                 <h1 className={styles.title}>{id ? "Редактирование товара" : "Новый товар"}</h1>
                 <Button onClick={() => handleSaveClick()}>Сохранить</Button>
             </div>
+
             <div className={styles.form_container}>
                 <div className={styles.left_container}>
-                    <label className={styles.label}>
-                        Название товара*
-                        <Input
-                            type='text'
-                            placeholder='Введите название товара'
-                            value={title}
-                            onChange={(e) => setTitle(e)}
-                            style={{ borderColor: errors.title ? 'var(--red)' : undefined }}
-                        />
-                    </label>
+                    <FormInput
+                        key={`title-${formKey}`}
+                        type='text'
+                        placeholder='Название товара'
+                        defaultValue={formRef.current.title}
+                        onChange={(e) => formRef.current.title = e}
+                        isErr={errors.title ? true : false}
+                        setErrors={(e) => setErrors(prev => ({ ...prev, title: e }))}
+                    />
 
-                    <label className={styles.label}>
-                        Артикул*
-                        <Input
-                            type='text'
-                            placeholder='Введите артикул'
-                            value={article}
-                            onChange={(e) => setArticle(e)}
-                            style={{ borderColor: errors.article ? 'var(--red)' : undefined }}
-                        />
-                    </label>
+                    <FormInput
+                        key={`article-${formKey}`}
+                        type='text'
+                        placeholder='Артикул'
+                        defaultValue={formRef.current.article}
+                        onChange={(e) => formRef.current.article = e}
+                        isErr={errors.article ? true : false}
+                        setErrors={(e) => setErrors(prev => ({ ...prev, article: e }))}
+                    />
+
                     {errors.article == "limit" && <p className={styles.err}>Длина артикула должна быть 8 символов</p>}
 
-                    <label className={styles.label}>
-                        Цена*
-                        <Input
-                            type='number'
-                            placeholder='Цена'
-                            value={String(newProduct.price)}
-                            onChange={(e) => onInputChange("price", parseInt(e))}
-                            style={{ width: "150px", borderColor: errors.price ? 'var(--red)' : undefined }}
-                        />
-                    </label>
+                    <FormInput
+                        key={`price-${formKey}`}
+                        type='number'
+                        placeholder='Цена'
+                        defaultValue={String(formRef.current.price)}
+                        onChange={(e) => formRef.current.price = Number(e)}
+                        isErr={errors.price ? true : false}
+                        setErrors={(e) => setErrors(prev => ({ ...prev, price: e }))}
+                    />
 
-                    <label className={styles.label}>
-                        Бренд*
-                        <Select
-                            value={getLabel(brands, newProduct.brand)}
-                            title='Бренд'
-                            options={brands.map((b: Brand) => ({ value: b.id, label: b.name }))}
-                            onChange={(e) => { onInputChange("brand", e) }}
-                            lastChild={<div >Добавить бренд...</div>}
-                            lastOnClick={() => { setModalMode("brand") }}
-                            style={{ borderColor: errors.brand ? 'var(--red)' : undefined }}
-                        />
-                    </label>
+                    <BrandInput
+                        key={`brand-${formKey}`}
+                        defaultValue={formRef.current.brand}
+                        onChange={(e) => formRef.current.brand = e}
+                        isErr={errors.brand ? true : false}
+                        setErrors={(e) => setErrors(prev => ({ ...prev, brand: e }))}
+                    />
 
-                    <label className={styles.label}>
-                        Категория*
-                        <Select
-                            value={getLabelTitle(categories, newProduct.category)}
-                            title='Категория'
-                            options={categories.map((c: Category) => ({ value: c.id, label: c.title }))}
-                            onChange={(e) => onInputChange("category", e)}
-                            lastChild={<div >Добавить категорию...</div>}
-                            lastOnClick={() => { setModalMode("category") }}
-                            style={{ borderColor: errors.category ? 'var(--red)' : undefined }}
-                        />
+                    <CategoryInput
+                        key={`category-${formKey}`}
+                        defaultValue={formRef.current.category}
+                        onChange={(e) => formRef.current.category = e}
+                        isErr={errors.category ? true : false}
+                        setErrors={(e) => setErrors(prev => ({ ...prev, category: e }))}
+                    />
 
-                    </label>
+                    <MaterialInput
+                        key={`materials-${formKey}`}
+                        defaultValue={formRef.current.materials}
+                        onChange={(e) => formRef.current.materials = e as string[]}
+                        isErr={errors.materials ? true : false}
+                        setErrors={(e) => setErrors(prev => ({ ...prev, materials: e }))}
+                    />
 
-                    <MaterialInput setModalMode={setModalMode} style={{ border: errors.materials ? '2px solid var(--red)' : undefined }} />
-
-                    <label className={styles.label} >
-                        Страна*
-                        <Select
-                            value={getLabelTitle(countries, newProduct.country)}
-                            title='Страна'
-                            options={countries.map((c: Country) => ({ value: c.id, label: c.title }))}
-                            onChange={(e) => onInputChange("country", e)}
-                            lastChild={<div>Добавить страну...</div>}
-                            lastOnClick={() => { setModalMode("country") }}
-                            style={{ borderColor: errors.country ? 'var(--red)' : undefined }}
-                        />
-                    </label>
+                    <CountryInput
+                        key={`country-${formKey}`}
+                        defaultValue={formRef.current.country}
+                        onChange={(e) => formRef.current.country = e}
+                        isErr={errors.country ? true : false}
+                        setErrors={(e) => setErrors(prev => ({ ...prev, country: e }))}
+                    />
 
                     <div className={styles.width_container}>
-                        <label className={styles.label}>
-                            Длина*
-                            <Input
-                                type='number'
-                                placeholder='Введите длину'
-                                value={String(newProduct.width)}
-                                onChange={(e) => onInputChange("width", parseInt(e))}
-                                style={{ width: "120px", borderColor: errors.width ? 'var(--red)' : undefined }}
-                            />
-                        </label>
 
-                        <label className={styles.label}>
-                            Ширина*
-                            <Input
-                                type='number'
-                                placeholder='Ширина'
-                                value={String(newProduct.depth)}
-                                onChange={(e) => onInputChange("depth", parseInt(e))}
-                                style={{ width: "120px", borderColor: errors.depth ? 'var(--red)' : undefined }}
-                            />
-                        </label>
+                        <FormInput
+                            key={`width-${formKey}`}
+                            type='number'
+                            placeholder='Длина'
+                            defaultValue={String(formRef.current.width)}
+                            onChange={(e) => formRef.current.width = parseInt(e)}
+                            isErr={errors.width ? true : false}
+                            setErrors={(e) => setErrors(prev => ({ ...prev, width: e }))}
+                            style={{ width: "120px" }}
+                        />
 
-                        <label className={styles.label}>
-                            Высота*
-                            <Input
-                                type='number'
-                                placeholder='Высота'
-                                value={String(newProduct.height)}
-                                onChange={(e) => onInputChange("height", parseInt(e))}
-                                style={{ width: "120px", borderColor: errors.height ? 'var(--red)' : undefined }}
-                            />
-                        </label>
+                        <FormInput
+                            key={`depth-${formKey}`}
+                            type='number'
+                            placeholder='Ширина'
+                            defaultValue={String(formRef.current.depth)}
+                            onChange={(e) => formRef.current.depth = parseInt(e)}
+                            isErr={errors.depth ? true : false}
+                            setErrors={(e) => setErrors(prev => ({ ...prev, depth: e }))}
+                            style={{ width: "120px" }}
+                        />
+
+                        <FormInput
+                            key={`height-${formKey}`}
+                            type='number'
+                            placeholder='Высота'
+                            defaultValue={String(formRef.current.height)}
+                            onChange={(e) => formRef.current.height = parseInt(e)}
+                            isErr={errors.height ? true : false}
+                            setErrors={(e) => setErrors(prev => ({ ...prev, height: e }))}
+                            style={{ width: "120px" }}
+                        />
+
                     </div>
 
 
                 </div>
                 <div className={styles.right_container}>
-                    <ColorInput setModalMode={setModalMode} style={{ borderColor: errors.colors ? 'var(--red)' : undefined }} />
-                    <SeemsInput />
+                    <ColorInput
+                        key={`colors-${colorListKey}`}
+                        defaultValue={colorListRef.current}
+                        onChange={(e) => colorListRef.current = e as ColorItem[]}
+                        isErr={errors.colors ? true : false}
+                        setErrors={(e) => setErrors(prev => ({ ...prev, colors: e }))}
+                        selectedColor={selectedColor}
+                        setSelectedColor={setSelectedColor}
+                    />
+
+                    <SeemsInput
+                        key={`seems-${formKey}`}
+                        defaultValue={formRef.current.seems}
+                        onChange={(e) => formRef.current.seems = e as string[]}
+                        isErr={false}
+                        setErrors={() => { }}
+                    />
                 </div>
 
-
-                {modalMode != "none" && <Modal closeCallback={() => setModalMode("none")}>
-                    {modalMode === 'brand' && <BrandForm closecallback={() => setModalMode("none")} setNewProduct={setNewProduct} />}
-                    {modalMode === 'material' && <MaterialForm closecallback={() => setModalMode("none")} setNewProduct={setNewProduct} />}
-                    {modalMode === 'category' && <CategoryForm closecallback={() => setModalMode("none")} setNewProduct={setNewProduct} />}
-                    {modalMode == "country" && <CountryForm closecallback={() => setModalMode("none")} setNewProduct={setNewProduct} />}
-                    {modalMode === "color" && <ColorForm closecallback={() => setModalMode("none")} setColorList={setColorList} setSelectedColor={setSelectedColor} />}
-
-                </Modal>}
             </div>
-            <label className={styles.label}>
-                Описание
-            </label>
+            <div className={styles.description_container}>
+                <label className={styles.label}>
+                    Описание
+                </label>
 
-            <MDRedactor />
+                <DescriptionInput key={`description-${formKey}`} defaultValue={formRef.current.description} onChange={(e) => formRef.current.description = e} />
+            </div>
         </div>
     )
 }
+export default ProductForm;
 
-export const ProductForm = () => {
-    return (
-        <ProductFormProvider>
-            <ProductFormContent />
-        </ProductFormProvider>
-    )
-}
