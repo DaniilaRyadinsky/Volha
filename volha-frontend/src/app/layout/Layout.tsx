@@ -2,36 +2,37 @@ import Footer from '../../widgets/footer/Footer'
 import { Outlet } from 'react-router-dom'
 import Topbar from '../../widgets/topbar/Topbar'
 import styles from './Layout.module.css'
-import type { Category } from '../../entities/Product/types/ProductTypes'
 import { useSuspenseQuery } from '@tanstack/react-query';
-
-import Breadcrumbs from '../../features/Breadcrumbs/Breadcrumbs'
 import { ScrollToTop } from '../../shared/lib/ScrollToTop'
 import { fetchCategories } from '../../shared/api/fetchTables'
+import { useCategories } from './model/useCategories'
 
 
-
-
-
-const Layout = () => {
-    const { data: categories, error } = useSuspenseQuery<Category[]>({
+export const LayoutDataProvider = ({ children }: { children: React.ReactNode; }) => {
+    useSuspenseQuery({
         queryKey: ['categories'],
         queryFn: fetchCategories,
     });
+
+    return <>{children}</>;
+};
+
+
+const Layout = () => {
+    const {error} = useCategories();
 
     if (error) return <div className={styles.filter_container} style={{ color: "red", fontSize: '0.8rem' }}>Ошибка: {error.message}</div>;
 
     return (
         <>
             <ScrollToTop />
-            <Topbar categories={categories} />
+            <LayoutDataProvider >
+                <Topbar  />
 
-            <main className={styles.layout__content}>
-                <Breadcrumbs />
                 <Outlet />
-            </main>
 
-            <Footer categories={categories} />
+                <Footer/>
+            </LayoutDataProvider>
         </>
     )
 }

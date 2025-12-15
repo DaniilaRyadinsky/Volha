@@ -27,3 +27,7 @@
     text-decoration: none;
     color: inherit;
 }
+
+.admin_nav a:hover {
+    text-decoration: underline;
+}

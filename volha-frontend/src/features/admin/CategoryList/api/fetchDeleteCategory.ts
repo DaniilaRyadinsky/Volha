@@ -5,7 +5,7 @@ export const fetchDeleteCategory = async (
     onSuccess: () => void,
     onError: (err: string) => void
 ) => {
-    fetch(`${BASE_URL}api/category/delete?id=${id}`, {
+    fetch(`${BASE_URL}api/category?id=${id}`, {
         method: 'DELETE',
         headers: { 'Content-Type': 'application/json' },
     })

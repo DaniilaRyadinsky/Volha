@@ -15,8 +15,9 @@
     grid-template-areas: "a b c";
     grid-template-columns: 1fr 1fr 1fr;
     justify-content: space-between;
+    /* align-self: start; */
     gap: 30px;
-    padding-left: 5%;
+    /* padding-left: 5%; */
 }
 
 .left_container {

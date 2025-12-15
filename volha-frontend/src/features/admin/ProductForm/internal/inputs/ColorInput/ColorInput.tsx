@@ -140,7 +140,7 @@ const ColorInput = ({ defaultValue, onChange, isErr, setErrors, selectedColor, s
 
           <AddColor
             title="Добавить цвет"
-            options={colors.map((c: Color) => ({ value: c.id, label: c.name }))}
+            options={colors.map((c: Color) => ({ value: c.id, label: c.title }))}
             onChange={handleAddColor}
             lastChild={<div>Добавить цвет...</div>}
             lastOnClick={() => setIsModal(true)}
@@ -194,8 +194,8 @@ const ColorItem = memo(
         style={{ borderColor: isSelected ? 'var(--main)' : 'var(--outline)' }}
         onClick={handleClick}
       >
-        <ColorMarker name={color.name} hex={color.hex} />
-        {color.name}
+        <ColorMarker name={color.title} hex={color.hex} />
+        {color.title}
         <div className={styles.icon_container}>
           <img
             src={close}

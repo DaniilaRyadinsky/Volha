@@ -1,13 +1,11 @@
 import { Link } from 'react-router-dom'
 import NewsSubscr from '../../features/NewsSubscr/NewsSubscr'
 import styles from './Footer.module.css'
-import type { Category } from '../../entities/Product/types/ProductTypes'
+import { useCategories } from '../../app/layout/model/useCategories'
 
-interface IFooter {
-    categories: Category[]
-}
 
-const Footer = ({ categories }: IFooter) => {
+const Footer = () => {
+    const {categories} = useCategories();
 
     return (
         <footer className={styles.footer}>
@@ -15,18 +13,18 @@ const Footer = ({ categories }: IFooter) => {
                 <nav className={styles.footer_list} style={{ gridArea: "a" }}>
                     <h3 className={styles.footer_title}>О магазине</h3>
                     <ul className={styles.footer_list_items}>
-                        <Link to="/about"><li className={styles.footer_item}>О нас</li></Link>
-                        <Link to="/contacts"><li className={styles.footer_item}>Контакты</li></Link>
-                        <Link to="/contacts"><li className={styles.footer_item}>Оставить заявку</li></Link>
-                        <li className={styles.footer_item}>Пользовательское соглашение</li>
+                        <Link to="/about"><li className={styles.footer_item_link}>О нас</li></Link>
+                        <Link to="/contacts"><li className={styles.footer_item_link}>Контакты</li></Link>
+                        <Link to="/contacts"><li className={styles.footer_item_link}>Оставить заявку</li></Link>
+                        <li className={styles.footer_item_link}>Пользовательское соглашение</li>
                     </ul>
                 </nav>
                 <nav className={styles.footer_list} style={{ gridArea: "b" }}>
                     <h3 className={styles.footer_title}>Продукция</h3>
                     <ul className={styles.footer_list_items}>
                         {categories.slice(0, 4).map((category) =>
-                            <Link key={category.id} to={`/catalog/category/${category.uri}`} style={{ textDecoration: "none" }}><li className={styles.footer_item}>{category.title}</li></Link>)}
-                        <Link to="/catalog" style={{ textDecoration: "none" }}><li className={styles.footer_item}>Все товары</li></Link>
+                            <Link key={category.id} to={`/catalog/category/${category.uri}`} style={{ textDecoration: "none" }}><li className={styles.footer_item_link}>{category.title}</li></Link>)}
+                        <Link to="/catalog" style={{ textDecoration: "none" }}><li className={styles.footer_item_link}>Все товары</li></Link>
                     </ul>
                 </nav>
                 <div className={styles.footer_list} style={{ gridArea: "c" }}>

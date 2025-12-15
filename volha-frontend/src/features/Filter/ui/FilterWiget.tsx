@@ -3,7 +3,7 @@ import Filter from './Filter'
 import styles from './Filter.module.css'
 import type { FilterWidgetProps } from '../model/FilterType'
 import Sidebar from '../../../shared/ui/Sidebar/Sidebar'
-import SortSelect from './SortSelect/SortSelect'
+import Select from '../../../shared/ui/Select/Select'
 
 
 
@@ -70,7 +70,10 @@ const FilterWiget = (props: FilterWidgetProps) => {
                 </div>
             </div>
             <div className={styles.widget_right_container}>
-                <SortSelect
+                <Select
+                    variant="sort"
+                    fontSize="sm"
+                    dropdownSide="right"
                     value={getSortMode()}
                     title="Сортировка"
                     options={[{ label: "По убыванию цены", value: "price DESC" }, { label: "По возрастанию цены", value: "price ASC" }]}

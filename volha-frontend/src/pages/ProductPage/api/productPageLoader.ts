@@ -6,7 +6,7 @@ import BASE_URL from "../../../shared/const/base_url";
 export const productPageLoader = async ({ params }:  LoaderFunctionArgs ) => {
   const { id } = params;
 
-  const res = await fetch(`${BASE_URL}api/product/get?id=${id}`);
+  const res = await fetch(`${BASE_URL}api/product?id=${id}`);
   if (!res.ok) throw new Error('Product not found');
 
   const product: Product = await res.json();

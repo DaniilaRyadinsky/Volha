@@ -16,6 +16,8 @@ import Markdown from 'react-markdown';
 import remarkGfm from 'remark-gfm'
 
 import styles from './ProductPage.module.css'
+import Breadcrumbs from '../../features/Breadcrumbs/Breadcrumbs';
+import LayoutContent from '../../app/layout/LayoutContent';
 
 interface LoaderResult {
   product: Product;
@@ -82,12 +84,13 @@ const ProductPage = () => {
   }, [selectedColor])
 
   return (
-    <>
+    <LayoutContent>
       {isImgView &&
         <ImgView images={img} thumbsSwiper={thumbsSwiper} setThumbsSwiper={setThumbsSwiper} />
       }
 
       <div className={styles.container}>
+        <Breadcrumbs />
         <div className={styles.product_info}>
           <div className={styles.info_left_container}>
             <ProductImages name={"Шкаф"} images={img} thumbsSwiper={thumbsSwiper} setThumbsSwiper={setThumbsSwiper} onClick={() => setIsImgView(true)} />
@@ -96,13 +99,13 @@ const ProductPage = () => {
             <h1 className={styles.title}>{product.title}</h1>
 
             <div className={styles.color_container}>
-              <h3 className={styles.color_title}>{"Цвет: " + selectedColor.name}</h3>
+              <h3 className={styles.color_title}>{"Цвет: " + selectedColor.title}</h3>
               <div className={styles.colors}>
                 {product.colors.map(c =>
                   <ColorMarker
                     key={c.id}
                     style={{ borderColor: selectedColor.id === c.id ? "var(--main)" : undefined }}
-                    name={c.name}
+                    name={c.title}
                     hex={c.hex}
                     onClick={() => handleColorClick(c.id)}
                   />)}
@@ -119,7 +122,7 @@ const ProductPage = () => {
               <div className={styles.feature}>
                 <div className={styles.feature_title}>Производитель</div>
                 <div className={styles.feature_points}></div>
-                <div className={styles.feature_text}>{product.brand?.name}</div>
+                <div className={styles.feature_text}>{product.brand?.title}</div>
               </div>
 
               <div className={styles.feature}>
@@ -160,7 +163,7 @@ const ProductPage = () => {
         {product.seems && <div className={styles.product_seems}>
           <h2 className={styles.title2}>С этим сочетается</h2>
           <div className={styles.swiper_container}>
-            <img className={styles.swiper_prev_button} src={arrow} onClick={() => prevHandler()} style={{visibility: product.seems.length > getSlidesPerView() ? "visible" : "hidden"}}/>
+            <img className={styles.swiper_prev_button} src={arrow} onClick={() => prevHandler()} style={{ visibility: product.seems.length > getSlidesPerView() ? "visible" : "hidden" }} />
             <Swiper
               slidesPerView={getSlidesPerView()}
               spaceBetween={20}
@@ -192,12 +195,12 @@ const ProductPage = () => {
                 </SwiperSlide>
               ))}
             </Swiper>
-            <img className={styles.swiper_next_button} src={arrow} onClick={() => nextHandler()} style={{visibility: product.seems.length > getSlidesPerView() ? "visible" : "hidden"}}/>
+            <img className={styles.swiper_next_button} src={arrow} onClick={() => nextHandler()} style={{ visibility: product.seems.length > getSlidesPerView() ? "visible" : "hidden" }} />
           </div>
         </div>}
 
       </div >
-    </>
+    </LayoutContent>
   )
 }
 

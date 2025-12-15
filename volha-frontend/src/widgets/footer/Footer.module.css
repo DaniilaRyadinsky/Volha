@@ -89,6 +89,14 @@
     color: var(--on-main);
 }
 
+.footer_item_link {
+    color: var(--on-main);
+}
+
+.footer_item_link:hover {
+    text-decoration: underline;
+}
+
 
 .footer_credits {
     font-size: 0.8rem;

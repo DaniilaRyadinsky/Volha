@@ -5,7 +5,7 @@ export const fetchDeleteColor = async (
     onSuccess: () => void,
     onError: (err: string) => void
 ) => {
-    fetch(`${BASE_URL}api/color/delete?id=${id}`, {
+    fetch(`${BASE_URL}api/color?id=${id}`, {
         method: 'DELETE',
         headers: { 'Content-Type': 'application/json' },
     })

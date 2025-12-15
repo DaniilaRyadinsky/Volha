@@ -5,7 +5,7 @@ export const deleteFile = async (
     onSuccess: () => void,
     onError: (err: string) => void
 ) => {
-    fetch(`${BASE_URL}api/files/delete?title=${file}`, {
+    fetch(`${BASE_URL}api/files?title=${file}`, {
         method: "DELETE",
         headers: { 'Content-Type': 'application/json' },
     })

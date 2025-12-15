@@ -1,0 +1,26 @@
+.slider :global(.swiper-slide) {
+    width: 100%;
+    aspect-ratio: 2.56;
+    height: auto;
+}
+
+.slider :global(.swiper-pagination-bullet) {
+    background-color: var(--main);
+}
+
+
+.slider :global(.swiper-button-next) {
+    right: 20px;
+    color: var(--main);
+}
+
+.slider :global(.swiper-button-prev) {
+    left: 20px;
+    color: var(--main);
+}
+
+.img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}

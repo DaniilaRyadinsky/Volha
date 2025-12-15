@@ -3,7 +3,7 @@ import BASE_URL from "../const/base_url";
 export const fetchTables = async (
     table: "brand" | "color" | "country" | "material" | "category"
 ) => {
-    const res = await fetch(`${BASE_URL}api/${table}/getall`, {
+    const res = await fetch(`${BASE_URL}api/${table}/all`, {
         method: 'GET',
         headers: { 'Content-Type': 'application/json' }
     });

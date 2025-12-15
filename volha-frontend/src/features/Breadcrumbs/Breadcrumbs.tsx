@@ -38,13 +38,13 @@ const Breadcrumbs = () => {
   return (
     <nav className={styles.breadcrumbs}>
       {crumbs.map((c, i) => (
-        <span className={styles.breadcrumb_item} key={`${c.pathname}-${i}`}>
+        <span className={styles.breadcrumb_item_last} key={`${c.pathname}-${i}`}>
           {c.isLast ? (
             <span>{c.label}</span>
           ) : (
             <>
               <Link to={c.pathname} className={styles.breadcrumb_item}>{c.label}</Link>
-              <span className={styles.breadcrumb_item}> / </span>
+              <span className={styles.breadcrumb_item_slash}> / </span>
             </>
           )}
         </span>

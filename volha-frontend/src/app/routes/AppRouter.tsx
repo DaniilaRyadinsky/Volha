@@ -1,4 +1,4 @@
-import { Navigate, createBrowserRouter, RouterProvider, Outlet } from "react-router-dom"
+import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom"
 import Layout from "../layout/Layout"
 import Contacts from "../../pages/Contacts/Contacts"
 import Catalog from "../../pages/Catalog/Catalog"
@@ -14,6 +14,8 @@ import MaterialList from "../../features/admin/MaterialList/ui/MaterialList"
 import BrandList from "../../features/admin/BrandList/ui/BrandList"
 import CountryList from "../../features/admin/CountryList/ui/CountryList"
 import ColorList from "../../features/admin/ColorList/ui/ColorList"
+import Main from "../../pages/Main/Main"
+import SliderForm from "../../features/admin/SliderForm/SliderForm"
 
 
 const useCategoryCrumb = (_data: Category & {breadcrumb: string}, params: Category) => {
@@ -33,7 +35,7 @@ const router = createBrowserRouter([
         element: <Layout />,
         handle: { crumb: "Главная" },
         children: [
-            { index: true, element: <Navigate to="/catalog" replace /> },
+            { index: true, element: <Main/> },
 
             {
                 path: "catalog",
@@ -123,6 +125,10 @@ const router = createBrowserRouter([
 				path: "color/all",
 				element: <ColorList />
 			},
+            {
+                path: "slider",
+                element: <SliderForm/>
+            }
         ]
     }
 ]);

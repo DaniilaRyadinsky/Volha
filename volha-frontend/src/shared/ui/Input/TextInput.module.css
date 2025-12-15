@@ -11,3 +11,7 @@
 .input::placeholder {
     color: #6d6d71;
 }
+
+.input:hover {
+    outline: 1px solid var(--outline);
+}

@@ -5,7 +5,7 @@ export const fetchDeleteCountry = async (
     onSuccess: () => void,
     onError: (err: string) => void
 ) => {
-    fetch(`${BASE_URL}api/country/delete?id=${id}`, {
+    fetch(`${BASE_URL}api/country?id=${id}`, {
         method: 'DELETE',
         headers: { 'Content-Type': 'application/json' },
     })

@@ -13,7 +13,7 @@ export const uploadFile = (
     const formData = new FormData();
     formData.append('img', file);
 
-    fetch(`${BASE_URL}api/files/upload`, {
+    fetch(`${BASE_URL}api/files`, {
         method: 'POST',
         body: formData,
     })

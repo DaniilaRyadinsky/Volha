@@ -6,7 +6,7 @@ import ColorInput from '../internal/inputs/ColorInput/ColorInput'
 import MaterialInput from '../internal/inputs/MaterialInput/MaterialInput'
 import { useParams } from 'react-router-dom'
 import { useProductFormEffects } from '../lib/useProductFormEffects'
-import { defaultNewProduct } from '../model/defaults'
+import { createDefaultNewProduct } from '../model/defaults'
 import { type ColorItem, type NewProduct } from '../types/types'
 import FormInput from '../internal/inputs/FormInput/FormInput'
 import BrandInput from '../internal/inputs/SelectInputs/BrandInput'
@@ -17,32 +17,24 @@ import DescriptionInput from '../internal/DescriptionInput/DescriptionInput'
 
 
 const ProductForm = () => {
-    const formRef = useRef<NewProduct>(defaultNewProduct)
+    const formRef = useRef<NewProduct>(createDefaultNewProduct())
     const colorListRef = useRef<ColorItem[]>([])
 
-    const [selectedColor, setSelectedColor] = useState<string|null>(null)
+    const [selectedColor, setSelectedColor] = useState<string | null>(null)
 
     const [errors, setErrors] = useState<Partial<Record<keyof NewProduct, "empty" | "limit">>>({});
 
     const [shouldPost, setShouldPost] = useState(false);
+
     const [formKey, setFormKey] = useState(0)
     const [colorListKey, setColorListKey] = useState(0)
 
     const { id } = useParams();
 
-    const resetForm = () => {
-        formRef.current = defaultNewProduct
-        colorListRef.current = []
-        setSelectedColor(null)
-        setFormKey(prev => prev + 1)
-        setColorListKey(prev => prev + 1)
-    }
-
-
     useProductFormEffects({
         id,
-        newProduct: formRef.current,
-        colorList: colorListRef.current,
+        formRef,
+        colorListRef,
         shouldPost,
         setNewProduct: (e) => {
             formRef.current = e
@@ -53,10 +45,9 @@ const ProductForm = () => {
             setColorListKey(prev => prev + 1)
         },
         setSelectedColor,
-        setShouldPost,
-        resetForm,
+        setShouldPost
+    })
 
-    });
 
     const handleSaveClick = () => {
         console.log(formRef.current)
@@ -66,8 +57,6 @@ const ProductForm = () => {
 
         console.log("handlesave")
         setShouldPost(true);
-
-        
     }
 
     return (

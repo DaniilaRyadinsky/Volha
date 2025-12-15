@@ -28,6 +28,7 @@ const DescriptionInput = ({ defaultValue, onChange }: DescriptionFormProps) => {
     const lastExternalValueRef = useRef(defaultValue)
 
     useEffect(() => {
+        console.log("use desc")
         if (editorRef.current && defaultValue !== lastExternalValueRef.current) {
             const currentMarkdown = editorRef.current.getMarkdown()
             if (currentMarkdown !== defaultValue) {

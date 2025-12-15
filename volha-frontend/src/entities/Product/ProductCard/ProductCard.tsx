@@ -33,7 +33,7 @@ const ProductCard = ({ id, title, price, colors, width, height, depth, photos, i
           <h3 className={styles.card_title}>{title}</h3>
           <p className={styles.card_dimensions}>{width}*{depth}*{height}мм</p>
           <div className={styles.color_container} >
-            {colors.map((color) => <ColorMarker key={color.id} name={color.name} hex={color.hex} />)}
+            {colors.map((color) => <ColorMarker key={color.id} name={color.title} hex={color.hex} />)}
           </div>
 
           <div className={styles.price_container}>
@@ -47,5 +47,31 @@ const ProductCard = ({ id, title, price, colors, width, height, depth, photos, i
     </Link>
   )
 }
+
+// const ProductCard = ({ id, title, price, colors, width, height, depth, photos, isAbsolutePath = false }: IProduct) => {
+//   return (
+//     <Link
+//       className={styles.main_link}
+//       to={`${isAbsolutePath ? "/" : ""}product/${id}/${CyrillicToTranslit().transform(title, '-').toLowerCase()}`}>
+//       <li className={styles.card_unit} key={id}>
+        
+//         <ProductCardImages img={photos} />
+
+//         <div className={styles.card_unit_description_container}>
+//           <h3 className={styles.card_title}>{title}</h3>
+//           {/* <p className={styles.card_dimensions}>{width}*{depth}*{height}мм</p> */}
+          
+
+//           <div className={styles.price_container}>
+//           <div className={styles.color_container} >
+//             {colors.map((color) => <ColorMarker key={color.id} name={color.name} hex={color.hex} />)}
+//           </div>
+//             <p className={styles.card_price}>{price}<span className={styles.price_span}>₽</span></p>
+//           </div>
+//         </div>
+//       </li>
+//     </Link>
+//   )
+// }
 
 export default ProductCard

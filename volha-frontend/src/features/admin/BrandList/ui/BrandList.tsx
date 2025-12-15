@@ -44,7 +44,7 @@ const BrandList = () => {
 
                 {brands?.map((brand: Brand) => (
                     <div key={brand.id} className={styles.row}>
-                        <div className={styles.cell}>{brand.name}</div>
+                        <div className={styles.cell}>{brand.title}</div>
                         <div className={styles.cell}>
                             <div className={styles.actions}>
                                 <img

@@ -20,7 +20,7 @@ interface IColorForm {
 const ColorForm = ({ closecallback, data, setColorList, setSelectedColor }: IColorForm) => {
     const { refetchColors } = useAdminData()
     const [err, setErr] = useState('')
-    const [newColor, setNewColor] = useState<Color>({ id: '', name: '', hex: '#000000' })
+    const [newColor, setNewColor] = useState<Color>({ id: '', title: '', hex: '#000000' })
 
     useEffect(() => {
         if (data) {
@@ -45,7 +45,7 @@ const ColorForm = ({ closecallback, data, setColorList, setSelectedColor }: ICol
     }, [newColor]);
 
     const handleClick = () => {
-        if (newColor.name.trim() == "")
+        if (newColor.title.trim() == "")
             setErr("emptyName")
         else {
             setErr('')
@@ -101,8 +101,8 @@ const ColorForm = ({ closecallback, data, setColorList, setSelectedColor }: ICol
                 style={{ width: "100%" , borderColor: err=="emptyName" ? "var(--red)": ""}}
                 type='text'
                 placeholder='Введите название'
-                value={newColor.name}
-                onChange={(e) => setNewColor((prev) => ({ ...prev, name: e }))} />
+                value={newColor.title}
+                onChange={(e) => setNewColor((prev) => ({ ...prev, title: e }))} />
             {err == 'emptyName' && <p className={styles.err}>Введите название</p>}
             <ColorHexInput
                 value={newColor.hex}

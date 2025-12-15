@@ -31,7 +31,7 @@ const BrandInput = ({ defaultValue, onChange, isErr, setErrors }: IAdminSelect) 
                 <Select
                     value={getLabel(brands, value)}
                     title="Бренд"
-                    options={brands.map((b: Brand) => ({ value: b.id, label: b.name }))}
+                    options={brands.map((b: Brand) => ({ value: b.id, label: b.title }))}
                     onChange={handleChange}
                     lastChild={<div >Добавить бренд...</div>}
                     lastOnClick={() => { setIsModal(true) }}

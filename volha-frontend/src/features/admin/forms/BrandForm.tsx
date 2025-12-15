@@ -17,7 +17,7 @@ const BrandForm = ({ closecallback, data, onChange }: IBrandForm) => {
     const [err, setErr] = useState('')
     const [newBrand, setNewBrand] = useState<Brand>({
         id: '',
-        name: ''
+        title: ''
     }
     )
 
@@ -44,7 +44,7 @@ const BrandForm = ({ closecallback, data, onChange }: IBrandForm) => {
 
 
     const handleClick = () => {
-        if (newBrand.name.trim() == "")
+        if (newBrand.title.trim() == "")
             setErr("emptyName")
         else {
             setErr('')
@@ -91,8 +91,8 @@ const BrandForm = ({ closecallback, data, onChange }: IBrandForm) => {
                 style={{ width: "100%", borderColor: err == "emptyName" ? "var(--red)" : "" }}
                 type='text'
                 placeholder='Введите название'
-                value={newBrand.name}
-                onChange={(e) => setNewBrand((prev) => ({ ...prev, name: e }))} />
+                value={newBrand.title}
+                onChange={(e) => setNewBrand((prev) => ({ ...prev, title: e }))} />
             {err == 'emptyName' && <p className={styles.err}>Введите название</p>}
             <Button style={{ width: "100%" }} onClick={handleClick} mode='primary'>Сохранить</Button>
         </div>

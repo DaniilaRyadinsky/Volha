@@ -6,34 +6,38 @@
     align-items: start;
 }
 
+.miniatures_container {
+    position: relative;
+    width: 110px;
+    height: 395px;
+    flex-shrink: 0;
+    box-sizing: border-box;
+}
 
 .miniatures {
     box-sizing: border-box;
-    width: 100px;
-    height: 395px;
-    /* box-sizing: border-box; */
+    width: 100%;
+    height: 100%;
 }
 
 .miniature {
-    width: 98px;
-    height: 100%;
+    width: 100%;
+    aspect-ratio: 1.5;
+    height: auto;
     object-fit: cover;
 }
 
-
 .miniatures :global(.swiper-slide) {
-    width: 98px !important;
-    height: 65px !important;
+    width: calc(100% - 10px);
+    aspect-ratio: 1.5;
+    height: auto;
     border-radius: 4px;
-    opacity: 0.6;
+    opacity: 0.8;
     transition: opacity 0.3s ease;
     border: 1px solid transparent;
 }
 
-/* Стиль для активного слайда */
 .miniatures :global(.swiper-slide-thumb-active) {
-    width: 98px !important;
-    height: 65px !important;
     opacity: 1 !important;
     border: 1px solid var(--outline);
 }
@@ -43,43 +47,93 @@
     height: 100%;
     object-fit: cover;
     border-radius: 4px;
+    cursor: pointer;
+}
+
+.miniatures :global(.swiper-scrollbar) {
+    position: absolute;
+    right: 0px;
+    top: 0;
+    bottom: 0;
+    width: 4px;
+    background-color: var(--surface);
+    padding-left: 3px;
+}
+
+.miniatures :global(.swiper-scrollbar-drag) {
+    border-radius: 29px;
+    width: 4px;
+    background-color: #8D8D93;
 }
 
 .image_container {
+    box-sizing: border-box;
     flex-grow: 1;
     min-width: 0;
-    max-width: calc(100% - 100px - 15px);
+    max-width: 100%;
+    /* ширина контейнера миниатюр + gap */
+
+    aspect-ratio: 1.5;
+    height: auto;
     border-radius: 4px;
+}
+
+.image_container :global(.swiper-pagination-bullet) {
+    background-color: var(--main);
 }
 
 .image {
     width: 100%;
-    height: auto;
-    aspect-ratio: 1.5;
+    height: 100%;
     object-fit: cover;
 }
+
 
 @media (max-width: 1400px) {
     .container {
         flex-direction: column-reverse;
-        gap: 0;
     }
 
     .image_container {
         max-width: 100%;
     }
 
-    .miniatures {
-        height: 67px;
-        width: 527px;
+    .miniatures_container {
+        width: 100%;
+        height: 90px;
     }
 
+    .miniatures {
+        width: auto;
+        height: calc(100% - 10px);
+    }
 
+    .miniatures :global(.swiper-slide) {
+        width: auto;
+        height: calc(100% - 10px);
+    }
+
+    .miniatures :global(.swiper-scrollbar) {
+        right: auto;
+        top: auto;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        height: 4px;
+        margin-top: 3px;
+    }
+
+    .miniatures :global(.swiper-scrollbar-drag) {
+        border-radius: 29px;
+        height: 4px;
+        background-color: #8D8D93;
+    }
 }
 
+/* РАНЬШЕ здесь ты полностью скрывал миниатюры — убираем это! */
 @media (max-width: 1096px) {
-
-    .miniatures {
+    .miniatures_container {
         display: none;
     }
+
 }

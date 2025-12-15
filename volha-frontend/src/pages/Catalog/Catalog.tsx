@@ -10,12 +10,14 @@ import type { FilterMetadata, IFilter } from '../../features/Filter/model/Filter
 import FilterWiget from '../../features/Filter/ui/FilterWiget';
 import { fetchProducts } from './api/Fetch';
 import { defaultFilter } from './consts/consts';
+import Breadcrumbs from '../../features/Breadcrumbs/Breadcrumbs';
+import LayoutContent from '../../app/layout/LayoutContent';
 
 const Catalog = () => {
     const { data: filterMetaData, isLoading: isLoadingFilterMeta, error } = useQuery<FilterMetadata>({
         queryKey: ['filterMetaData'],
         queryFn: async () => {
-            const res = await fetch(`${BASE_URL}api/dictionaries/getall`);
+            const res = await fetch(`${BASE_URL}api/dictionaries/all`);
             if (!res.ok) throw new Error(res.statusText);
             return res.json();
         },
@@ -29,7 +31,7 @@ const Catalog = () => {
             console.log("apply filters")
             setFilterState(prev => ({
                 ...prev,
-                categories: [],
+                // categories: [],
                 brands: [],
                 colors: [],
                 countries: [],
@@ -70,18 +72,24 @@ const Catalog = () => {
     const queryClient = useQueryClient();
 
     useEffect(() => {
+        console.log("uri")
         if (uri) {
+            
             const categories = queryClient.getQueryData<Category[]>(['categories']) ?? [];
             const category = categories.find(c => c.uri === uri)
 
             if (category) {
+                console.log("set title")
                 setTitle(category.title);
-                if (filterMetaData) {
+                // if (filterMetaData) {
+                if (filterState.categories[0] !== category.id) {
                     setFilterState(prev => ({
                         ...prev,
                         categories: [category.id],
                     }));
+                    setShouldUpdate(true)
                 }
+                // }
             }
         }
     }, [uri]);
@@ -91,26 +99,29 @@ const Catalog = () => {
     if (!filterMetaData) return null;
 
     return (
-        <div className={styles.catalog_container}>
-            <h1 className={styles.header}>{title}</h1>
-            <FilterWiget filterState={filterState} filterMetadata={filterMetaData} onFilterChange={setFilterState} callback={fetchCatalog} isLoading={isLoadingFilterMeta} error={error} />
-            <div className={styles.catalog}>
+        <LayoutContent>
+            <div className={styles.catalog_container}>
+                <Breadcrumbs />
+                <h1 className={styles.header}>{title}</h1>
+                <FilterWiget filterState={filterState} filterMetadata={filterMetaData} onFilterChange={setFilterState} callback={fetchCatalog} isLoading={isLoadingFilterMeta} error={error} />
+                <div className={styles.catalog}>
 
-                <div className={styles.product_list}>
-                    {productList?.map((item) => <ProductCard
-                        article={item.article}
-                        key={item.id}
-                        id={item.id}
-                        title={item.title}
-                        price={item.price}
-                        width={item.width}
-                        height={item.height}
-                        depth={item.depth}
-                        colors={item.colors}
-                        photos={item.photos} />)}
+                    <div className={styles.product_list}>
+                        {productList?.map((item) => <ProductCard
+                            article={item.article}
+                            key={item.id}
+                            id={item.id}
+                            title={item.title}
+                            price={item.price}
+                            width={item.width}
+                            height={item.height}
+                            depth={item.depth}
+                            colors={item.colors}
+                            photos={item.photos} />)}
+                    </div>
                 </div>
             </div>
-        </div>
+        </LayoutContent>
     );
 };
 

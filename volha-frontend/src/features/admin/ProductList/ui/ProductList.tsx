@@ -64,7 +64,7 @@ const ProductList = () => {
                         <div className={styles.cell}>{product.title}</div>
                         <div className={styles.cell}>{product.category?.title}</div>
                         <div className={styles.cell}>{product.article}</div>
-                        <div className={styles.cell}>{product.brand?.name}</div>
+                        <div className={styles.cell}>{product.brand?.title}</div>
                         <div className={styles.cell}>{product.price} ₽</div>
                         <div className={styles.cell}>
                             <div className={styles.actions}>

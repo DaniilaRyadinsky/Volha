@@ -9,7 +9,7 @@ const postTable = async (
     onSuccess: (id: string) => void,
     onError: (err: string) => void
 ) => {
-    fetch(`${BASE_URL}api/${table}/create`, {
+    fetch(`${BASE_URL}api/${table}`, {
         method: "POST",
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(data)
@@ -98,7 +98,8 @@ export const postColorImg = async (
     onError: (err: string) => void,
     mode?: "post" | "put"
 ) => {
-    fetch(`${BASE_URL}api/productcolorphotos/create`, {
+    console.log("rrrrrrrr")
+    fetch(`${BASE_URL}api/colorphotos`, {
         method: "POST",
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ color_id, photos, product_id })
@@ -115,7 +116,7 @@ export const postColorImg = async (
                 case 500:
                     onError("Ошибка сервера 500")
                     break;
-                case 502:
+                case 409:
                     if (mode === "put")
                         return putColorImg(
                             color_id,
@@ -124,8 +125,13 @@ export const postColorImg = async (
                             onSuccess,
                             onError
                         )
+                        else {
+                            onError("Изображения для этого цвета уже существуют")
+                        }
+                    break;
+                case 502:
                     onError("Ошибка сервера 502")
-
+                    break;
             }
         })
         .catch(err => {
@@ -141,7 +147,7 @@ export const putTable= async (
     onSuccess: () => void,
     onError: (err: string) => void
 ) => {
-    fetch(`${BASE_URL}api/${table}/update?id=${data.id}`, {
+    fetch(`${BASE_URL}api/${table}`, {
         method: "PUT",
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(data)
@@ -220,7 +226,7 @@ export const putColorImg = async (
     onSuccess: () => void,
     onError: (err: string) => void
 ) => {
-    fetch(`${BASE_URL}api/productcolorphotos/update`, {
+    fetch(`${BASE_URL}api/colorphotos`, {
         method: "PUT",
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ color_id, photos, product_id })

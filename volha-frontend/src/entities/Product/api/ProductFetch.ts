@@ -6,7 +6,7 @@ export const fetchProduct = async (
     onSuccess: (res: Product) => void,
     onError: (err: string) => void
 ) => {
-    fetch(`${BASE_URL}api/product/get?id=${id}`, {
+    fetch(`${BASE_URL}api/product?id=${id}`, {
         method: 'GET',
         headers: { 'Content-Type': 'application/json' }
     })
@@ -38,7 +38,7 @@ export const fetchColorImg = async(
     onSuccess: (data: string[]) => void,
     onError: (e: string) => void
 ) => {
-    fetch(`${BASE_URL}api/productcolorphotos/getphotos`, {
+    fetch(`${BASE_URL}api/colorphotos/photos/get`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({color_id, product_id})
@@ -68,7 +68,7 @@ export const productSearch = async(
     onSuccess: (res: Product[])=> void,
     onError: (e: string) => void
 ) => {
-    fetch(`${BASE_URL}api/product/search?query=${query}`, {
+    fetch(`${BASE_URL}api/product/search?prompt=${query}`, {
         method: 'GET',
         headers: { 'Content-Type': 'application/json' }
     })

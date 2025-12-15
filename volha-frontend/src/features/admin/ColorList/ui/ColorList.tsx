@@ -46,7 +46,7 @@ const ColorList = () => {
 
                 {colors?.map((color: Color) => (
                     <div key={color.id} className={styles.row}>
-                        <div className={styles.cell}>{color.name}</div>
+                        <div className={styles.cell}>{color.title}</div>
                         <div className={styles.cell}>
                             <div
                                 className={styles.color_preview}

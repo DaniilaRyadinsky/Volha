@@ -23,8 +23,9 @@ const AdminLayout = () => {
                                 <li><Link to="/admin/color/all">Цвета</Link></li>
                                 <li><Link to="/admin/brand/all">Бренды</Link></li>
                                 <li><Link to="/admin/country/all">Страны</Link></li>
+                                <li><Link to="/admin/slider">Слайдер</Link></li>
                             </ul>
-                        </nav>
+                        </nav> 
                     </div>
                     <div className={styles.admin_layout}>
                         <Outlet />

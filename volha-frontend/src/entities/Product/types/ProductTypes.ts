@@ -1,6 +1,6 @@
 export type Color = {
     id: string,
-    name: string,
+    title: string,
     hex: string
 }
 
@@ -13,7 +13,7 @@ export type Category = {
 
 export type Brand = {
     id: string,
-    name: string
+    title: string
 }
 
 export type Country = {

@@ -1,4 +1,27 @@
+.breadcrumbs {
+    overflow-x: auto;
+    scrollbar-width: none;
+    white-space: nowrap;
+}
+
+
 .breadcrumb_item {
+    font-size: 0.875rem;
+    color: var(--gray);
+    text-decoration: none;
+}
+
+.breadcrumb_item:hover {
+    text-decoration: underline;
+}
+
+.breadcrumb_item_slash {
+    font-size: 0.875rem;
+    color: var(--gray);
+    text-decoration: none;
+}
+
+.breadcrumb_item_last {
     font-size: 0.875rem;
     color: var(--gray);
     text-decoration: none;
