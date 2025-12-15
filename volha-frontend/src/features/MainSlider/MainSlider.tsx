@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import 'swiper/swiper-bundle.css';
 
@@ -6,8 +6,9 @@ import styles from './MainSlider.module.css';
 import BASE_URL from "../../shared/const/base_url";
 import { Link } from "react-router-dom";
 import { Autoplay, Navigation, Pagination } from "swiper/modules";
+import { getAllSLides } from "../admin/SliderForm/api/fetchSlides";
 
-interface Slide {
+export interface Slide {
   id: string;
   img: string;
   img768: string;
@@ -15,26 +16,32 @@ interface Slide {
 }
 
 const MainSlider = () => {
-  const [slides] = useState<Slide[]>([
-    {
-      id: "1",
-      img: `${BASE_URL}images/9d406330-a9dd-415d-bc97-8e7923edff30.png`,
-      img768: "/images/slide1-768.jpg",
-      link: "/products"
-    },
-    {
-      id: "2",
-      img: `${BASE_URL}images/9d406330-a9dd-415d-bc97-8e7923edff30.png`,
-      img768: "/images/slide2-768.jpg",
-      link: "/new-arrivals"
-    },
-    {
-      id: "3",
-      img: `${BASE_URL}images/9d406330-a9dd-415d-bc97-8e7923edff30.png`,
-      img768: "/images/slide3-768.jpg",
-      link: "/sale"
-    }
+  const [slides, setSlides] = useState<Slide[]>([
+    // {
+    //   id: "1",
+    //   img: `${BASE_URL}images/9d406330-a9dd-415d-bc97-8e7923edff30.png`,
+    //   img768: "/images/slide1-768.jpg",
+    //   link: "/products"
+    // },
+    // {
+    //   id: "2",
+    //   img: `${BASE_URL}images/9d406330-a9dd-415d-bc97-8e7923edff30.png`,
+    //   img768: "/images/slide2-768.jpg",
+    //   link: "/new-arrivals"
+    // },
+    // {
+    //   id: "3",
+    //   img: `${BASE_URL}images/9d406330-a9dd-415d-bc97-8e7923edff30.png`,
+    //   img768: "/images/slide3-768.jpg",
+    //   link: "/sale"
+    // }
   ]);
+
+
+  useEffect(() => {
+    getAllSLides(setSlides, (e) => console.log(e))
+  }, [])
+
   return (
     <div>
       <Swiper
