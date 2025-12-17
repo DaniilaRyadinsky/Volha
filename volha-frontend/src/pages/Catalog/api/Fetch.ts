@@ -17,7 +17,7 @@ export const fetchProducts = async (
             category: filterData.categories,
             colors: filterData.colors,
             country: filterData.countries,
-            limit: 0,
+            limit: 20,
             materials: filterData.materials,
             max_depth: filterData.max_depth,
             max_height: filterData.max_height,
@@ -33,6 +33,6 @@ export const fetchProducts = async (
         })
     })
         .then(res => res.json())
-        .then(d => onSuccess(d))
+        .then(d => onSuccess(d.items))
         .catch(e => onError(e))
 }
