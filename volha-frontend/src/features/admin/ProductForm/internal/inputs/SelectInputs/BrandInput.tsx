@@ -16,13 +16,13 @@ const BrandInput = ({ defaultValue, onChange, isErr, setErrors }: IAdminSelect) 
     const [value, setValue] = useState(defaultValue)
 
     const handleChange = (e: string) => {
+        console.log("brand change")
         setValue(e)
         onChange(e)
         if (e !== '' && isErr) {
             setErrors(undefined)
         }
     }
-
 
     return (
         <>
@@ -32,14 +32,14 @@ const BrandInput = ({ defaultValue, onChange, isErr, setErrors }: IAdminSelect) 
                     value={getLabel(brands, value)}
                     title="Бренд"
                     options={brands.map((b: Brand) => ({ value: b.id, label: b.title }))}
-                    onChange={handleChange}
+                    onChange={(e)=> handleChange(e)}
                     lastChild={<div >Добавить бренд...</div>}
                     lastOnClick={() => { setIsModal(true) }}
                     style={{ borderColor: isErr ? 'var(--red)' : undefined }}
                 />
             </label>
 
-            {isModal && <Modal closeCallback={() => setIsModal(false)}><BrandForm closecallback={() => setIsModal(false)} onChange={(e)=> setValue(e)}/></Modal>}
+            {isModal && <Modal closeCallback={() => setIsModal(false)}><BrandForm closecallback={() => setIsModal(false)} onChange={(e)=> handleChange(e)}/></Modal>}
         </>
     )
 }

@@ -4,6 +4,8 @@ import type { IFilter } from '../../../features/Filter/model/FilterType';
 import BASE_URL from '../../../shared/const/base_url'
 
 
+
+
 export const fetchProducts = async (
     filterData: IFilter,
     onSuccess: (d: Product[]) => void,

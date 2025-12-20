@@ -74,7 +74,7 @@ const Catalog = () => {
     useEffect(() => {
         console.log("uri")
         if (uri) {
-            
+
             const categories = queryClient.getQueryData<Category[]>(['categories']) ?? [];
             const category = categories.find(c => c.uri === uri)
 
@@ -104,8 +104,8 @@ const Catalog = () => {
                 <Breadcrumbs />
                 <h1 className={styles.header}>{title}</h1>
                 <FilterWiget filterState={filterState} filterMetadata={filterMetaData} onFilterChange={setFilterState} callback={fetchCatalog} isLoading={isLoadingFilterMeta} error={error} />
+                
                 <div className={styles.catalog}>
-
                     <div className={styles.product_list}>
                         {productList?.map((item) => <ProductCard
                             article={item.article}

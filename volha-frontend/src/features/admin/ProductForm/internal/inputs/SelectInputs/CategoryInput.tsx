@@ -1,7 +1,7 @@
 import Select from '../../../../../../shared/ui/Select/Select'
 import { useState } from 'react'
 import type { Category } from '../../../../../../entities/Product/types/ProductTypes'
-import { getLabelTitle } from '../../../lib/utils'
+import { getLabel } from '../../../lib/utils'
 
 import styles from './FormSelect.module.css'
 import CategoryForm from '../../../../forms/CategoryForm'
@@ -29,7 +29,7 @@ const CategoryInput = ({ defaultValue, onChange, isErr, setErrors }: IAdminSelec
             <label className={styles.label}>
                 Категория*
                 <Select
-                    value={getLabelTitle(categories, value)}
+                    value={getLabel(categories, value)}
                     title="Категория"
                     options={categories.map((c: Category) => ({ value: c.id, label: c.title }))}
                     onChange={handleChange}
@@ -39,7 +39,7 @@ const CategoryInput = ({ defaultValue, onChange, isErr, setErrors }: IAdminSelec
                 />
             </label>
 
-            {isModal && <Modal closeCallback={() => setIsModal(false)}><CategoryForm closecallback={() => setIsModal(false)} onChange={(e) => setValue(e)} /></Modal>}
+            {isModal && <Modal closeCallback={() => setIsModal(false)}><CategoryForm closecallback={() => setIsModal(false)} onChange={(e) => handleChange(e)} /></Modal>}
         </>
     )
 }

@@ -1,7 +1,7 @@
 import Select from '../../../../../../shared/ui/Select/Select'
 import { useState } from 'react'
 import type { Country } from '../../../../../../entities/Product/types/ProductTypes'
-import { getLabelTitle } from '../../../lib/utils'
+import { getLabel } from '../../../lib/utils'
 
 import styles from './FormSelect.module.css'
 import CountryForm from '../../../../forms/CountryForm'
@@ -28,7 +28,7 @@ const CountryInput = ({ defaultValue, onChange, isErr, setErrors }: IAdminSelect
             <label className={styles.label}>
                 Страна*
                 <Select
-                    value={getLabelTitle(countries, value)}
+                    value={getLabel(countries, value)}
                     title="Страна"
                     options={countries.map((c: Country) => ({ value: c.id, label: c.title }))}
                     onChange={handleChange}
@@ -38,7 +38,7 @@ const CountryInput = ({ defaultValue, onChange, isErr, setErrors }: IAdminSelect
                 />
             </label>
 
-            {isModal && <Modal closeCallback={() => setIsModal(false)}><CountryForm closecallback={() => setIsModal(false)} onChange={(e) => setValue(e)} /></Modal>}
+            {isModal && <Modal closeCallback={() => setIsModal(false)}><CountryForm closecallback={() => setIsModal(false)} onChange={(e) => handleChange(e)} /></Modal>}
         </>
     )
 }

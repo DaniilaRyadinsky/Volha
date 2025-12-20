@@ -9,7 +9,8 @@ export const fetchProducts = async (): Promise<Product[]> => {
     if (!res.ok) {
         throw new Error(res.statusText);
     }
-    return res.json();
+    const products = await res.json() 
+    return products.items;
 }
 
 
