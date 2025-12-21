@@ -5,6 +5,7 @@ import { FreeMode, Mousewheel, Pagination, Scrollbar, Thumbs } from 'swiper/modu
 import 'swiper/swiper-bundle.css';
 import styles from './ProductImages.module.css'
 import BASE_URL from '../../shared/const/base_url';
+import { useState, useEffect } from 'react';
 
 interface IProductImages {
     images: string[];
@@ -15,7 +16,13 @@ interface IProductImages {
 }
 
 const ProductImages = ({ images, name, thumbsSwiper, setThumbsSwiper, onClick }: IProductImages) => {
-    const isDesktop = window.innerWidth > 1400;
+    const [isDesktop, setIsDesktop] = useState(window.innerWidth);
+
+    useEffect(() => {
+        const onResize = () => setIsDesktop(window.innerWidth);
+        window.addEventListener('resize', onResize);
+        return () => window.removeEventListener('resize', onResize);
+    }, []);
 
     return (
         <div className={styles.container}>
@@ -26,13 +33,13 @@ const ProductImages = ({ images, name, thumbsSwiper, setThumbsSwiper, onClick }:
                     slidesPerView={'auto'}
                     freeMode={true}
                     scrollbar={{
-                        hide: false, 
+                        hide: false,
                         draggable: true,
                     }}
                     watchSlidesProgress={true}
                     modules={[Scrollbar, FreeMode, Mousewheel]}
                     className={styles.miniatures}
-                    direction={isDesktop ? 'vertical' : 'horizontal'}
+                    direction={isDesktop > 1400 ? 'vertical' : 'horizontal'}
                     mousewheel={{
                         forceToAxis: false,
                         sensitivity: 0.8,
@@ -54,8 +61,8 @@ const ProductImages = ({ images, name, thumbsSwiper, setThumbsSwiper, onClick }:
             <SwiperComponent
                 slidesPerView={1}
                 thumbs={{ swiper: thumbsSwiper }}
-                pagination={window.innerWidth < 1096}
-                modules={[FreeMode, Thumbs,Pagination]}
+                pagination={isDesktop < 1096}
+                modules={[FreeMode, Thumbs, Pagination]}
                 className={styles.image_container}
             >
                 {images.map((img) =>

@@ -20,6 +20,7 @@
     font-size: 1rem;
     padding: 0;
     min-width: 0;
+    font-weight: 300 !important;
 }
 
 .input::placeholder {

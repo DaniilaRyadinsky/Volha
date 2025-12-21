@@ -17,7 +17,6 @@
 
 .logo {
     display: block;
-    height: auto;
     width: 50px;
     height: auto;
 }
@@ -35,6 +34,7 @@
 .navlist_item {
     color: var(--main);
     font-size: 1.125rem;
+    font-weight: 300;
 }
 
 .navlist_item:hover {
@@ -53,6 +53,10 @@
 }
 
 @media (max-width: 1400px) {
+    .logo {
+        width: 35px;
+    }
+
     .navlist {
         display: none;
     }
@@ -76,6 +80,11 @@
         width: 30px;
         height: 30px;
     }
+
+    .search {
+        width: 24px;
+        height: 24px;
+    }
 }
 
 @media (max-width: 1096px) {
@@ -89,10 +98,9 @@
 }
 
 @media (max-width: 768px) {
-    .logo {
-        width: 40px;
-        height: 40px;
-    }
+    /* .logo {
+        width: 30px;
+    } */
 
     /* .icons {
         width: 20px;

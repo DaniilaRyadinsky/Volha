@@ -12,6 +12,10 @@ import { fetchProducts } from './api/Fetch';
 import { defaultFilter } from './consts/consts';
 import Breadcrumbs from '../../features/Breadcrumbs/Breadcrumbs';
 import LayoutContent from '../../app/layout/LayoutContent';
+import Title from '../../shared/ui/Title/Title';
+import Pagination from '../../features/Pagination/Pagination';
+import { PRODUCT_PER_PAGE } from '../../features/Pagination/consts/consts';
+
 
 const Catalog = () => {
     const { data: filterMetaData, isLoading: isLoadingFilterMeta, error } = useQuery<FilterMetadata>({
@@ -25,48 +29,6 @@ const Catalog = () => {
     });
 
     const [filterState, setFilterState] = useState<IFilter>(defaultFilter)
-
-    useEffect(() => {
-        if (filterMetaData) {
-            console.log("apply filters")
-            setFilterState(prev => ({
-                ...prev,
-                // categories: [],
-                brands: [],
-                colors: [],
-                countries: [],
-                materials: [],
-                min_height: filterMetaData.min_height,
-                max_height: filterMetaData.max_height,
-                min_width: filterMetaData.min_width,
-                max_width: filterMetaData.max_width,
-                min_depth: filterMetaData.min_depth,
-                max_depth: filterMetaData.max_depth,
-                min_price: filterMetaData.min_price,
-                max_price: filterMetaData.max_price,
-            }))
-            setShouldUpdate(true)
-        }
-    }, [filterMetaData])
-
-    const [productList, setProductList] = useState<Product[]>([])
-    const [isLoading, setIsLoading] = useState(false)
-
-    const [shouldUpdate, setShouldUpdate] = useState(false)
-
-    const fetchCatalog = useCallback(async () => {
-        setIsLoading(true);
-        await fetchProducts(filterState, setProductList, (e) => { alert(e) });
-        setIsLoading(false);
-    }, [filterState]);
-
-    useEffect(() => {
-        if (shouldUpdate) {
-            fetchCatalog();
-            setShouldUpdate(false);
-        }
-    }, [shouldUpdate]);
-
     const { uri } = useParams();
     const [title, setTitle] = useState('Все товары')
     const queryClient = useQueryClient();
@@ -94,6 +56,58 @@ const Catalog = () => {
         }
     }, [uri]);
 
+    useEffect(() => {
+        if (filterMetaData) {
+            setFilterState(prev => ({
+                ...prev,
+                // categories: [],
+                brands: [],
+                colors: [],
+                countries: [],
+                materials: [],
+                min_height: filterMetaData.min_height,
+                max_height: filterMetaData.max_height,
+                min_width: filterMetaData.min_width,
+                max_width: filterMetaData.max_width,
+                min_depth: filterMetaData.min_depth,
+                max_depth: filterMetaData.max_depth,
+                min_price: filterMetaData.min_price,
+                max_price: filterMetaData.max_price,
+            }))
+            setShouldUpdate(true)
+        }
+    }, [filterMetaData])
+
+    const [productList, setProductList] = useState<{ items: Product[], total: number }>({ items: [], total: 0 })
+    const [isLoading, setIsLoading] = useState(false)
+
+    const [shouldUpdate, setShouldUpdate] = useState(false)
+
+    const fetchCatalog = useCallback(async () => {
+        setIsLoading(true);
+        await fetchProducts(filterState, setProductList, (e) => { alert(e) });
+        setIsLoading(false);
+    }, [filterState]);
+
+
+    useEffect(() => {
+        if (shouldUpdate) {
+            fetchCatalog();
+            setShouldUpdate(false);
+            window.scrollTo({ top: 0, behavior: 'smooth' })
+        }
+    }, [shouldUpdate]);
+
+
+    const handlePaginationChange = (e: number) => {
+        setFilterState(prev => ({
+            ...prev,
+            limit: e * PRODUCT_PER_PAGE,
+            offset: (e - 1) * PRODUCT_PER_PAGE
+        }));
+        setShouldUpdate(true)
+    }
+
 
     if (isLoading) return <ClipLoader loading cssOverride={{ color: 'var(--main)' }} size={50} />;
     if (!filterMetaData) return null;
@@ -102,12 +116,12 @@ const Catalog = () => {
         <LayoutContent>
             <div className={styles.catalog_container}>
                 <Breadcrumbs />
-                <h1 className={styles.header}>{title}</h1>
+                <Title>{title}</Title>
                 <FilterWiget filterState={filterState} filterMetadata={filterMetaData} onFilterChange={setFilterState} callback={fetchCatalog} isLoading={isLoadingFilterMeta} error={error} />
-                
+
                 <div className={styles.catalog}>
                     <div className={styles.product_list}>
-                        {productList?.map((item) => <ProductCard
+                        {productList?.items?.map((item) => <ProductCard
                             article={item.article}
                             key={item.id}
                             id={item.id}
@@ -120,6 +134,7 @@ const Catalog = () => {
                             photos={item.photos} />)}
                     </div>
                 </div>
+                <Pagination total={productList.total} onChange={handlePaginationChange} />
             </div>
         </LayoutContent>
     );

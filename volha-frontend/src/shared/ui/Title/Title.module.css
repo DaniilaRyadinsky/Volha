@@ -1,0 +1,23 @@
+.header {
+    padding: 20px 0;
+    font-weight: 300;
+}
+
+@media (max-width: 768px) {
+    .header {
+        padding: 10px 20px;
+    }
+}
+
+
+@media (max-width: 568px) {
+    .header {
+        padding: 10px 15px;
+    }
+}
+
+@media (max-width: 400px) {
+    .header {
+        padding: 10px 0px;
+    }
+}

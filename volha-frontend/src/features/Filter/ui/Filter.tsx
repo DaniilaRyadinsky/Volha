@@ -19,8 +19,9 @@ const Filter = ({ filterState, filterMetadata, onFilterChange, callback, isLoadi
 
     const cleanFilters = () => {
         if (filterMetadata) {
-            onFilterChange({
-                categories: [],
+            onFilterChange((prev) => ({
+                // categories: [],
+                ...prev,
                 brands: [],
                 colors: [],
                 countries: [],
@@ -35,7 +36,7 @@ const Filter = ({ filterState, filterMetadata, onFilterChange, callback, isLoadi
                 max_price: filterMetadata.max_price,
                 sort_by: '',
                 sort_order: ''
-            })
+            }))
         };
         setIsUpdate(true)
     };
@@ -90,7 +91,6 @@ const Filter = ({ filterState, filterMetadata, onFilterChange, callback, isLoadi
     const renderCheckbox = ({
         title,
         items,
-        textKey = "title",
         filterKey,
         CheckboxComponent = Checkbox
     }: RenderCheckboxesProps) => (
@@ -104,7 +104,7 @@ const Filter = ({ filterState, filterMetadata, onFilterChange, callback, isLoadi
                     <CheckboxComponent
                         key={item.id}
                         checked={filterState[filterKey].includes(item.id)}
-                        text={item[textKey] as string}
+                        text={item.title as string}
                         hex={item.hex}
                         onClick={() => toggleArrayItem(filterKey, item.id)} />)}
             </div>
@@ -132,6 +132,7 @@ const Filter = ({ filterState, filterMetadata, onFilterChange, callback, isLoadi
     if (isLoading) { console.log("loading"); return <ClipLoader loading size={50} cssOverride={{ color: 'var(--main)' }} />; }
     if (error) return <div style={{ color: 'red' }}>Ошибка: {error.message}</div>;
     if (!filterMetadata) return null;
+    
     return (
         <div className={styles.filter_container}>
             <div className={styles.title_container}>
@@ -151,7 +152,6 @@ const Filter = ({ filterState, filterMetadata, onFilterChange, callback, isLoadi
                     {renderCheckbox({
                         title: "Бренды",
                         items: filterMetadata.brands,
-                        textKey: "name",
                         filterKey: "brands"
                     })}
 
@@ -170,7 +170,6 @@ const Filter = ({ filterState, filterMetadata, onFilterChange, callback, isLoadi
                     {renderCheckbox({
                         title: "Цвета",
                         items: filterMetadata.colors,
-                        textKey: "name",
                         filterKey: "colors",
                         CheckboxComponent: ColorCheckbox
                     })}

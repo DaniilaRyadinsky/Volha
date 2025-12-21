@@ -29,6 +29,7 @@
     width: calc(100% - 36px - 12px - 2px);
     font-size: 0.8rem;
     color: var(--main);
+    font-weight: 300 !important;
 }
 
 .input_container::after {

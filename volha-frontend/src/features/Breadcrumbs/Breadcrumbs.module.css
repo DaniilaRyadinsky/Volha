@@ -7,6 +7,7 @@
 
 .breadcrumb_item {
     font-size: 0.875rem;
+    font-weight: 300;
     color: var(--gray);
     text-decoration: none;
 }
@@ -18,11 +19,13 @@
 .breadcrumb_item_slash {
     font-size: 0.875rem;
     color: var(--gray);
+    font-weight: 300;
     text-decoration: none;
 }
 
 .breadcrumb_item_last {
     font-size: 0.875rem;
+    font-weight: 300;
     color: var(--gray);
     text-decoration: none;
 }

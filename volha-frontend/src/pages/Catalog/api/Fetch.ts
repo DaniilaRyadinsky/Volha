@@ -8,7 +8,7 @@ import BASE_URL from '../../../shared/const/base_url'
 
 export const fetchProducts = async (
     filterData: IFilter,
-    onSuccess: (d: Product[]) => void,
+    onSuccess: (d: { items: Product[], total: number }) => void,
     onError: (e: string) => void
 ) => {
     fetch(`${BASE_URL}api/product/filter`, {
@@ -19,7 +19,7 @@ export const fetchProducts = async (
             category: filterData.categories,
             colors: filterData.colors,
             country: filterData.countries,
-            limit: 20,
+            limit: filterData.limit,
             materials: filterData.materials,
             max_depth: filterData.max_depth,
             max_height: filterData.max_height,
@@ -29,12 +29,12 @@ export const fetchProducts = async (
             min_height: filterData.min_height,
             min_price: filterData.min_price,
             min_width: filterData.min_width,
-            offset: 0,
+            offset: filterData.offset,
             sort_by: filterData.sort_by,
             sort_order: filterData.sort_order
         })
     })
         .then(res => res.json())
-        .then(d => onSuccess(d.items))
+        .then(d => onSuccess(d))
         .catch(e => onError(e))
 }

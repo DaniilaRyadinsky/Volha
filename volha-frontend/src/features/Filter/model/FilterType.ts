@@ -15,7 +15,9 @@ export interface IFilter {
     min_depth: number,
     max_depth: number,
     sort_by: string,
-    sort_order: string
+    sort_order: string,
+    limit: number,
+    offset: number
 }
 
 export type FilterMetadata = {
@@ -38,8 +40,7 @@ export type FilterMetadata = {
 
 export type CheckboxItem = {
     id: string,
-    title?: string,
-    name?: string,
+    title: string,
     hex?: string
 }
 

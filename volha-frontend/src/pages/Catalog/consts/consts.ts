@@ -1,3 +1,5 @@
+import { PRODUCT_PER_PAGE } from "../../../features/Pagination/consts/consts";
+
 export const defaultFilter = {
     categories: [],
     brands: [],
@@ -13,5 +15,7 @@ export const defaultFilter = {
     min_price: 0,
     max_price: 1000,
     sort_by: "",
-    sort_order: ""
+    sort_order: "",
+    limit: PRODUCT_PER_PAGE,
+    offset: 0
 }

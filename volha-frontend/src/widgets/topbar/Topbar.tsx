@@ -46,7 +46,7 @@ const Topbar = () => {
 
                 <div className={styles.right_container_short}>
                     <div className={styles.icons_container} onClick={() => setIsOpen(true)}>
-                        <img src={search} className={styles.icons} />
+                        <img src={search} className={styles.search} />
                         <img src={menu} className={styles.icons} />
                     </div>
                     <Sidebar isOpen={isOpen} closeCallback={() => setIsOpen(false)} isRight={true}>

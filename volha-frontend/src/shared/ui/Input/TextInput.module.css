@@ -6,6 +6,7 @@
     font-size: 1rem;
     border: 2px solid transparent;
     border-radius: 4px;
+    font-weight: 300 !important;
 }
 
 .input::placeholder {

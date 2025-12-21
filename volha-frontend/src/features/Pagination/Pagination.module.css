@@ -1,0 +1,40 @@
+.pagination {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    justify-content: center;
+    padding: 10px;
+}
+
+.prev_button {
+    transform: rotate(90deg);
+}
+
+.next_button {
+    transform: rotate(-90deg);
+}
+
+.pag_btn {
+    display: flex;
+    width: 30px;
+    height: 30px;
+    font-size: 1.25rem;
+    border-radius: 15px;
+    align-items: center;
+    justify-content: center;
+
+}
+
+.pag_dots {
+    display: flex;
+    width: 30px;
+    height: 30px;
+    font-size: 1.25rem;
+    border-radius: 15px;
+    align-items: center;
+    justify-content: center;
+}
+
+.pag_btn:hover {
+    background-color: var(--on-main-container);
+}

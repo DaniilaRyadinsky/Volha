@@ -1,6 +1,7 @@
 import LayoutContent from '../../app/layout/LayoutContent'
 import Breadcrumbs from '../../features/Breadcrumbs/Breadcrumbs'
 import Feedback from '../../features/Feedback/ui/Feedback'
+import Title from '../../shared/ui/Title/Title'
 import styles from './Contacts.module.css'
 
 const Contacts = () => {
@@ -8,7 +9,7 @@ const Contacts = () => {
         <LayoutContent>
             <div className={styles.contacts}>
                 <Breadcrumbs />
-                <h1 className={styles.title}>Контакты</h1>
+                <Title>Контакты</Title>
                 <div className={styles.contacts_container} >
                     <div className={styles.left_container}>
                         <h2 className={styles.info_title}>Оставить заявку</h2>
