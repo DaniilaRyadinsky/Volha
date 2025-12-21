@@ -8,13 +8,13 @@ export interface IColor {
     onClick?: () => void;
 }
 
-export const ColorMarker = ({name,hex, children, style, onClick}: IColor) => {
+export const ColorMarker = ({ name, hex, children, style, onClick }: IColor) => {
     return (
-        <div 
-        className={styles.color} 
-        style={{backgroundColor: hex, cursor: onClick? "pointer": "auto", ...style}} 
-        title={name}
-        onClick={onClick}
+        <div
+            className={styles.color}
+            style={{ backgroundColor: hex, cursor: onClick ? "pointer" : "auto", ...style }}
+            title={name}
+            onClick={(e) => { e.stopPropagation(); onClick ? onClick() : undefined} }
         >{children}</div>
     )
 }

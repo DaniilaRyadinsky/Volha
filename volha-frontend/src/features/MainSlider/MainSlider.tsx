@@ -11,7 +11,7 @@ import { getAllSLides } from "../admin/SliderForm/api/fetchSlides";
 export interface Slide {
   id: string;
   img: string;
-  img768: string;
+  img762: string;
   link: string;
 }
 
@@ -60,7 +60,7 @@ const MainSlider = () => {
         {slides.map((slide) => (
           <SwiperSlide key={slide.id}>
             <Link to={slide.link}>
-              <img src={slide.img} alt="" className={styles.img} />
+              <img src={`${BASE_URL}images/${slide.img}`} alt="" className={styles.img} />
             </Link>
           </SwiperSlide>
         ))}
