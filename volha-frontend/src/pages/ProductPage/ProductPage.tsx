@@ -1,5 +1,4 @@
 import { Swiper, SwiperSlide, type SwiperRef } from 'swiper/react';
-import { Swiper as SwiperTypes } from 'swiper';
 import { Button } from '../../shared/ui/Button/Button'
 import ProductImages from '../../widgets/ProductImages/ProductImages'
 import 'swiper/swiper-bundle.css';
@@ -10,7 +9,6 @@ import { useLoaderData } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { ColorMarker } from '../../shared/ui/Color/Color';
 import arrow from '../../shared/assets/icons/expand_more.svg'
-import ImgView from '../../widgets/ImgView/ImgView';
 import { fetchColorImg } from '../../entities/Product/api/ProductFetch';
 import Markdown from 'react-markdown';
 import remarkGfm from 'remark-gfm'
@@ -27,14 +25,8 @@ interface LoaderResult {
 const ProductPage = () => {
   const product = (useLoaderData() as LoaderResult).product;
 
-  console.log(product)
-
-  const [thumbsSwiper, setThumbsSwiper] = useState<SwiperTypes | null>(null);
-
   const [selectedColor, setSelectedColor] = useState(product.colors[0])
   const [img, setImg] = useState<string[]>([]);
-
-  const [isImgView, setIsImgView] = useState(false);
 
   const [swiper, setSwiper] = useState<SwiperRef['swiper'] | null>(null);
 
@@ -85,15 +77,11 @@ const ProductPage = () => {
 
   return (
     <LayoutContent>
-      {isImgView &&
-        <ImgView images={img} thumbsSwiper={thumbsSwiper} setThumbsSwiper={setThumbsSwiper} />
-      }
-
       <div className={styles.container}>
         <Breadcrumbs />
         <div className={styles.product_info}>
           <div className={styles.info_left_container}>
-            <ProductImages name={"Шкаф"} images={img} thumbsSwiper={thumbsSwiper} setThumbsSwiper={setThumbsSwiper} onClick={() => setIsImgView(true)} />
+            <ProductImages name={"Шкаф"} images={img}/>
           </div>
           <div className={styles.info_right_container}>
             <h1 className={styles.title}>{product.title}</h1>
@@ -174,7 +162,6 @@ const ProductPage = () => {
               onSwiper={(swiper) => setSwiper(swiper)}
               modules={[Navigation, Pagination]}
               className={styles.mySwiper}
-            // style={{ overflow: 'visible' }}
             >
               {product.seems && product.seems.map(seem => (
                 <SwiperSlide key={seem.id} style={{ height: 'auto' }}>

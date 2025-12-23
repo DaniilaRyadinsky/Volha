@@ -23,12 +23,13 @@ export const getAllSLides = async (
 
 
 export const postSlide = async (
+    mode: 'POST' | 'PUT',
     slide: Slide,
     onSuccess: (id: string) => void,
     onError: (err: string) => void
 ) => {
     fetch(`${BASE_URL}api/slide`, {
-        method: 'POST',
+        method: mode,
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(slide)
     })
@@ -49,6 +50,35 @@ export const postSlide = async (
                         onError('Ошибка сервера');
                         break;
                 }
+            }
+        })
+}
+
+
+export const deleteSlide = async (
+    id: string,
+    onSuccess: () => void,
+    onError: (err: string) => void
+) => {
+    fetch(`${BASE_URL}api/slide?id=${id}`, {
+        method: 'DELETE',
+        headers: { 'Content-Type': 'application/json' }
+    })
+        .then(async response => response.status)
+        .then(status => {
+            switch (status) {
+                case 200:
+                    onSuccess();
+                    break;
+                case 400:
+                    onError('Неправильный ввод');
+                    break;
+                case 409:
+                    onError('Уже существует');
+                    break;
+                case 502:
+                    onError('Ошибка сервера');
+                    break;
             }
         })
 }

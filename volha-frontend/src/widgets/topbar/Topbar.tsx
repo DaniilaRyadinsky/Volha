@@ -9,6 +9,7 @@ import { useState } from 'react'
 import Sidebar from '../../shared/ui/Sidebar/Sidebar'
 import Select from '../../shared/ui/Select/Select'
 import { useCategories } from '../../app/layout/model/useCategories'
+import close from '../../shared/assets/icons/close.svg'
 
 
 const Topbar = () => {
@@ -24,7 +25,7 @@ const Topbar = () => {
                 <div className={styles.right_container}>
                     <Search />
                 </div>
-                
+
                 <nav >
                     <ul className={styles.navlist}>
                         {/* {categories.slice(0, 4).map((category) =>
@@ -50,11 +51,18 @@ const Topbar = () => {
                         <img src={menu} className={styles.icons} />
                     </div>
                     <Sidebar isOpen={isOpen} closeCallback={() => setIsOpen(false)} isRight={true}>
-                        <div className={styles.sidebar_navlist}>
-                            <Search />
-                            {categories.map((category) =>
-                                <Link onClick={() => setIsOpen(false)} key={category.id} to={`/catalog/category/${category.uri}`} style={{ textDecoration: "none" }}><li className={styles.navlist_item}>{category.title}</li></Link>)}
-                            <Link to="/catalog" onClick={() => setIsOpen(false)} style={{ textDecoration: "none" }}><li className={styles.navlist_item}>Все товары</li></Link>
+                        <div className={styles.sidebar_container}>
+                            <div className={styles.search_container}>
+                                <Search />
+                                <img src={close} className={styles.close} onClick={() => setIsOpen(false)} />
+                            </div>
+                            <ul className={styles.sidebar_navlist}>
+                                {categories.map((category) =>
+                                    <Link onClick={() => setIsOpen(false)} key={category.id} to={`/catalog/category/${category.uri}`} style={{ textDecoration: "none" }}><li className={styles.navlist_item}>{category.title}</li></Link>)}
+                                <Link to="/catalog" onClick={() => setIsOpen(false)} style={{ textDecoration: "none" }}><li className={styles.navlist_item}>Все товары</li></Link>
+                                <Link to="/about" style={{ textDecoration: "none" }}><li className={styles.navlist_item}>О нас</li></Link>
+                                <Link to="/contacts" style={{ textDecoration: "none" }}><li className={styles.navlist_item}>Контакты</li></Link>
+                            </ul>
                         </div>
                     </Sidebar>
                 </div>

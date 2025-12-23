@@ -9,32 +9,67 @@ import TextInput from "../../../shared/ui/Input/TextInput";
 import FileUpload from "../FileUpload/FileUpload";
 import AdminImage from "../ProductForm/internal/AdminImage/AdminImage";
 import { Button } from "../../../shared/ui/Button/Button";
-import { postSlide } from "./api/fetchSlides";
+import { deleteSlide, getAllSLides, postSlide } from "./api/fetchSlides";
 import { showAlert, showErr } from "../../../shared/ui/customAlert/showAlert";
+import BASE_URL from "../../../shared/const/base_url";
 const SliderForm = () => {
-
-  const [swiper, setSwiper] = useState<SwiperRef['swiper'] | null>(null);
   const [slides, setSlides] = useState<Slide[]>([]);
-
-  const [currentSlide, setCurrentSlide] = useState<Slide>({ id: '', img: '', img762: '', link: '' })
+  const [activeIndex, setActiveIndex] = useState(0);
+  const [currentSlide, setCurrentSlide] = useState<Slide>({ id: '', img: '', img762: '', link: '' });
+  const isCreateMode = activeIndex === slides.length;
+  const [swiper, setSwiper] = useState<SwiperRef['swiper'] | null>(null);
 
   const handleAddClick = () => {
-    postSlide(currentSlide, () => showAlert("Слайд добавлен"), (e) => showErr(e))
+    if (!currentSlide) return;
+
+    if (isCreateMode) {
+      postSlide('POST', currentSlide,
+        () => { showAlert("Слайд добавлен"); getAllSLides((e) => setSlides(e), (e) => { showErr(e) }) },
+        (e) => showErr(e))
+    } else {
+      postSlide('PUT', currentSlide,
+        () => { showAlert("Слайд обновлен"); getAllSLides((e) => setSlides(e), (e) => { showErr(e) }) },
+        (e) => showErr(e))
+    }
+
+  }
+
+
+  const handleDeleteClick = () => {
+    deleteSlide(currentSlide.id, () => {
+      showAlert("Слайд удален");
+      getAllSLides((e) => setSlides(e), (e) => { showErr(e) })
+    }, (e) => showErr(e))
   }
 
 
   useEffect(() => {
-
+    getAllSLides((e) => setSlides(e), (e) => { showErr(e) })
   }, [])
 
+  useEffect(() => {
+    if (activeIndex < slides.length) {
+      // редактирование
+      setCurrentSlide(slides[activeIndex]);
+    } else {
+      // добавление
+      setCurrentSlide({
+        id: '',
+        img: '',
+        img762: '',
+        link: ''
+      });
+    }
+  }, [activeIndex, slides]);
+
   return (
-    <div>
+    <div className={styles.container}>
       <div>
         <Swiper
           onSwiper={(swiper) => setSwiper(swiper)}
-          // onSlideChange={() => { setCurrentSlide(slides[swiper ? swiper?.activeIndex : 0]) }}
+          onSlideChange={(swiper) => setActiveIndex(swiper.activeIndex)}
           className={styles.slider}
-          loop={true}
+          loop={false}
           pagination={{
             clickable: true,
           }}
@@ -43,9 +78,14 @@ const SliderForm = () => {
         >
           {slides.map((slide) => (
             <SwiperSlide key={slide.id}>
-              <img src={slide.img} alt="" className={styles.img} />
+              <img src={`${BASE_URL}images/${slide.img}`} alt="" className={styles.img} />
             </SwiperSlide>
           ))}
+          <SwiperSlide>
+            <div className={styles.add_slide}>
+              <span>+ Добавить слайд</span>
+            </div>
+          </SwiperSlide>
         </Swiper>
       </div>
       <div className={styles.form_container}>
@@ -66,10 +106,11 @@ const SliderForm = () => {
         </div>
         <div className={styles.form_container_item}>
           <label>Ссылка</label>
-          <TextInput type='text' placeholder="Ссылка" value={swiper ? slides[swiper?.activeIndex]?.link : ''} onChange={(e) => setCurrentSlide(prev => ({ ...prev, link: e }))} />
+          <TextInput type='text' placeholder="Ссылка" value={currentSlide.link} onChange={(e) => setCurrentSlide(prev => ({ ...prev, link: e }))} />
         </div>
-        <div className={styles.form_container_item}>
-          <Button onClick={() => handleAddClick()}>Добавить</Button>
+        <div className={styles.button_container}>
+          <Button onClick={() => handleAddClick()}>{isCreateMode ? 'Добавить' : 'Сохранить'}</Button>
+          <Button onClick={() => handleDeleteClick()}>Удалить</Button>
         </div>
         <div className={styles.form_container_item}>
 

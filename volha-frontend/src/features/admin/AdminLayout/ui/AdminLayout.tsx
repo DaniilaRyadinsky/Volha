@@ -14,7 +14,7 @@ const AdminLayout = () => {
                 <AdminDataProvider>
                     <ScrollToTop />
                     <div className={styles.admin_topbar}>
-                        <img src={logo} />
+                        <Link to="/"><img src={logo} /></Link>
                         <nav>
                             <ul className={styles.admin_nav}>
                                 <li><Link to="/admin/product/all">Товары</Link></li>
@@ -25,7 +25,7 @@ const AdminLayout = () => {
                                 <li><Link to="/admin/country/all">Страны</Link></li>
                                 <li><Link to="/admin/slider">Слайдер</Link></li>
                             </ul>
-                        </nav> 
+                        </nav>
                     </div>
                     <div className={styles.admin_layout}>
                         <Outlet />

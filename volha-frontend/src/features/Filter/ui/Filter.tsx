@@ -13,8 +13,6 @@ import arrow from '../../../shared/assets/icons/expand_more.svg'
 import close from '../../../shared/assets/icons/close.svg'
 
 
-
-
 const Filter = ({ filterState, filterMetadata, onFilterChange, callback, isLoading, error, setIsUpdate, closeCallback }: FilterProps) => {
 
     const cleanFilters = () => {
