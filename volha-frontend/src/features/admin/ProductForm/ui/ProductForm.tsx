@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import styles from './ProductForm.module.css'
 import { validateForm } from '../lib/utils'
 import { Button } from '../../../../shared/ui/Button/Button'
@@ -14,6 +14,7 @@ import CategoryInput from '../internal/inputs/SelectInputs/CategoryInput'
 import CountryInput from '../internal/inputs/SelectInputs/CountryInput'
 import SeemsInput from '../internal/inputs/SeemsInput/SeemsInput'
 import DescriptionInput from '../internal/DescriptionInput/DescriptionInput'
+import Checkbox from '../../../../shared/ui/Checkbox/Checkbox'
 
 
 const ProductForm = () => {
@@ -28,6 +29,12 @@ const ProductForm = () => {
 
     const [formKey, setFormKey] = useState(0)
     const [colorListKey, setColorListKey] = useState(0)
+
+    const [is_favorite, setIsFavorite] = useState(false)
+
+    useEffect(() => {
+        setIsFavorite(formRef.current.is_favorite)
+    }, [formKey])
 
     const { id } = useParams();
 
@@ -57,6 +64,12 @@ const ProductForm = () => {
 
         console.log("handlesave")
         setShouldPost(true);
+    }
+
+    const handleCheckboxChange = () => {
+        const prev = is_favorite
+        setIsFavorite(!prev)
+        formRef.current.is_favorite = (!prev)
     }
 
     return (
@@ -172,6 +185,12 @@ const ProductForm = () => {
 
                 </div>
                 <div className={styles.right_container}>
+                    <Checkbox
+                        key={`favorite-${formKey}`}
+                        text='Избранный товар'
+                        checked={is_favorite}
+                        onClick={() => handleCheckboxChange()} />
+
                     <ColorInput
                         key={`colors-${colorListKey}`}
                         defaultValue={colorListRef.current}

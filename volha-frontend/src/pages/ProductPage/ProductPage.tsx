@@ -5,7 +5,7 @@ import 'swiper/swiper-bundle.css';
 import { Navigation, Pagination } from 'swiper/modules';
 import ProductCard from '../../entities/Product/ProductCard/ProductCard';
 import type { Product } from '../../entities/Product/types/ProductTypes';
-import { useLoaderData } from 'react-router-dom';
+import { useLoaderData, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { ColorMarker } from '../../shared/ui/Color/Color';
 import arrow from '../../shared/assets/icons/expand_more.svg'
@@ -16,6 +16,8 @@ import remarkGfm from 'remark-gfm'
 import styles from './ProductPage.module.css'
 import Breadcrumbs from '../../features/Breadcrumbs/Breadcrumbs';
 import LayoutContent from '../../app/layout/LayoutContent';
+import Modal from '../../shared/ui/Modal/Modal';
+import Feedback from '../../features/Feedback/ui/Feedback';
 
 interface LoaderResult {
   product: Product;
@@ -28,7 +30,11 @@ const ProductPage = () => {
   const [selectedColor, setSelectedColor] = useState(product.colors[0])
   const [img, setImg] = useState<string[]>([]);
 
+  const [modal, setModal] = useState(false)
+
   const [swiper, setSwiper] = useState<SwiperRef['swiper'] | null>(null);
+
+  const navigate = useNavigate()
 
 
   const nextHandler = () => {
@@ -77,11 +83,16 @@ const ProductPage = () => {
 
   return (
     <LayoutContent>
+
+      {modal && <Modal closeCallback={() => setModal(false)}>
+          <Feedback subject={`Заявка на цену (${product.article})`} closeCallback={() => setModal(false)} />
+      </Modal>}
+
       <div className={styles.container}>
         <Breadcrumbs />
         <div className={styles.product_info}>
           <div className={styles.info_left_container}>
-            <ProductImages name={"Шкаф"} images={img}/>
+            <ProductImages name={"Шкаф"} images={img} />
           </div>
           <div className={styles.info_right_container}>
             <h1 className={styles.title}>{product.title}</h1>
@@ -134,7 +145,7 @@ const ProductPage = () => {
             </div>
             <p className={styles.price}>{product.price} р</p>
             <div className={styles.button_container}>
-              <Button style={{ width: "100%" }} mode={"on_primary"} onClick={() => console.log("click")}>Узнать цену</Button>
+              <Button style={{ width: "100%" }} mode={"on_primary"} onClick={() => setModal(true)}>Узнать цену</Button>
             </div>
           </div>
         </div>

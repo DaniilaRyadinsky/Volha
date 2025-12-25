@@ -42,5 +42,6 @@ export type Product = {
     photos: string[],
     seems: Product[],
     price: number,
-    description: string
+    description: string,
+    is_favorite: boolean
 }

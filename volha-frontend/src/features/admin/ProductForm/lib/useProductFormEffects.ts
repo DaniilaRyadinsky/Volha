@@ -54,7 +54,8 @@ export const useProductFormEffects = ({
                     photos: product.photos ?? [],
                     seems: product.seems != null ? product.seems.map(s => s.id) : [],
                     price: product.price,
-                    description: product.description ?? ''
+                    description: product.description ?? '',
+                    is_favorite: product.is_favorite ?? false
                 });
 
                 const colors = product.colors ?? [];

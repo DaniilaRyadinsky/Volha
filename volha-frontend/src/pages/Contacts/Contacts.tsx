@@ -12,7 +12,6 @@ const Contacts = () => {
                 <Title>Контакты</Title>
                 <div className={styles.contacts_container} >
                     <div className={styles.left_container}>
-                        <h2 className={styles.info_title}>Оставить заявку</h2>
                         <Feedback />
                     </div>
 

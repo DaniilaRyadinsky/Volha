@@ -20,3 +20,8 @@
     border: 2px solid var(--outline);
     width: 300px;
 }
+
+.error {
+    color: var(--red);
+    font-size: 0.875rem;
+}

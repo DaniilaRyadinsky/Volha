@@ -35,7 +35,8 @@ export type NewProduct = {
     photos: string[],
     seems: string[],
     price: number,
-    description: string
+    description: string,
+    is_favorite: boolean
 }
 
 export type ColorItem = {

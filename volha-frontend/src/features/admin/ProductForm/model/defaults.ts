@@ -15,7 +15,8 @@ export const defaultNewProduct: NewProduct = {
     photos: [],
     seems: [],
     price: 0,
-    description: ''
+    description: '',
+    is_favorite: false
 }
 
 export const createDefaultNewProduct = (): NewProduct => ({
@@ -34,4 +35,5 @@ export const createDefaultNewProduct = (): NewProduct => ({
   seems: [],
   price: 0,
   description: '',
+  is_favorite: false
 });

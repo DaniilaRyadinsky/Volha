@@ -6,7 +6,7 @@
     inset: 0;
     align-items: center;
     justify-content: center;
-    z-index: 3;
+    z-index: 20;
 }
 
 .modal_window {
@@ -17,4 +17,14 @@
     background-color: var(--surface);
     border-radius: 4px;
     z-index: 4;
+    max-height: 90vh;
+    overflow-y: auto;
+    width: 400px;
+}
+
+
+@media (max-width: 576px) {
+    .modal_window {
+        width: 100%;
+    }
 }
