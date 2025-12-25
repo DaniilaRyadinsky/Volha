@@ -1,4 +1,4 @@
-import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom"
+import { createBrowserRouter, RouterProvider, Outlet, Navigate } from "react-router-dom"
 import Layout from "../layout/Layout"
 import Contacts from "../../pages/Contacts/Contacts"
 import Catalog from "../../pages/Catalog/Catalog"
@@ -16,9 +16,10 @@ import CountryList from "../../features/admin/CountryList/ui/CountryList"
 import ColorList from "../../features/admin/ColorList/ui/ColorList"
 import Main from "../../pages/Main/Main"
 import SliderForm from "../../features/admin/SliderForm/SliderForm"
+import AdminAuth from "../../features/admin/AdminAuth/ui/AdminAuth"
 
 
-const useCategoryCrumb = (_data: Category & {breadcrumb: string}, params: Category) => {
+const useCategoryCrumb = (_data: Category & { breadcrumb: string }, params: Category) => {
     const queryClient = useQueryClient();
     const categories = queryClient.getQueryData<Category[]>(['categories']) ?? [];
 
@@ -27,7 +28,7 @@ const useCategoryCrumb = (_data: Category & {breadcrumb: string}, params: Catego
     return category ? category.title : decodeURIComponent(params.uri ?? "Категория");
 }
 
-const getProductCrumb = (data: Product & {breadcrumb: string}) => data?.breadcrumb || "Товар"
+const getProductCrumb = (data: Product & { breadcrumb: string }) => data?.breadcrumb || "Товар"
 
 const router = createBrowserRouter([
     {
@@ -35,7 +36,7 @@ const router = createBrowserRouter([
         element: <Layout />,
         handle: { crumb: "Главная" },
         children: [
-            { index: true, element: <Main/> },
+            { index: true, element: <Main /> },
 
             {
                 path: "catalog",
@@ -69,6 +70,13 @@ const router = createBrowserRouter([
                         handle: {
                             crumb: getProductCrumb
                         }
+                    },
+                    {
+                        path: "search/:query",
+                        element: <Catalog />,
+                        handle: {
+                            crumb: "Поиск товаров"
+                        }
                     }
                 ]
             },
@@ -92,7 +100,11 @@ const router = createBrowserRouter([
         path: "admin",
         element: <AdminLayout />,
         children: [
-            { index: true, element: <ProductForm /> },
+            { index: true, element: <Navigate to="/admin/auth"></Navigate> },
+            {
+                path: "auth",
+                element: <AdminAuth />
+            },
             {
                 path: "product/all",
                 element: <ProductList />
@@ -104,30 +116,30 @@ const router = createBrowserRouter([
             {
                 path: "product/:id/edit",
                 element: <ProductForm />
-			},
-			{
-				path: "category/all",
-				element: <CategoryList />
-			},
-			{
-				path: "material/all",
-				element: <MaterialList />
-			},
-			{
-				path: "brand/all",
-				element: <BrandList />
-			},
-			{
-				path: "country/all",
-				element: <CountryList />
-			},
-			{
-				path: "color/all",
-				element: <ColorList />
-			},
+            },
+            {
+                path: "category/all",
+                element: <CategoryList />
+            },
+            {
+                path: "material/all",
+                element: <MaterialList />
+            },
+            {
+                path: "brand/all",
+                element: <BrandList />
+            },
+            {
+                path: "country/all",
+                element: <CountryList />
+            },
+            {
+                path: "color/all",
+                element: <ColorList />
+            },
             {
                 path: "slider",
-                element: <SliderForm/>
+                element: <SliderForm />
             }
         ]
     }

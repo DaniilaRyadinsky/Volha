@@ -14,7 +14,7 @@ const ColorCheckbox = ({ text, checked, onClick, hex }: ICheckbox) => {
 
     return (
         <div className={styles.checkbox} onClick={onClick}>
-            <ColorMarker name={text} hex={hex} style={{ borderColor: checked ? 'var(--main)' : '' }}>
+            <ColorMarker name={text} hex={hex} style={{ borderColor: checked ? 'var(--main)' : '' }} onClick={onClick}>
                 {checked &&
                     <svg width="18" height="18" viewBox="0 0 18 19" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <g clipPath="url(#clip0_61_1837)">

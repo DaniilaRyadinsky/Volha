@@ -17,7 +17,8 @@ export interface IFilter {
     sort_by: string,
     sort_order: string,
     limit: number,
-    offset: number
+    offset: number,
+    title?: string,
 }
 
 export type FilterMetadata = {

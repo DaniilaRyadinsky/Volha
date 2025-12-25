@@ -31,7 +31,8 @@ export const fetchProducts = async (
             min_width: filterData.min_width,
             offset: filterData.offset,
             sort_by: filterData.sort_by,
-            sort_order: filterData.sort_order
+            sort_order: filterData.sort_order,
+            title: filterData.title? filterData.title : undefined
         })
     })
         .then(res => res.json())

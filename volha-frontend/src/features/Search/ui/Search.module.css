@@ -8,6 +8,7 @@
     border-radius: 4px;
     position: relative;
     border: 1px solid transparent;
+    position: relative;
 }
 
 .input {
@@ -16,6 +17,7 @@
     padding: 12px 0px;
     font-size: 1rem;
     font-weight: 300;
+    width: calc(100% - 24px);
 }
 
 .icon {
@@ -23,6 +25,7 @@
     right: 16px;
     width: 24px;
     height: 24px;
+    z-index: 20;
 }
 
 .search_container:hover {
@@ -31,4 +34,26 @@
 
 .search_container:focus-within {
     border: 1px solid var(--outline);
+}
+
+.productList_result {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    top: calc(100% + 5px);
+    z-index: 20;
+    background-color: #fff;
+    border-radius: 4px;
+    /* width: calc(100% + 150px); */
+    width: 100%;
+    padding: 8px 0px;
+}
+
+.product_item {
+    padding: 8px 20px;
+}
+
+.product_item:hover {
+    background-color: var(--on-main-container);
+    cursor: pointer;
 }

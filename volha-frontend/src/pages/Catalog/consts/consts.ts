@@ -17,5 +17,6 @@ export const defaultFilter = {
     sort_by: "",
     sort_order: "",
     limit: PRODUCT_PER_PAGE,
-    offset: 0
+    offset: 0,
+    title: ''
 }

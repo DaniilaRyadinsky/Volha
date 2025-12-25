@@ -29,32 +29,36 @@ const Catalog = () => {
     });
 
     const [filterState, setFilterState] = useState<IFilter>(defaultFilter)
-    const { uri } = useParams();
+    const { uri, query } = useParams();
     const [title, setTitle] = useState('Все товары')
     const queryClient = useQueryClient();
 
     useEffect(() => {
-        console.log("uri")
+        console.log(uri, query)
         if (uri) {
-
             const categories = queryClient.getQueryData<Category[]>(['categories']) ?? [];
             const category = categories.find(c => c.uri === uri)
 
             if (category) {
                 console.log("set title")
                 setTitle(category.title);
-                // if (filterMetaData) {
                 if (filterState.categories[0] !== category.id) {
                     setFilterState(prev => ({
                         ...prev,
                         categories: [category.id],
                     }));
-                    setShouldUpdate(true)
                 }
-                // }
             }
         }
-    }, [uri]);
+        if (query) {
+            console.log(query)
+            setFilterState(prev => ({
+                ...prev,
+                title: query,
+            }));
+        }
+        setShouldUpdate(true)
+    }, [uri, query]);
 
     useEffect(() => {
         if (filterMetaData) {

@@ -2,6 +2,7 @@ import { useEffect } from 'react'
 import Backdrop from '../Backdrop/Backdrop'
 import styles from './Sidebar.module.css'
 import clsx from 'clsx'
+import { useLocation } from 'react-router-dom'
 interface ISidebar {
     children: React.ReactNode,
     isOpen: boolean,
@@ -9,7 +10,7 @@ interface ISidebar {
     isRight?: boolean
 }
 
-const Sidebar = ({ children, isOpen, closeCallback, isRight=false }: ISidebar) => {
+const Sidebar = ({ children, isOpen, closeCallback, isRight = false }: ISidebar) => {
     useEffect(() => {
         if (isOpen) {
             const originalStyle = window.getComputedStyle(document.body).overflow;
@@ -21,15 +22,21 @@ const Sidebar = ({ children, isOpen, closeCallback, isRight=false }: ISidebar) =
         }
     }, [isOpen]);
 
+    const location = useLocation();
+
+    useEffect(() => {
+        closeCallback()
+    }, [location]);
+
     return (
         <>
-            <div 
-            className={clsx(styles.sidebar, {
-                [styles.offset_left]: !isRight,
-                [styles.offset_right]: isRight,
-                [styles.sidebar_active]: isOpen && !isRight,
-                [styles.sidebar_active_right]: isOpen && isRight,
-            })}>
+            <div
+                className={clsx(styles.sidebar, {
+                    [styles.offset_left]: !isRight,
+                    [styles.offset_right]: isRight,
+                    [styles.sidebar_active]: isOpen && !isRight,
+                    [styles.sidebar_active_right]: isOpen && isRight,
+                })}>
                 {children}
             </div>
             {isOpen && (

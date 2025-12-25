@@ -68,7 +68,7 @@ export const productSearch = async(
     onSuccess: (res: Product[])=> void,
     onError: (e: string) => void
 ) => {
-    fetch(`${BASE_URL}api/product/search?prompt=${query}`, {
+    fetch(`${BASE_URL}api/product/search?prompt=${query}&start=0&end=20`, {
         method: 'GET',
         headers: { 'Content-Type': 'application/json' }
     })
@@ -77,7 +77,7 @@ export const productSearch = async(
         switch (status) {
             case 200:
                 return response.json().then(data => {
-                    onSuccess(data);
+                    onSuccess(data.items);
                 });
             case 400:
                 onError('Неправильные данные');
