@@ -17,8 +17,9 @@ const AdminAuth = () => {
             return
         }
         else {
-            document.cookie = `admin_pw=${password}; path=/`;
-            validatePassword(
+            // document.cookie =
+            //     `admin_pw=${encodeURIComponent(password)}; path=/; SameSite=None; Secure`;
+            validatePassword(password,
                 () => {
                     navigate("/admin/product/all")
                 },
