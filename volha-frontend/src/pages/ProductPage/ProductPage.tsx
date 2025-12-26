@@ -5,7 +5,7 @@ import 'swiper/swiper-bundle.css';
 import { Navigation, Pagination } from 'swiper/modules';
 import ProductCard from '../../entities/Product/ProductCard/ProductCard';
 import type { Product } from '../../entities/Product/types/ProductTypes';
-import { useLoaderData, useNavigate } from 'react-router-dom';
+import { useLoaderData } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { ColorMarker } from '../../shared/ui/Color/Color';
 import arrow from '../../shared/assets/icons/expand_more.svg'
@@ -33,9 +33,6 @@ const ProductPage = () => {
   const [modal, setModal] = useState(false)
 
   const [swiper, setSwiper] = useState<SwiperRef['swiper'] | null>(null);
-
-  const navigate = useNavigate()
-
 
   const nextHandler = () => {
     swiper?.slideNext();

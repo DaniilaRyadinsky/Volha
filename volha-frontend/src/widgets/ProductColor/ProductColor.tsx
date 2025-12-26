@@ -11,7 +11,7 @@ const ProductColor = ({colors}: IProductColor) => {
         <div className={styles.color_container}>
             <p className={styles.color_title}>Цвет: Серый</p>
             <div className={styles.color_container}>
-                {colors.map((color) => <ColorMarker {...color}/>)}
+                {colors.map((color) => <ColorMarker name={color.title} hex={color.hex}/>)}
             </div>
 
         </div>

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Swiper, SwiperSlide, type SwiperRef } from "swiper/react";
+import { Swiper, SwiperSlide } from "swiper/react";
 import 'swiper/swiper-bundle.css';
 
 import { Navigation, Pagination } from "swiper/modules";
@@ -17,7 +17,6 @@ const SliderForm = () => {
   const [activeIndex, setActiveIndex] = useState(0);
   const [currentSlide, setCurrentSlide] = useState<Slide>({ id: '', img: '', img762: '', link: '' });
   const isCreateMode = activeIndex === slides.length;
-  const [swiper, setSwiper] = useState<SwiperRef['swiper'] | null>(null);
 
   type SlideErrors = {
     img?: boolean;
@@ -88,7 +87,6 @@ const SliderForm = () => {
     <div className={styles.container}>
       <div>
         <Swiper
-          onSwiper={(swiper) => setSwiper(swiper)}
           onSlideChange={(swiper) => setActiveIndex(swiper.activeIndex)}
           className={styles.slider}
           loop={false}
