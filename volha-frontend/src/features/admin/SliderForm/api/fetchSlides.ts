@@ -19,6 +19,10 @@ export const getAllSLides = async (
                     onError('Ошибка сервера');
             }
         })
+        .catch(err => {
+            console.error("Ошибка сети:", err);
+            onError("Ошибка сети");
+        })
 }
 
 
@@ -43,6 +47,9 @@ export const postSlide = async (
                     case 400:
                         onError('Неправильный ввод');
                         break;
+                    case 404:
+                        onError("Неправильный адрес")
+                        break;
                     case 409:
                         onError('Уже существует');
                         break;
@@ -51,6 +58,10 @@ export const postSlide = async (
                         break;
                 }
             }
+        })
+        .catch(err => {
+            console.error("Ошибка сети:", err);
+            onError("Ошибка сети");
         })
 }
 
@@ -73,6 +84,9 @@ export const deleteSlide = async (
                 case 400:
                     onError('Неправильный ввод');
                     break;
+                case 404:
+                    onError("Неправильный адрес")
+                    break;
                 case 409:
                     onError('Уже существует');
                     break;
@@ -80,6 +94,10 @@ export const deleteSlide = async (
                     onError('Ошибка сервера');
                     break;
             }
+        })
+        .catch(err => {
+            console.error("Ошибка сети:", err);
+            onError("Ошибка сети");
         })
 }
 

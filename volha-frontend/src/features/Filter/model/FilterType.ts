@@ -51,7 +51,7 @@ export interface FilterWidgetProps {
     onFilterChange: (newState: IFilter | ((prev: IFilter) => IFilter)) => void,
     callback: () => void;
     isLoading: boolean,
-    error: Error | null
+    error: string | null
 }
 
 export interface FilterProps {
@@ -60,7 +60,7 @@ export interface FilterProps {
     onFilterChange: (newState: IFilter | ((prev: IFilter) => IFilter)) => void,
     callback: () => void;
     isLoading: boolean,
-    error: Error | null,
+    error: string | null,
     setIsUpdate: (newState: boolean | ((prev: boolean) => boolean)) => void,
     closeCallback: () => void;
 }

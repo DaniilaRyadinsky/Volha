@@ -18,9 +18,16 @@ export const validatePassword = async (
                 case 401:
                     onError("Неправильный пароль")
                     break;
+                case 404:
+                    onError("Неправильный адрес")
+                    break;
                 case 502:
                     onError("Ошибка сервера 502")
                     break;
             }
+        })
+        .catch(err => {
+            console.error("Ошибка сети:", err);
+            onError("Ошибка сети");
         })
 }

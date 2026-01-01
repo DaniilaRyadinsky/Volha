@@ -1,14 +1,13 @@
 import styles from './Catalog.module.css';
 import ProductCard from '../../entities/Product/ProductCard/ProductCard';
-import { useCallback, useEffect, useState, type PropsWithChildren } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { useQuery, useQueryClient } from '@tanstack/react-query';
-import BASE_URL from '../../shared/const/base_url';
+import { useQueryClient } from '@tanstack/react-query';
 import { ClipLoader } from 'react-spinners';
 import type { Category, Product } from '../../entities/Product/types/ProductTypes';
 import type { FilterMetadata, IFilter } from '../../features/Filter/model/FilterType';
 import FilterWiget from '../../features/Filter/ui/FilterWiget';
-import { fetchProducts } from './api/Fetch';
+import { fetchFilters, fetchProducts } from './api/Fetch';
 import { defaultFilter } from './consts/consts';
 import Breadcrumbs from '../../features/Breadcrumbs/Breadcrumbs';
 import LayoutContent from '../../app/layout/LayoutContent';
@@ -22,34 +21,42 @@ import ProductCardSkeleton from '../../entities/Product/ProductCard/ProductCardS
 
 
 const Catalog = () => {
-    const { data: filterMetaData, isLoading: isLoadingFilterMeta, error } = useQuery<FilterMetadata>({
-        queryKey: ['filterMetaData'],
-        queryFn: async () => {
-            const res = await fetch(`${BASE_URL}api/dictionaries/all`);
-            if (!res.ok) throw new Error(res.statusText);
-            return res.json();
-        },
-        staleTime: Infinity
-    });
+    const [filterMetaData, setFilterMetaData] = useState<FilterMetadata>()
+    const [isLoadingFilterMeta, setIsLoadingFilterMeta] = useState(false)
+    const [error, setError] = useState<string | null>(null)
+
+    const queryClient = useQueryClient();
 
     const [filterState, setFilterState] = useState<IFilter>(defaultFilter)
     const { uri, query } = useParams();
+    const categories = queryClient.getQueryData<Category[]>(['categories']) ?? [];
     const [title, setTitle] = useState('Все товары')
-    const queryClient = useQueryClient();
+
+    const loadFilters = async (id?: string) => {
+        setIsLoadingFilterMeta(true)
+        await fetchFilters(
+            (data) => setFilterMetaData(data),
+            (e) => { console.error(e); setError(e)},
+            id
+        )
+        setIsLoadingFilterMeta(false)
+    }
+
+    useEffect(() => {
+        loadFilters();
+    }, [])
 
     useEffect(() => {
         console.log(uri, query)
         if (uri) {
-            const categories = queryClient.getQueryData<Category[]>(['categories']) ?? [];
-            const category = categories.find(c => c.uri === uri)
-
-            if (category) {
-                console.log("set title")
-                setTitle(category.title);
-                if (filterState.categories[0] !== category.id) {
+            const _category = uri ? categories.find(c => c.uri === uri) : undefined
+            if (_category) {
+                setTitle(_category.title);
+                loadFilters(_category.id)
+                if (filterState.categories[0] !== _category.id) {
                     setFilterState(prev => ({
                         ...prev,
-                        categories: [category.id],
+                        categories: [_category.id],
                     }));
                 }
             }
@@ -121,6 +128,8 @@ const Catalog = () => {
 
 
     if (isLoadingFilterMeta) return <ClipLoader loading cssOverride={{ color: 'var(--main)' }} size={50} />;
+    if (error != null) return <div style={{ color: 'red', height: '80vh' }}>Ошибка: {error}</div>;
+
     if (!filterMetaData) return null;
 
     return (
@@ -129,7 +138,7 @@ const Catalog = () => {
                 <Breadcrumbs />
                 <Title subtitle={`Найдено ${productList.total}`}>{title}</Title>
                 <FilterWiget filterState={filterState} filterMetadata={filterMetaData} onFilterChange={setFilterState} callback={fetchCatalog} isLoading={isLoadingFilterMeta} error={error} />
-
+                
                 <div className={styles.catalog}>
                     <div className={styles.product_list}>
                         {isLoading &&

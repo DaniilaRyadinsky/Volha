@@ -26,6 +26,9 @@ export const sendFeedback = async (
                 case 400:
                     onError("Неправильные данные")
                     break;
+                case 404:
+                    onError("Неправильный адрес")
+                    break;
                 case 500:
                     onError("Ошибка сервера 500")
                     break;
@@ -33,6 +36,10 @@ export const sendFeedback = async (
                     onError("Ошибка сервера 502")
                     break;
             }
+        })
+        .catch(err => {
+            console.error("Ошибка сети:", err);
+            onError("Ошибка сети");
         })
 
 }

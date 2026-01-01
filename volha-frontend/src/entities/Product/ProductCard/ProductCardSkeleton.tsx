@@ -18,7 +18,7 @@ const ProductCardSkeleton = () => {
         <div className={styles.price_container}>
           <div className={styles.color_container} >
             {Array.from({ length: 3 }).map((_, i) => (
-              <ColorMarkerSkeleton />
+              <ColorMarkerSkeleton key={i}/>
             ))}
           </div>
           <Skeleton width={80} className={styles.skeleton_title} />

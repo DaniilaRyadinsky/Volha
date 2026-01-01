@@ -25,6 +25,9 @@ const postTable = async (
                     case 400:
                         onError("Неправильные данные")
                         break;
+                    case 404:
+                        onError("Неправильный адрес")
+                        break;
                     case 500:
                         onError("Ошибка сервера 500")
                         break;
@@ -113,6 +116,9 @@ export const postColorImg = async (
                 case 400:
                     onError("Неправильные данные")
                     break;
+                case 404:
+                    onError("Неправильный адрес")
+                    break;
                 case 500:
                     onError("Ошибка сервера 500")
                     break;
@@ -125,9 +131,9 @@ export const postColorImg = async (
                             onSuccess,
                             onError
                         )
-                        else {
-                            onError("Изображения для этого цвета уже существуют")
-                        }
+                    else {
+                        onError("Изображения для этого цвета уже существуют")
+                    }
                     break;
                 case 502:
                     onError("Ошибка сервера 502")
@@ -141,7 +147,7 @@ export const postColorImg = async (
 }
 
 
-export const putTable= async (
+export const putTable = async (
     table: "brand" | "category" | "material" | "country" | "product" | "color",
     data: Brand | Category | Material | Country | NewProduct | Color,
     onSuccess: () => void,
@@ -160,6 +166,8 @@ export const putTable= async (
                     break
                 case 400:
                     throw new Error("Неверные данные")
+                case 404:
+                    throw new Error("Неправильный адрес")
                 case 500:
                     throw new Error("Ошибка на сервере")
                 case 502:
@@ -239,6 +247,9 @@ export const putColorImg = async (
                     break;
                 case 400:
                     onError("Неправильные данные")
+                    break;
+                case 404:
+                    onError("Неправильный адрес")
                     break;
                 case 500:
                     onError("Ошибка сервера 500")

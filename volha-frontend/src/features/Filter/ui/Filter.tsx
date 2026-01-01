@@ -128,7 +128,7 @@ const Filter = ({ filterState, filterMetadata, onFilterChange, callback, isLoadi
     );
 
     if (isLoading) { console.log("loading"); return <ClipLoader loading size={50} cssOverride={{ color: 'var(--main)' }} />; }
-    if (error) return <div style={{ color: 'red' }}>Ошибка: {error.message}</div>;
+    if (error) return <div style={{ color: 'red' }}>Ошибка: {error}</div>;
     if (!filterMetadata) return null;
     
     return (
