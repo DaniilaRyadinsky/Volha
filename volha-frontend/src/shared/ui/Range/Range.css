@@ -10,25 +10,28 @@
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
-    gap: 36px;
+    gap: 50px;
 }
 
 .input_container {
+    box-sizing: border-box;
     display: block;
     position: relative;
     font-size: 0.8rem;
     color: var(--main);
+    width: calc(100% - 50px - 12px - 2px);
 }
 
 .inputs {
+    box-sizing: border-box;
     display: block;
     position: relative;
     padding: 12px 12px 12px 36px;
     border: 1px solid #CECED7;
     border-radius: 4px;
-    width: calc(100% - 36px - 12px - 2px);
     font-size: 0.8rem;
     color: var(--main);
+    width: 100%;
     font-weight: 300 !important;
 }
 
