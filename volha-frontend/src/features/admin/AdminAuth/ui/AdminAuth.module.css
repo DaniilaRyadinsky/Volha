@@ -17,7 +17,7 @@
     padding: 32px;
     border-radius: 8px;
     /* background-color: #fff; */
-    border: 2px solid var(--outline);
+    border: 2px solid var(--on-main-container);
     width: 300px;
 }
 

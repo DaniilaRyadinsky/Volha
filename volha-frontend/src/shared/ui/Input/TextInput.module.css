@@ -16,3 +16,7 @@
 .input:hover {
     outline: 1px solid var(--outline);
 }
+
+.input:active {
+    outline: 1px solid var(--outline);
+}

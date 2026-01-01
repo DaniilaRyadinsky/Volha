@@ -19,7 +19,7 @@ const Pagination = ({ total, onChange }: IPagination) => {
     }, [page])
 
     const handlePrevCLick = () => {
-        if (page > 0)
+        if (page > 1)
             setPage(prev => (prev - 1))
     }
 

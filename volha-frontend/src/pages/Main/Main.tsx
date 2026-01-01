@@ -14,19 +14,40 @@ import { useEffect, useState } from 'react'
 import ProductCard from '../../entities/Product/ProductCard/ProductCard'
 import { fetchFavorites } from './api/fetchFav'
 import Title from '../../shared/ui/Title/Title'
+import Skeleton from 'react-loading-skeleton'
+import ProductCardSkeleton from '../../entities/Product/ProductCard/ProductCardSkeleton'
 
 const Main = () => {
   const { categories } = useCategories()
 
   const [favorites, setFavorites] = useState<Product[]>([])
 
-  useEffect(() => {
-    fetchFavorites(
-      (data) => setFavorites(data.items),
-      (error) => console.error('Error fetching favorites:', error)
-    )
+  const [isLoading, setLoading] = useState(false)
 
-  }, [])
+
+  // const delay = (ms: number) =>
+  //   new Promise(resolve => setTimeout(resolve, ms));
+
+
+  useEffect(() => {
+    const loadFavorites = async () => {
+      try {
+        setLoading(true);
+        // await Promise.all([delay(5000), fetchFavorites(
+        //   (data) => setFavorites(data.items),
+        //   (error) => console.error('Error fetching favorites:', error)
+        // )])
+        await fetchFavorites(
+          (data) => setFavorites(data.items),
+          (error) => console.error('Error fetching favorites:', error)
+        );
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadFavorites();
+  }, []);
 
   return (
     <div>
@@ -58,7 +79,7 @@ const Main = () => {
           >
             {categories.map((category) => (
               <SwiperSlide key={category.id}>
-                <Link to={`/catalog/category/${category.uri}`}>
+                <Link to={`/catalog/category/${category.uri}`} style={{ textDecoration: "none" }}>
                   <div className={styles.category_card}>
                     <img src={`${BASE_URL}images/${category.img}`} className={styles.category_img} />
                     <div className={styles.category_title}>{category.title}</div>
@@ -90,20 +111,29 @@ const Main = () => {
           modules={[Navigation, Mousewheel, FreeMode, Scrollbar]}
           className={styles.mySwiper}
         >
-          {favorites.map((product) => (
-            <SwiperSlide key={product.id}>
-              <ProductCard
-                article={product.article}
-                isAbsolutePath={true}
-                id={product.id}
-                title={product.title}
-                price={product.price}
-                width={product.width}
-                height={product.height}
-                depth={product.depth}
-                photos={product.photos}
-                colors={product.colors} />
-            </SwiperSlide>))}
+          {isLoading ?
+            Array.from({ length: 6 }).map((_, i) =>
+              <SwiperSlide key={i}>
+                < Skeleton wrapper={ProductCardSkeleton} key={i} />
+              </SwiperSlide>
+            )
+            :
+            favorites.map((product) => (
+              <SwiperSlide key={product.id}>
+                <ProductCard
+                  article={product.article}
+                  isAbsolutePath={true}
+                  id={product.id}
+                  title={product.title}
+                  price={product.price}
+                  width={product.width}
+                  height={product.height}
+                  depth={product.depth}
+                  photos={product.photos}
+                  colors={product.colors} />
+              </SwiperSlide>))
+          }
+
         </Swiper>
 
         <div>

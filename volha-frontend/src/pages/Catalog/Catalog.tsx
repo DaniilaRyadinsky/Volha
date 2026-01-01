@@ -1,6 +1,6 @@
 import styles from './Catalog.module.css';
 import ProductCard from '../../entities/Product/ProductCard/ProductCard';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useState, type PropsWithChildren } from 'react';
 import { useParams } from 'react-router-dom';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import BASE_URL from '../../shared/const/base_url';
@@ -15,6 +15,10 @@ import LayoutContent from '../../app/layout/LayoutContent';
 import Title from '../../shared/ui/Title/Title';
 import Pagination from '../../features/Pagination/Pagination';
 import { PRODUCT_PER_PAGE } from '../../features/Pagination/consts/consts';
+
+import Skeleton from 'react-loading-skeleton'
+import 'react-loading-skeleton/dist/skeleton.css'
+import ProductCardSkeleton from '../../entities/Product/ProductCard/ProductCardSkeleton';
 
 
 const Catalog = () => {
@@ -52,6 +56,8 @@ const Catalog = () => {
         }
         if (query) {
             console.log(query)
+
+            setTitle(`Результаты поиска по запросу «${query}»`);
             setFilterState(prev => ({
                 ...prev,
                 title: query,
@@ -89,6 +95,7 @@ const Catalog = () => {
 
     const fetchCatalog = useCallback(async () => {
         setIsLoading(true);
+        // await Promise.all([delay(5000), fetchProducts(filterState, setProductList, (e) => { alert(e) })])
         await fetchProducts(filterState, setProductList, (e) => { alert(e) });
         setIsLoading(false);
     }, [filterState]);
@@ -113,18 +120,20 @@ const Catalog = () => {
     }
 
 
-    if (isLoading) return <ClipLoader loading cssOverride={{ color: 'var(--main)' }} size={50} />;
+    if (isLoadingFilterMeta) return <ClipLoader loading cssOverride={{ color: 'var(--main)' }} size={50} />;
     if (!filterMetaData) return null;
 
     return (
         <LayoutContent>
             <div className={styles.catalog_container}>
                 <Breadcrumbs />
-                <Title>{title}</Title>
+                <Title subtitle={`Найдено ${productList.total}`}>{title}</Title>
                 <FilterWiget filterState={filterState} filterMetadata={filterMetaData} onFilterChange={setFilterState} callback={fetchCatalog} isLoading={isLoadingFilterMeta} error={error} />
 
                 <div className={styles.catalog}>
                     <div className={styles.product_list}>
+                        {isLoading &&
+                            Array.from({ length: PRODUCT_PER_PAGE }).map((_, i) => < Skeleton wrapper={ProductCardSkeleton} key={i} />)}
                         {productList?.items?.map((item) => <ProductCard
                             article={item.article}
                             key={item.id}

@@ -22,7 +22,7 @@ interface IProduct {
 }
 
 const ProductCard = ({ id, title, price, colors, isAbsolutePath = false }: IProduct) => {
-  const [selectedColor, setSelectedColor] = useState(colors[0])
+  const [selectedColor, setSelectedColor] = useState<Color | null>(null)
   const [img, setImg] = useState<string[]>([]);
 
   const navigate = useNavigate();
@@ -34,13 +34,20 @@ const ProductCard = ({ id, title, price, colors, isAbsolutePath = false }: IProd
   }
 
   useEffect(() => {
-    fetchColorImg(
-      selectedColor.id,
-      id,
-      (e) => setImg(e),
-      (e) => console.error(e)
+    if (!selectedColor && colors.length) {
+      setSelectedColor(colors[0]);
+    }
+  }, [colors, selectedColor]);
 
-    )
+  useEffect(() => {
+    if (selectedColor)
+      fetchColorImg(
+        selectedColor.id,
+        id,
+        (e) => setImg(e),
+        (e) => console.error(e)
+
+      )
   }, [selectedColor])
 
   const navigareClick = () => {
@@ -60,7 +67,7 @@ const ProductCard = ({ id, title, price, colors, isAbsolutePath = false }: IProd
             {colors.map(c =>
               <ColorMarker
                 key={c.id}
-                style={{ borderColor: selectedColor.id === c.id ? "var(--main)" : undefined }}
+                style={{ borderColor: selectedColor?.id === c.id ? "var(--main)" : undefined }}
                 name={c.title}
                 hex={c.hex}
                 onClick={() => handleColorClick(c.id)}

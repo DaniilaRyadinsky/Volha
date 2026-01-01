@@ -1,23 +1,35 @@
-.header {
+.header_container {
     padding: 20px 0;
+    display: flex;
+    flex-direction: row;
+    gap: 30px;
+    align-items: baseline;
+}
+
+.header {
     font-weight: 300;
 }
 
+.subtitle {
+    font-size: 1rem;
+    color: var(--outline);
+}
+
 @media (max-width: 768px) {
-    .header {
+    .header_container {
         padding: 10px 20px;
     }
 }
 
 
 @media (max-width: 568px) {
-    .header {
+    .header_container {
         padding: 10px 15px;
     }
 }
 
 @media (max-width: 400px) {
-    .header {
+    .header_container {
         padding: 10px 0px;
     }
 }

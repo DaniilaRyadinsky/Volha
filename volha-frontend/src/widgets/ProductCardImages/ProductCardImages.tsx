@@ -18,6 +18,7 @@ const ProductCardImages = ({ img }: IProductImages) => {
         src={`${BASE_URL}images/${img[activeImage]}`}
         alt={`Product view ${activeImage + 1}`}
         className={styles.mainImage}
+        loading='lazy'
       />
       <div className={styles.triggers}>
         {Array.from({ length: segments }, (_, index) => (

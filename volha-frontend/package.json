@@ -16,6 +16,7 @@
     "clsx": "^2.1.1",
     "cyrillic-to-translit-js": "^3.2.1",
     "react": "^19.1.0",
+    "react-loading-skeleton": "^3.5.0",
     "react-markdown": "^10.1.0",
     "react-range-slider-input": "^3.2.1",
     "react-router-dom": "^7.6.3",

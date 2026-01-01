@@ -228,6 +228,7 @@
         width: 100% !important;
         height: auto !important;
         opacity: 1 !important;
+        border: none;
     }
 
     .miniatures :global(.swiper-slide-thumb-active) {

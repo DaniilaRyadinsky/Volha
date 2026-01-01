@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import FormInput from '../../ProductForm/internal/inputs/FormInput/FormInput'
 import { Button } from '../../../../shared/ui/Button/Button'
 import styles from './AdminAuth.module.css'
@@ -10,6 +10,22 @@ const AdminAuth = () => {
     const [error, setError] = useState<"empty" | "limit" | undefined>(undefined)
 
     const navigate = useNavigate();
+
+    useEffect(() => {
+        const handleKeyPress = (event: Event) => {
+            const keyEvent = event as unknown as KeyboardEvent
+            if (keyEvent.key === 'Enter') {
+                event.preventDefault()
+                handleClick()
+            }
+        };
+
+        window.addEventListener('keydown', handleKeyPress);
+
+        return () => {
+            window.removeEventListener('keydown', handleKeyPress);
+        };
+    }, [password]);
 
     const handleClick = () => {
         if (password === '') {

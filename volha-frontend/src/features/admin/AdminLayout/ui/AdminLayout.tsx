@@ -1,13 +1,26 @@
 import styles from './AdminLayout.module.css'
 import logo from '../../../../shared/assets/icons/logo.svg'
-import { Outlet, Link } from 'react-router-dom'
+import { Outlet, Link, useNavigate } from 'react-router-dom'
 import { ScrollToTop } from '../../../../shared/lib/ScrollToTop'
 import { AdminDataProvider } from '../../providers/admin-data-provider'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { useEffect } from 'react'
 
 const queryClient = new QueryClient();
 
 const AdminLayout = () => {
+    const navigate = useNavigate()
+
+    useEffect(() => {
+        if (!getCookie('admin_pw')) {
+            navigate('/admin/auth')
+        } 
+
+        
+    }, [])
+
+
+
     return (
         <>
             <QueryClientProvider client={queryClient}>
@@ -35,5 +48,12 @@ const AdminLayout = () => {
         </>
     )
 }
+
+const getCookie = (name: string) => {
+  return document.cookie
+    .split('; ')
+    .find(row => row.startsWith(name + '='))
+    ?.split('=')[1];
+};
 
 export default AdminLayout

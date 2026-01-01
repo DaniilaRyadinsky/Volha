@@ -121,7 +121,7 @@
 
 .filter_attr_btn {
     padding: 8px 16px;
-    border: 1px solid var(--outline);
+    border: 1px solid var(--on-main-container);
     border-radius: 32px;
     font-size: 0.9375rem;
     font-weight: 300;
