@@ -77,9 +77,9 @@ const FilterWiget = (props: FilterWidgetProps) => {
                     value={getSortMode()}
                     title="Сортировка"
                     options={[
+                        {label: "По популярности", value: "views DESC"},
                         { label: "По убыванию цены", value: "price DESC" }, 
                         { label: "По возрастанию цены", value: "price ASC" },
-                        {label: "По популярности", value: "views DESC"}
                     ]}
                     onChange={(e) => sortChange(e)} />
             </div>

@@ -20,9 +20,12 @@
     font-size: 1.15rem;
 }
 
+
 .mySwiper {
     padding-bottom: 20px;  
     width: 100%; 
+    /* height: auto;
+    aspect-ratio: 1920 / 750; */
 }
 
 .mySwiper :global(.swiper-slide) {

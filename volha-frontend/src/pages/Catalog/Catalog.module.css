@@ -6,6 +6,7 @@
     grid-row-gap: 64px;
     grid-column-gap: 24px;
     padding-bottom: 64px;
+    min-height: 300px;
 }
 
 @media (max-width: 1400px) {

@@ -100,6 +100,10 @@ const Catalog = () => {
 
     const [shouldUpdate, setShouldUpdate] = useState(false)
 
+    //   const delay = (ms: number) =>
+    // new Promise(resolve => setTimeout(resolve, ms));
+
+
     const fetchCatalog = useCallback(async () => {
         setIsLoading(true);
         // await Promise.all([delay(5000), fetchProducts(filterState, setProductList, (e) => { alert(e) })])
